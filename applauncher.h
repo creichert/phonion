@@ -1,6 +1,9 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QPointer>
+#include <QProcess>
+#include <QString>
 
 class AppLauncher : public QObject
 {
@@ -12,6 +15,11 @@ class AppLauncher : public QObject
         Browse
     };
 
+public:
+    AppLauncher();
+
+    Q_INVOKABLE QString onion();
+
 public slots:
     void launch(int index);
 
@@ -19,5 +27,8 @@ private:
     void launchMessage();
     void launchCall();
     void launchBrowse();
+
+    QString _addr;
+    QPointer<QProcess> _proc;
 };
 

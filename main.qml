@@ -2,13 +2,13 @@
 import QtQuick 2.0
 
 Rectangle  {
-    width: 300; height: 400
+    width: 210; height: 400
     color: "white"
 
     ListModel  {
         id: model
-        ListElement { name: "Message"; icon: "" }
-        ListElement { name: "Call"; icon: "" }
+        ListElement { name: "Message"; icon: "message.png" }
+        ListElement { name: "Call"; icon: "phone.png" }
         ListElement { name: "Browse"; icon: "" }
     }
 
@@ -20,8 +20,11 @@ Rectangle  {
             width: 100; height: 100
             Image  {
                 id: appIcon
-                y: 20; anchors.horizontalCenter: parent.horizontalCenter
                 source: icon
+
+                width: 60; height: 60
+                y: 20; anchors.horizontalCenter: parent.horizontalCenter
+                fillMode: Image.PreserveAspectFit
             }
 
             Text  {
@@ -60,6 +63,14 @@ Rectangle  {
         focus: true
         model: model
         delegate: delegate
+    }
+
+    Text {
+        id: onion
+        font.pointSize: 14
+        text: AppLauncher.onion()
+        anchors.bottom: grid.bottom
+        //anchors.horizontalCenter: grid.horizontalCenter
     }
 }
 
