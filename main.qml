@@ -10,6 +10,7 @@ Rectangle  {
         ListElement { name: "Message"; icon: "message.png" }
         ListElement { name: "Call"; icon: "phone.png" }
         ListElement { name: "Browse"; icon: "" }
+        ListElement { name: "Settings"; icon: "" }
     }
 
     Component  {
@@ -58,6 +59,7 @@ Rectangle  {
     GridView  {
         id: grid
         anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         cellWidth: 100; cellHeight: 100
         highlight: highlight
         focus: true
@@ -70,7 +72,7 @@ Rectangle  {
         font.pointSize: 14
         text: AppLauncher.onion()
         anchors.bottom: grid.bottom
-        //anchors.horizontalCenter: grid.horizontalCenter
+        anchors.horizontalCenter: grid.horizontalCenter
     }
 }
 
