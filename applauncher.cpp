@@ -9,13 +9,14 @@
 #include "applauncher.h"
 
 AppLauncher::AppLauncher()
-  : _proc(new QProcess())
 {
     // Use QFileInfo and also check against security key.
     //QFile f("/var/lib/tor/hidden_service/hostname");
     QFile f("test_hostname");
-    if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
+    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Hidden service not found");
         return;
+    }
 
     _addr = f.read(16);
     qDebug() << "Identified onion: " << _addr;
@@ -29,40 +30,28 @@ QString AppLauncher::onion()
                                  .arg(_addr.mid(12,4));
 }
 
-void AppLauncher::launch(int index)
+enum LaunchOptions { Message = 0,
+                     Call,
+                     Browse,
+                     Settings };
+
+QString AppLauncher::launch(int index)
 {
     switch (index) {
     case Message:
-        launchMessage();
         qDebug() << "Message";
-        break;
+        return "qrc:/qml/message.qml";
     case Call:
-        launchCall();
         qDebug() << "Call";
-        break;
+        return "qrc:/qml/call.qml";
     case Browse:
-        launchBrowse();
         qDebug() << "Browse";
-        break;
+        return "qrc:/qml/browse.qml";
+    case Settings:
+        qDebug() << "Settings";
+        return "qrc:/qml/settings.qml";
     default:
-        break;
+        return "qrc:/qml/home.qml";
     }
 }
 
-void AppLauncher::launchMessage()
-{
-    _proc->kill();
-    _proc->start("mumble");
-}
-
-void AppLauncher::launchCall()
-{
-    _proc->kill();
-    _proc->start("mumble");
-}
-
-void AppLauncher::launchBrowse()
-{
-    _proc->kill();
-    // Implement.
-}

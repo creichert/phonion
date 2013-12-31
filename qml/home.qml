@@ -1,14 +1,11 @@
-
 import QtQuick 2.0
 
 Rectangle  {
-    width: 210; height: 400
-    color: "white"
 
     ListModel  {
         id: model
-        ListElement { name: "Message"; icon: "message.png" }
-        ListElement { name: "Call"; icon: "phone.png" }
+        ListElement { name: "Message"; icon: "qrc:/message.png" }
+        ListElement { name: "Call"; icon: "qrc:/phone.png" }
         ListElement { name: "Browse"; icon: "" }
         ListElement { name: "Settings"; icon: "" }
     }
@@ -38,7 +35,7 @@ Rectangle  {
             MouseArea {
                 anchors.fill: parent
                 onClicked: { grid.currentIndex = index
-                             AppLauncher.launch(index)
+                             loader.source = AppLauncher.launch(index)
                            }
             }
         }
@@ -69,10 +66,9 @@ Rectangle  {
 
     Text {
         id: onion
-        font.pointSize: 14
+        font.pointSize: 12
         text: AppLauncher.onion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
     }
 }
-

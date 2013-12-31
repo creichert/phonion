@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
     v.rootContext()->setContextProperty("AppLauncher", &applauncher);
-    v.setSource(QUrl("qrc:/main.qml"));
+    v.setSource(QUrl("qrc:/qml/main.qml"));
     v.showFullScreen();
 
     return a.exec();
