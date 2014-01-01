@@ -1,0 +1,164 @@
+trunk
+- Added Swedish translation (thanks to Åke Engelbrektson)
+
+version 0.9.9.550
+- fix some string encoding problems (and crashes) with 
+  non-ascii user names or folder names.
+- Unix/Linux: make data folder and file permissions more restrictive
+- Windows: update the bundled tor.exe to current stable version 0.2.2.34
+
+version 0.9.9.534
+- Windows: fix old scroll bug which reappeared on Windows 7
+- added Russian translation
+
+version 0.9.9.530
+- fix some focus and focus-stealing problems
+- improve the way the standard browser is found
+- fix race condition in the GUI resulting in the same line sent twice
+- Windows: update bundled Tor binary to version 0.2.1.30
+
+version 0.9.9.515
+- fix (regression): make notification window stay on top again
+- fix wrong handling of new line characters in chat messages
+- make main window always come to front when unhiding from tray
+
+version 0.9.9.509
+- fixed the focus stealing of the notification window on Windows
+- made the notofication window less obtrusive, more native looking 
+  and make it immediately disappear on mouse contact. 
+- made the animation of the popup faster and look more natural.
+- additional notification methods: knotify, gtknotify, growlnotify, xosd
+- Mac OSX: more Mac conforming UI with menu bar
+- Windows: use stable Tor-0.2.1.29 instead of experimental 0.2.2.20-alpha
+- updated french translation
+- remove annoying popup warning about debug log, we even allow logging of
+  conversations now so this is only consequent.
+
+version 0.9.9.458
+- fixed crash that could happen while torchat was minimized to the tray
+
+version 0.9.9.453
+- fixed connection handshake: timeout for unanswered outgoing connections
+
+version 0.9.9.449
+- speed up the wiping of deleted files and not freeze the GUI while doing it
+
+version 0.9.9.425
+- (security) wipe temporary files and sent offline messages before deleting
+- (security) properly sanitize incoming file names
+- profile text and avatar (will be shown when mouse over buddy in list)
+- enable the logging for individual buddies and show backlog in opened window
+- make the splitter in the chat window movable
+- remember and restore window sizes
+- fix receiving of very small files (sometimes got stuck at 0%)
+- fix the annoying "list item -1" error on windows once and for all (hopefully)
+- allow sending files to offline buddies (will wait until connect, then send)
+- allow dropping of files directly to a buddy in the buddy list
+- remove some CPU hogging in the GUI, also removed annoying flickering
+- configurable fonts and colors (in the .ini file, no GUI config yet)
+- configurable branding ("Ask Bernd" name and ID can now be pre-configured
+  in torchat.ini for easier adaption to different usage scenarios)
+
+version 0.9.9.328
+- fixed a flaw in the PING-PONG-sequence, where pong messages went missing
+  and got stuck in the middle of the handshake, this fix now dramatically
+  increases connection speed
+- fix error in Bulgarian translation
+
+version 0.9.9.324
+- (windows) updated tor.exe to version 0.2.2.20-alpha
+- fixed crash bug on Ubuntu Karmic and later
+- fixed a possible race condition when incoming connection detected
+  (not critical and happens only once a week, but still annoying)
+- check incoming ping sender address for length and allowed characters
+- make the .deb package allow more different python versions (2.5 .. 2.7)
+- added some more logging
+- added Bulgarian translation
+
+version 0.9.9.292
+- prevent possible MITM attack by better verifying incoming pong messages
+- prevent possible attack by disallowing most incoming messages
+  on the outgoing connections (only file messages are allowed)
+- make it work with Python 2.7.1
+- (windows) use current version of Tor.exe (0.2.2.19-alpha)
+- (windows) changed build process to use pyinstaller instead of py2exe
+- added chinese translation
+
+version 0.9.9.277
+- fix (regression): non ascii characters in messages and filenames
+- fix (regression): sending files on win98 immediately disconnected buddy
+- added hungarian translation
+
+version 0.9.9.269
+- implemented drag 'n' drop file transfer
+- "edit contact" in chat window context menu
+- "send file" in chat window context menu
+- "quit" in main popup menu
+- meaningful titles for file open and save dialogs
+- removed the "bitmap not found" errors
+- the program now runs on Windows 98 SE
+- added polish translation
+- fixed issue 19: Enter-Key inserted newline before sending
+- fixed issue 20: Ask before overwriting files
+- fixed issue 27: indication of messages in main window
+- fixed: find application data folder on windows 98
+- fixed: don't open two chat windows for the same buddy
+- detect second instance on same port
+- allow multiple profiles (for permanent installation)
+- zero configuration now also on *ix platforms
+- implemented (experimental) debian package
+
+version 0.9.9.191
+- implemented configuration dialog
+- added german translation
+- added (partial) dutch translation
+- added (partial) french translation
+- let the user specify a path for temporary files, change the default
+  to be the data directory (the torchat folder in portable mode)
+
+version 0.9.9.149
+- remove the annoying permanent flicker of the buddy list
+- show own hostname in windows and taskbar icon
+- option to start up with hidden main window (only taskbar icon)
+- option to open new chat windows hidden (taskbar icon flashing instead)
+- show list of unread (hidden) windows when right click on taskbar icon
+- show buddy status in chat window icon
+- show list of unread (hidden) windows in taskbar icon tooltip
+- ask before exiting when there are unread messages
+- show message with timestamp when delayed messages have been sent
+
+version 0.9.9.140
+- incompatible protocol change! (adding and removing buddies)
+- implemented offline messages
+- implemented logging
+- bugfix: possible race condition when opening 2 chat windows in a short time
+- bugfix: allow non-ascii characters in buddy name
+- bugfix: a buddy can now be removed from the list
+- bugfix: prevent possible DoS attack through faked "ping" messages
+- bugfix: wrong initialization of buddy list window didn't work on Mac
+
+version 0.9.9.109
+- bugfix: if /tmp was on a separate partition, file receiving was broken
+- bugfix: show correct buddy status immediately after connect
+- new connection attempts and keep-alives now in random intervals
+- implemented configuration file
+- included some (unfinished) documentation
+
+version 0.9.9.98
+- bugfix: allow non ascii characters in filenames
+
+version 0.9.9.96
+- bugfix: fixes slow connection in 0.9.9.95
+
+version 0.9.9.95
+- notification popups and flashing symbols in taskbar
+- file transfers can recover from connection breakdowns
+
+version 0.9.9.85
+- time stamps in chat window
+- fixed: Messages may now contain newline characters
+- file transfer
+
+versions up to 0.9.9.64
+- basic messaging functionality
+- first really stable version

@@ -3,11 +3,18 @@ import QtQuick 2.0
 
 Rectangle  {
 
-   anchors.fill: parent
+    anchors.fill: parent
 
-   Text {
+    TextInput {
+        id: to
+        text: AppLauncher.onion()
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+
+    Text {
         id: messages
-        anchors.top: parent.top
+        anchors.top: to.top
         anchors.bottom: input.top
         anchors.horizontalCenter: parent.horizontalCenter
     }
@@ -34,7 +41,9 @@ Rectangle  {
     }
 
     function onMessageSend() {
-        console.log("me: " + input.text); 
+        console.log("me: " + input.text)
+
+        MessageApp.sendMessage(input.text)
 
         var text = messages.text + "\nme: " + input.text
         messages.text = text

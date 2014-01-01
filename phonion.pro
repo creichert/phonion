@@ -1,12 +1,4 @@
-TEMPLATE = app
-TARGET = phonion
-INCLUDEPATH += .
+TEMPLATE = subdirs
+SUBDIRS = phonion \
+          integrator
 
-QT += core gui qml quick
-
-HEADERS += applauncher.h
-
-SOURCES += applauncher.cpp \
-           main.cpp
-
-RESOURCES += main.qrc
