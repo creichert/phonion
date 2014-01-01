@@ -7,13 +7,14 @@
 #include "applauncher.h"
 #include "messageapp.h"
 
+
 int main(int argc, char** argv) {
 
     QGuiApplication a(argc, argv);
 
     AppLauncher applauncher;
     MessageApp msgApp;
-
+   
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
     v.rootContext()->setContextProperty("AppLauncher", &applauncher);

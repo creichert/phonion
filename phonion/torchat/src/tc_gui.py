@@ -1816,10 +1816,6 @@ class MainWindow(wx.Frame):
         self.taskbar_icon.showStatus(status)
 
     def callbackMessage(self, callback_type, callback_data):
-        print ' HERE '
-        print type(callback_type)
-        print type(callback_data)
-        print
         #we must always use wx.CallAfter() to interact with
         #the GUI-Thread because this method will be called
         #in the context of one of the connection threads

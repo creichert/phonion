@@ -209,6 +209,9 @@ class Buddy(object):
             self.sendPing()
 
     def isFullyConnected(self):
+        print ' CONN_IN - ' + str(self.conn_in)
+        print 'CONN_OUT - ' + str(self.conn_out)
+        print
         return self.conn_in and self.conn_out and self.conn_out.pong_sent
 
     def isAlreadyPonged(self):
@@ -300,6 +303,7 @@ class Buddy(object):
             self.bl.gui(CB_TYPE_AVATAR, self)
 
     def onChatMessage(self, message):
+        print ' MSG REC -- ' + str(message)
         self.bl.gui(CB_TYPE_CHAT, (self, message))
     
     def sendChatMessage(self, text):
@@ -1959,6 +1963,7 @@ class Listener(threading.Thread):
         while self.running:
             try:
                 conn, address = self.socket.accept()
+                print 'RUNNING... '
                 self.conns.append(InConnection(conn, self.buddy_list))
                 print "(2) new incoming connection"
                 print "(2) have now %i incoming connections" % len(self.conns)
@@ -1985,6 +1990,7 @@ class Listener(threading.Thread):
         self.timer.start()
 
     def onTimer(self):
+        print ' TIMEOUT '
         for conn in self.conns:
             if time.time() - conn.last_active > config.DEAD_CONNECTION_TIMEOUT:
                 if conn.buddy:
@@ -2068,6 +2074,7 @@ def startPortableTor():
                     print "(1) trying to read hostname file (try %i of 20)" % (cnt + 1)
                     f = open(os.path.join("hidden_service", "hostname"), "r")
                     hostname = f.read().rstrip()[:-6]
+                    print ' HOSTNAME ' + hostname
                     print "(1) found hostname: %s" % hostname
                     print "(1) writing own_hostname to torchat.ini"
                     config.set("client", "own_hostname", hostname)

@@ -2,3 +2,6 @@
 build/
 .clang_complete
 *.pyc
+tor_data/
+*.swp
+*offline.txt

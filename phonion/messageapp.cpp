@@ -5,23 +5,46 @@
 #include "../integrator/integrator.h"
 
 #include <QString>
+#include <QDebug>
 
 #include "messageapp.h"
 
 using namespace std;
 namespace py = boost::python;
 
+class AcquireGIL 
+{
+public:
+    inline AcquireGIL(){
+        state = PyGILState_Ensure();
+    }
+
+    inline ~AcquireGIL(){
+        PyGILState_Release(state);
+    }
+private:
+    PyGILState_STATE state;
+};
+
 MessageApp::MessageApp()
 {
+    PyEval_InitThreads();
     Py_Initialize();
+    AcquireGIL gil;
     try {
+
         py::object mm = py::import("__main__");
         py::object mn = mm.attr("__dict__");
         py::exec("import tc_client", mn);
         py::exec("import libintegrator", mn);
-        py::exec("libintegrator.callback(\"test..\",\"one two..\")", mn);
+        py::exec("libintegrator.callback(1, \"s\")", mn);
         py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(libintegrator.callback, socket)", mn);
+
+        // For some reason this call is needed in order to allow the looper thread
+        // to be started in the previous call.
+        py::exec("print \"start thread 1\"", mn);
+        //py::exec("print \"start thread 2\"", mn);
 
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
@@ -31,12 +54,19 @@ MessageApp::MessageApp()
 
 MessageApp::~MessageApp()
 {
-    Py_Finalize();
+    // Not needed using boost::python apparently.
+    //Py_Finalize();
 }
 
 void MessageApp::sendMessage(const QString& msg)
 {
-    PyRun_SimpleString(QString("print \"%1\"").arg(msg).toStdString().c_str());
+    try {
+        py::object buddy = _buddyList.attr("getBuddyFromAddress")("k4hzlexjprajz5ew");
+        buddy.attr("sendChatMessage")(msg.toStdString().c_str());
+    } catch(py::error_already_set const &){
+        string perror_str = parse_python_exception();
+        cout << "Error during configuration parsing: " << perror_str << endl;
+    }
 }
 
 std::string MessageApp::parse_python_exception() {
