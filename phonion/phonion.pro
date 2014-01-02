@@ -9,8 +9,11 @@ LIBS += -L/usr/local/lib -L/usr/lib/python2.7 -lpython2.7 -lboost_python
 # Boost Python
 QT += core gui qml quick
 
+INCLUDEPATH += ../integrator
+
 HEADERS += applauncher.h \
            messageapp.h \
+           ../integrator/integrator.h
 
 SOURCES += applauncher.cpp \
            main.cpp \

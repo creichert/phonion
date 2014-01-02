@@ -6,8 +6,6 @@
 
 class QString;
 
-class OnionChatThread;
-
 class MessageApp : public QObject
 {
     Q_OBJECT
@@ -15,27 +13,14 @@ public:
     MessageApp();
     ~MessageApp();
 
-    Q_INVOKABLE void sendMessage(const QString& msg);
+    Q_INVOKABLE void sendChatMessage(const QString& msg);
+
+private slots:
+    void updateInterpreter();
+    void onChatMessage(const QString& msg);
 
 private:
-    OnionChatThread* _t;
     std::string parse_python_exception();
 
     boost::python::object _buddyList;
 };
-
-class OnionChatThread : public QThread
-{
-    Q_OBJECT
-public:
-    OnionChatThread(MessageApp* app) {
-        _app = app;
-    }
-private:
-    MessageApp* _app;
-    void run() {
-        //_app->initialize();
-    }
-};
-
-

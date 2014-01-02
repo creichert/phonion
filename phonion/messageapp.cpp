@@ -2,54 +2,50 @@
 #include <iostream>
 #include <boost/python.hpp>
 
-#include "../integrator/integrator.h"
+#include "integrator.h"
 
 #include <QString>
 #include <QDebug>
+#include <QTimer>
 
 #include "messageapp.h"
 
 using namespace std;
 namespace py = boost::python;
 
-class AcquireGIL 
-{
-public:
-    inline AcquireGIL(){
-        state = PyGILState_Ensure();
-    }
-
-    inline ~AcquireGIL(){
-        PyGILState_Release(state);
-    }
-private:
-    PyGILState_STATE state;
-};
-
 MessageApp::MessageApp()
 {
-    PyEval_InitThreads();
     Py_Initialize();
-    AcquireGIL gil;
     try {
 
         py::object mm = py::import("__main__");
         py::object mn = mm.attr("__dict__");
         py::exec("import tc_client", mn);
         py::exec("import libintegrator", mn);
-        py::exec("libintegrator.callback(1, \"s\")", mn);
-        py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
-        _buddyList = py::eval("tc_client.BuddyList(libintegrator.callback, socket)", mn);
 
-        // For some reason this call is needed in order to allow the looper thread
-        // to be started in the previous call.
-        py::exec("print \"start thread 1\"", mn);
-        //py::exec("print \"start thread 2\"", mn);
+        // Fix this ugliness.
+        py::exec("i = libintegrator.Integrator()", mn);
+
+        //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
+        _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
+
+        Integrator* integrator = py::extract<Integrator*>(mn["i"]);
+        connect(integrator, SIGNAL(onChatMessage(const QString&)), SLOT(onChatMessage(const QString&)));
 
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
         cout << "Error during configuration parsing: " << perror_str << endl;
     }
+
+    // Needed to keep app up to date.
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateInterpreter()));
+    timer->start(1000);
+}
+
+void MessageApp::updateInterpreter()
+{
+    py::exec("print \"updating interpreter\"");
 }
 
 MessageApp::~MessageApp()
@@ -58,7 +54,12 @@ MessageApp::~MessageApp()
     //Py_Finalize();
 }
 
-void MessageApp::sendMessage(const QString& msg)
+void MessageApp::onChatMessage(const QString& msg)
+{
+    qDebug() << " ON CHAT MESSAGE: " << msg;
+}
+
+void MessageApp::sendChatMessage(const QString& msg)
 {
     try {
         py::object buddy = _buddyList.attr("getBuddyFromAddress")("k4hzlexjprajz5ew");

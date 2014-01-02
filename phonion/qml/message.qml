@@ -43,7 +43,7 @@ Rectangle  {
     function onMessageSend() {
         console.log("me: " + input.text)
 
-        MessageApp.sendMessage(input.text)
+        MessageApp.sendChatMessage(input.text)
 
         var text = messages.text + "\nme: " + input.text
         messages.text = text

@@ -5,3 +5,4 @@ build/
 tor_data/
 *.swp
 *offline.txt
+*.pid

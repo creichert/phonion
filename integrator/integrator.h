@@ -1,8 +1,19 @@
 
 #include <boost/python.hpp>
 
+#include <QObject>
+#include <QDebug>
+#include <QString>
+
 using namespace boost::python;
 
-static void callback(int type, PyObject* data);
+class Integrator : public QObject
+{
+  Q_OBJECT
 
+public:
+    void callback(int type, PyObject* data);
 
+signals:
+    void onChatMessage(const QString& msg);
+};
