@@ -15,5 +15,5 @@ public:
     void callback(int type, PyObject* data);
 
 signals:
-    void onChatMessage(const QString& msg);
+    void onChatMessage(const QString&, const QString& msg);
 };

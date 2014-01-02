@@ -11,8 +11,7 @@
 AppLauncher::AppLauncher()
 {
     // Use QFileInfo and also check against security key.
-    //QFile f("/var/lib/tor/hidden_service/hostname");
-    QFile f("test_hostname");
+    QFile f("../phonion/torchat/src/Tor/hidden_service/hostname");
     if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning("Hidden service not found");
         return;

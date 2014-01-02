@@ -13,11 +13,13 @@ public:
     MessageApp();
     ~MessageApp();
 
+    // BuddyListModel* buddyListModel();
+    // ChatModel* chatModel();
     Q_INVOKABLE void sendChatMessage(const QString& msg);
 
 private slots:
     void updateInterpreter();
-    void onChatMessage(const QString& msg);
+    void onChatMessage(const QString& buddy, const QString& msg);
 
 private:
     std::string parse_python_exception();

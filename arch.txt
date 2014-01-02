@@ -1,0 +1,6 @@
+
+        QML Chat List    ---------------------->   QML Chat
+             |->onClicked: (buddy url)
+   |---->ChatsModel 
+   |
+incoming

@@ -15,6 +15,7 @@ namespace py = boost::python;
 
 MessageApp::MessageApp()
 {
+    // _chatModel = new ChatModel
     Py_Initialize();
     try {
 
@@ -28,9 +29,11 @@ MessageApp::MessageApp()
 
         //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
+        // new BuddyListModel
 
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
-        connect(integrator, SIGNAL(onChatMessage(const QString&)), SLOT(onChatMessage(const QString&)));
+        connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
+                              SLOT(onChatMessage(const QString&, const QString&)));
 
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
@@ -54,13 +57,15 @@ MessageApp::~MessageApp()
     //Py_Finalize();
 }
 
-void MessageApp::onChatMessage(const QString& msg)
+void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
-    qDebug() << " ON CHAT MESSAGE: " << msg;
+    qDebug() << " ON CHAT MESSAGE :" << buddy << ": " << msg;
+    // _chatModel->newMessage(buddy, msg);
 }
 
 void MessageApp::sendChatMessage(const QString& msg)
 {
+    // _chatModel->newMessage(self.address, msg);
     try {
         py::object buddy = _buddyList.attr("getBuddyFromAddress")("k4hzlexjprajz5ew");
         buddy.attr("sendChatMessage")(msg.toStdString().c_str());
