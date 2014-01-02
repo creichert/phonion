@@ -16,7 +16,8 @@ Rectangle  {
         id: messages
         anchors.top: to.top
         anchors.bottom: input.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 
     TextInput {
@@ -49,8 +50,5 @@ Rectangle  {
         messages.text = text
 
         input.text = ""
-    }
-
-    function onMessageRecieve() {
     }
 }
