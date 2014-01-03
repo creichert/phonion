@@ -17,7 +17,7 @@ namespace py = boost::python;
 MessageApp::MessageApp(QObject* parent)
   : QObject(parent)
   , _chatModel(new ChatModel())
-  , _buddyListModel(0)
+  , _buddyListModel(new BuddyListModel)
 {
     _chatModel->setCurrentBuddy("k4hzlexjprajz5ew");
     Py_Initialize();
@@ -41,7 +41,6 @@ MessageApp::MessageApp(QObject* parent)
             bs.append(QString(p));
         }
         qDebug() << "Buddy List: " << bs.join(", ");
-        _buddyListModel = new BuddyListModel;
         _buddyListModel->setStringList(bs);
 
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
@@ -66,6 +65,7 @@ void MessageApp::updateInterpreter()
 
 MessageApp::~MessageApp()
 {
+    _buddyList.attr("stopClient");
     // Not needed using boost::python apparently.
     //Py_Finalize();
 }
@@ -83,6 +83,30 @@ BuddyListModel* MessageApp::buddyListModel()
 void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
     _chatModel->newMessage(buddy, msg);
+}
+
+void MessageApp::addBuddy(const QString& buddy)
+{
+    if (buddy.length() != 16) {
+        qDebug() << "[ERROR]: Incorrectly formatted buddy address.";
+        return;
+    }
+
+    QStringList buddies(_buddyListModel->stringList());
+    if (buddies.contains(buddy)) {
+        qDebug() << "Buddy already in list.";
+        return;
+    }
+
+    try {
+        py::extract<bool>(_buddyList.attr("addBuddy")(buddy.toStdString()));
+    } catch(py::error_already_set const &){
+        string perror_str = parse_python_exception();
+        cout << "Error during configuration parsing: " << perror_str << endl;
+    }
+
+    buddies.append(buddy);
+    _buddyListModel->setStringList(buddies);
 }
 
 void MessageApp::sendChatMessage(const QString& msg)

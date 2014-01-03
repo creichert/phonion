@@ -1,4 +1,5 @@
 
+#include <QDebug>
 #include <QVariant>
 #include <QHash>
 #include <QByteArray>
@@ -21,8 +22,3 @@ QHash<int, QByteArray> BuddyListModel::roleNames() const
     roles[StatusRole] = "status";
     return roles;
 }
-
-//int BuddyListModel::rowCount (const QModelIndex& parent) const
-//{
-//    return 1;
-//}

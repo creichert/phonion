@@ -23,4 +23,21 @@ Rectangle {
                       }
                   }
     }
+
+    Text {
+        id: addbuddybutton
+        text: "+"
+        anchors.bottom: parent.bottom
+        MouseArea {
+            anchors.fill: parent
+            onClicked: { MessageApp.addBuddy(newbuddy.text) }
+        }
+    }
+
+    TextInput {
+        id: newbuddy
+        anchors.left: addbuddybutton.right
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+    }
 }

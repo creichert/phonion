@@ -12,5 +12,4 @@ public:
 
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual QHash<int, QByteArray> roleNames() const;
-    //virtual int rowCount (const QModelIndex& parent = QModelIndex()) const;
 };

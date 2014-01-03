@@ -17,6 +17,8 @@ public:
 
     BuddyListModel* buddyListModel();
     ChatModel* chatModel();
+
+    Q_INVOKABLE void addBuddy(const QString& buddy);
     Q_INVOKABLE void sendChatMessage(const QString& msg);
 
 private slots:

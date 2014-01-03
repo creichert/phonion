@@ -4,7 +4,7 @@ import QtQuick 2.0
 Rectangle  {
 
     anchors.fill: parent
-    TextInput {
+    Text {
         id: to
         text: messagemodel.currentBuddy()
         anchors.horizontalCenter: parent.horizontalCenter
