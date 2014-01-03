@@ -7,17 +7,20 @@ Rectangle  {
 
     TextInput {
         id: to
-        text: AppLauncher.onion()
+        text: messagemodel.currentBuddy()
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-
-    Text {
+    ListView {
         id: messages
-        anchors.top: to.top
+
+        anchors.top: to.bottom
         anchors.bottom: input.top
         anchors.left: parent.left
         anchors.right: parent.right
+
+        model: messagemodel
+        delegate: Text { text: msg }
     }
 
     TextInput {
@@ -42,13 +45,7 @@ Rectangle  {
     }
 
     function onMessageSend() {
-        console.log("me: " + input.text)
-
         MessageApp.sendChatMessage(input.text)
-
-        var text = messages.text + "\nme: " + input.text
-        messages.text = text
-
         input.text = ""
     }
 }

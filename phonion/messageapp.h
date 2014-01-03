@@ -4,6 +4,7 @@
 
 #include <boost/python.hpp>
 
+class ChatModel;
 class QString;
 
 class MessageApp : public QObject
@@ -14,7 +15,7 @@ public:
     ~MessageApp();
 
     // BuddyListModel* buddyListModel();
-    // ChatModel* chatModel();
+    ChatModel* chatModel();
     Q_INVOKABLE void sendChatMessage(const QString& msg);
 
 private slots:
@@ -25,4 +26,6 @@ private:
     std::string parse_python_exception();
 
     boost::python::object _buddyList;
+
+    ChatModel* _chatModel;
 };

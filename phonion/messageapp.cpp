@@ -2,6 +2,7 @@
 #include <iostream>
 #include <boost/python.hpp>
 
+#include "chatmodel.h"
 #include "integrator.h"
 
 #include <QString>
@@ -14,8 +15,9 @@ using namespace std;
 namespace py = boost::python;
 
 MessageApp::MessageApp()
+  : _chatModel(new ChatModel())
 {
-    // _chatModel = new ChatModel
+    _chatModel->setCurrentBuddy("k4hzlexjprajz5ew");
     Py_Initialize();
     try {
 
@@ -57,15 +59,22 @@ MessageApp::~MessageApp()
     //Py_Finalize();
 }
 
+ChatModel* MessageApp::chatModel()
+{
+    return _chatModel;
+}
+
 void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
-    qDebug() << " ON CHAT MESSAGE :" << buddy << ": " << msg;
-    // _chatModel->newMessage(buddy, msg);
+    _chatModel->newMessage(buddy, msg);
 }
 
 void MessageApp::sendChatMessage(const QString& msg)
 {
-    // _chatModel->newMessage(self.address, msg);
+    if (msg.isEmpty())
+        return;
+
+    _chatModel->newMessage("k4hzlexjprajz5ew", msg);
     try {
         py::object buddy = _buddyList.attr("getBuddyFromAddress")("k4hzlexjprajz5ew");
         buddy.attr("sendChatMessage")(msg.toStdString().c_str());
