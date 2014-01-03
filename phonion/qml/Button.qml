@@ -20,7 +20,6 @@ Rectangle  {
     Text  {
         id: buttonLabel
         anchors.centerIn: container
-        color: activePalette.buttonText
         text: container.text
     }
 }
