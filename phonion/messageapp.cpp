@@ -92,7 +92,8 @@ void MessageApp::sendChatMessage(const QString& msg)
 
     _chatModel->newMessage(_chatModel->currentBuddy(), msg);
     try {
-        py::object buddy = _buddyList.attr("getBuddyFromAddress")(_chatModel->currentBuddy());
+        const char* bdy = _chatModel->currentBuddy().toStdString().c_str();
+        py::object buddy = _buddyList.attr("getBuddyFromAddress")(bdy);
         buddy.attr("sendChatMessage")(msg.toStdString().c_str());
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();

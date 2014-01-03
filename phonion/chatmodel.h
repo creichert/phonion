@@ -16,7 +16,7 @@ public:
 
     void newMessage(const QString& buddy, const QString& msg);
 
-    void setCurrentBuddy(const QString& buddy);
+    Q_INVOKABLE void setCurrentBuddy(const QString& buddy);
     Q_INVOKABLE QString currentBuddy();
 
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
