@@ -612,6 +612,8 @@ class BuddyList(object):
         self.own_buddy.onChatMessage("*** %s" % msg)
 
     def addBuddy(self, buddy):
+        if isinstance(buddy, str):
+            buddy = Buddy(buddy, self)
         if self.getBuddyFromAddress(buddy.address) == None:
             self.list.append(buddy)
             buddy.setTemporary(False)
