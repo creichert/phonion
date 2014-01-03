@@ -4,6 +4,7 @@
 
 #include <boost/python.hpp>
 
+class BuddyListModel;
 class ChatModel;
 class QString;
 
@@ -11,10 +12,10 @@ class MessageApp : public QObject
 {
     Q_OBJECT
 public:
-    MessageApp();
+    MessageApp(QObject* parent = 0);
     ~MessageApp();
 
-    // BuddyListModel* buddyListModel();
+    BuddyListModel* buddyListModel();
     ChatModel* chatModel();
     Q_INVOKABLE void sendChatMessage(const QString& msg);
 
@@ -28,4 +29,5 @@ private:
     boost::python::object _buddyList;
 
     ChatModel* _chatModel;
+    BuddyListModel* _buddyListModel;
 };

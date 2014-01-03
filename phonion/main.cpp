@@ -5,6 +5,7 @@
 #include <QUrl>
 
 #include "applauncher.h"
+#include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "messageapp.h"
 
@@ -21,6 +22,7 @@ int main(int argc, char** argv) {
     v.rootContext()->setContextProperty("AppLauncher", &applauncher);
     v.rootContext()->setContextProperty("MessageApp", &msgApp);
     v.rootContext()->setContextProperty("messagemodel", msgApp.chatModel());
+    v.rootContext()->setContextProperty("buddylistmodel", msgApp.buddyListModel());
     v.setSource(QUrl("qrc:/qml/main.qml"));
     v.showFullScreen();
 

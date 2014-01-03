@@ -2,20 +2,22 @@
 #include <iostream>
 #include <boost/python.hpp>
 
-#include "chatmodel.h"
-#include "integrator.h"
-
 #include <QString>
 #include <QDebug>
 #include <QTimer>
 
+#include "buddylistmodel.h"
+#include "chatmodel.h"
+#include "integrator.h"
 #include "messageapp.h"
 
 using namespace std;
 namespace py = boost::python;
 
-MessageApp::MessageApp()
-  : _chatModel(new ChatModel())
+MessageApp::MessageApp(QObject* parent)
+  : QObject(parent)
+  , _chatModel(new ChatModel())
+  , _buddyListModel(0)
 {
     _chatModel->setCurrentBuddy("k4hzlexjprajz5ew");
     Py_Initialize();
@@ -31,7 +33,16 @@ MessageApp::MessageApp()
 
         //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
-        // new BuddyListModel
+        py::list buddies = py::extract<py::list>(_buddyList.attr("list"));
+        QStringList bs;
+        int len = py::len(buddies);
+        for (int i=0; i<len; ++i) {
+            const char* p = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
+            bs.append(QString(p));
+        }
+        qDebug() << "Buddy List: " << bs.join(", ");
+        _buddyListModel = new BuddyListModel;
+        _buddyListModel->setStringList(bs);
 
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
         connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
@@ -64,6 +75,11 @@ ChatModel* MessageApp::chatModel()
     return _chatModel;
 }
 
+BuddyListModel* MessageApp::buddyListModel()
+{
+    return _buddyListModel;
+}
+
 void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
     _chatModel->newMessage(buddy, msg);
@@ -74,9 +90,9 @@ void MessageApp::sendChatMessage(const QString& msg)
     if (msg.isEmpty())
         return;
 
-    _chatModel->newMessage("k4hzlexjprajz5ew", msg);
+    _chatModel->newMessage(_chatModel->currentBuddy(), msg);
     try {
-        py::object buddy = _buddyList.attr("getBuddyFromAddress")("k4hzlexjprajz5ew");
+        py::object buddy = _buddyList.attr("getBuddyFromAddress")(_chatModel->currentBuddy());
         buddy.attr("sendChatMessage")(msg.toStdString().c_str());
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
