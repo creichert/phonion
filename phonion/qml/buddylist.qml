@@ -24,14 +24,11 @@ Rectangle {
                   }
     }
 
-    Text {
+    Button {
         id: addbuddybutton
         text: "+"
         anchors.bottom: parent.bottom
-        MouseArea {
-            anchors.fill: parent
-            onClicked: { MessageApp.addBuddy(newbuddy.text) }
-        }
+        onClicked: { MessageApp.addBuddy(newbuddy.text) }
     }
 
     TextInput {

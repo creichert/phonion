@@ -1,22 +1,26 @@
 
 import QtQuick 2.0
 
-Rectangle {
-    width: 30; height: 20
+Rectangle  {
+    id: container
+
+    property string text: ""
+
     signal clicked
 
-    Text {
+    width: buttonLabel.width
+    height: buttonLabel.height
+
+    MouseArea  {
+        id: mouseArea
         anchors.fill: parent
-        text: "Send"
+        onClicked: container.clicked();
     }
 
-    MouseArea {
-        id: ma
-        anchors.fill: parent
-        onClicked: { clicked; console.log("clicked...") }
-    }
-
-    Component.onCompleted: {
-        ma.clicked.connect(clicked)
+    Text  {
+        id: buttonLabel
+        anchors.centerIn: container
+        color: activePalette.buttonText
+        text: container.text
     }
 }

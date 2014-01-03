@@ -9,6 +9,7 @@
         <file>qml/message.qml</file>
         <file>qml/settings.qml</file>
         <file>qml/Button.qml</file>
+        <file>qml/Keyboard.qml</file>
         <file>message.png</file>
         <file>phone.png</file>
     </qresource>

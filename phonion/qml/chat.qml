@@ -34,6 +34,8 @@ Rectangle  {
 
     Button {
         id: send
+        text: "send"
+
         anchors.right: parent.right
         anchors.top: messages.bottom
         anchors.bottom: parent.bottom
