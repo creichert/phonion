@@ -6,3 +6,9 @@ tor_data/
 *.swp
 *offline.txt
 *.pid
+Makefile
+moc_*
+qrc_*
+lib*.so*
+phonion/phonion
+*.o
