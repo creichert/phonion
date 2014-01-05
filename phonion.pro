@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
 SUBDIRS = phonion \
-          integrator
-
+          integrator \
+          mumble/main.pro
