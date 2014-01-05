@@ -16,13 +16,9 @@ Rectangle  {
         source: "qrc:/qml/home.qml"
     }
 
-    Text {
+    Button {
         id: homeButton
         text: "Home"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: loader.source = "qrc:/qml/home.qml"
-        }
+        onClicked: loader.source = "qrc:/qml/home.qml"
     }
 }
-

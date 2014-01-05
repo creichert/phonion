@@ -19,15 +19,20 @@ Rectangle  {
         anchors.right: parent.right
 
         model: messagemodel
-        delegate: Text { text: msg }
+        delegate: Text { text: msg
+                         width: parent.width
+                         wrapMode: Text.WordWrap
+                       }
+
+        onCountChanged: { console.log("count changed."); }
     }
 
     TextInput {
         id: input
         focus: true
         anchors.bottom: parent.bottom
-        anchors.right: send.right
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.right: send.left
+        anchors.left: parent.left
 
         Keys.onReturnPressed: { send.clicked() }
     }

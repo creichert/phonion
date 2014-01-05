@@ -16,7 +16,14 @@ int main(int argc, char** argv) {
 
     AppLauncher applauncher;
     MessageApp msgApp;
-   
+
+    // Proxy for WebView
+    //QNetworkProxy proxy;
+    //proxy.setType(QNetworkProxy::HttpProxy);
+    //proxy.setHostName("127.0.0.1");
+    //proxy.setPort(9051);
+    //QNetworkProxy::setApplicationProxy(proxy);
+
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
     v.rootContext()->setContextProperty("AppLauncher", &applauncher);
