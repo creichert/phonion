@@ -1,0 +1,3 @@
+[submodule "mumble"]
+	path = mumble
+	url = git@github.com:mumble-voip/mumble.git
