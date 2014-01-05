@@ -94,8 +94,7 @@ DEAD_CONNECTION_TIMEOUT = 240
 KEEPALIVE_INTERVAL = 120
 MAX_UNANSWERED_PINGS = 4
 
-#SCRIPT_DIR = os.path.abspath(os.path.dirname(toUnicode(sys.argv[0])))
-SCRIPT_DIR = "/media/luke/dev/phonion/phonion/torchat/src/"
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 ICON_DIR = os.path.join(SCRIPT_DIR, "icons")
 log_writer = None
 
