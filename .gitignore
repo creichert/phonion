@@ -12,3 +12,4 @@ qrc_*
 lib*.so*
 phonion/phonion
 *.o
+hidden_service
