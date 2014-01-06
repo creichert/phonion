@@ -1,3 +1,5 @@
+#ifndef MESSAGEAPP_H
+#define MESSAGEAPP_H
 
 #include <QObject>
 #include <QThread>
@@ -33,3 +35,5 @@ private:
     ChatModel* _chatModel;
     BuddyListModel* _buddyListModel;
 };
+
+#endif // MESSAGEAPP_H

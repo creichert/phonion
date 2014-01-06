@@ -1,3 +1,5 @@
+#ifndef BUDDYLISTMODEL_H
+#define BUDDYLISTMODEL_H
 
 #include <QStringListModel>
 
@@ -13,3 +15,5 @@ public:
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual QHash<int, QByteArray> roleNames() const;
 };
+
+#endif // BUDDYLISTMODEL_H

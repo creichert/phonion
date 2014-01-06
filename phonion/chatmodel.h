@@ -1,3 +1,5 @@
+#ifndef CHATMODEL_H
+#define CHATMODEL_H
 
 #include <QAbstractListModel>
 #include <QHash>
@@ -28,3 +30,5 @@ private:
     QHash<QString, QStringList> _chats;
     QString _currentBuddy;
 };
+
+#endif // CHATMODEL_H

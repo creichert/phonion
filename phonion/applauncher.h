@@ -1,3 +1,5 @@
+#ifndef APPLAUNCHER_H
+#define APPLAUNCHER_H
 
 #include <QDebug>
 #include <QObject>
@@ -18,3 +20,4 @@ private:
     QString _addr;
 };
 
+#endif // APPLAUNCHER_H
