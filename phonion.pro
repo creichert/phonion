@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
-SUBDIRS = phonion \
+SUBDIRS = mumble/src/mumble \
           integrator \
-          mumble/main.pro
+          phonion
+
+CONFIG += ordered
