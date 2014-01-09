@@ -12,7 +12,7 @@ void ChatModel::newMessage(const QString& buddy, const QString& msg)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
 
-    qDebug() << " ON CHAT MESSAGE :" << buddy << ": " << msg;
+    qDebug() << "chat message:" << buddy << ": " << msg;
     if (!_chats.keys().contains(buddy))
         _chats[buddy] = QStringList();
     _chats[buddy].append(msg);
