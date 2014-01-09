@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = phonion
 INSTALL += phonion
 
-QT += core gui qml quick
+QT += core gui qml quick widgets
 
 INCLUDEPATH += .
 INCLUDEPATH += ../integrator
