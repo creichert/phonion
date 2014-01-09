@@ -1,23 +1,45 @@
-
 import QtQuick 2.0
 
-Grid {
+Rectangle {
     id: keyboard
 
-    property string keys: "0123456789abcdefghijklmnopqrstuvwsyz"
+    height: 175
+
+    property string numkeys: "0123456789"
+    property string alphakeys: " qwertyuiopasdfghjklzxcvbnm"
 
     signal hideKeyboard()
     signal letterClicked(string letter)
 
-    rows: 5
-    columns: 8
-    spacing: 1
-    Repeater {
-        model: keys.length
-        Button {
-            width: 25; height: 55
-            text: keys.charAt( index )
-            onClicked: { letterClicked(text) }
+    Grid {
+        id: numgrid
+
+        columns: 10
+        spacing: 1
+        Repeater {
+            model: numkeys.length
+            Button {
+                width: 15; height: 45
+                text: numkeys.charAt( index )
+                onClicked: { letterClicked(text) }
+            }
+        }
+    }
+
+    Grid {
+        id: alphagrid
+
+        anchors.top: numgrid.bottom
+
+        columns: 10
+        spacing: 1
+        Repeater {
+            model: alphakeys.length
+            Button {
+                width: 15; height: 45
+                text: alphakeys.charAt( index )
+                onClicked: { letterClicked(text) }
+            }
         }
     }
 }
