@@ -1,5 +1,5 @@
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQuickView>
 #include <QQmlContext>
 #include <QUrl>
@@ -8,14 +8,20 @@
 #include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "messageapp.h"
+#include "voipclient.h"
 
+#include "SetupMumble.h"
 
 int main(int argc, char** argv) {
 
-    QGuiApplication a(argc, argv);
+    QAppMumble a(argc, argv);
+
+    setupMumble(a, argc, argv);
+    qDebug() << "Mumble initialization complete.";
 
     AppLauncher applauncher;
     MessageApp msgApp;
+    VoipClient voip;
 
     // Proxy for WebView
     //QNetworkProxy proxy;
