@@ -6,6 +6,8 @@ Rectangle {
     TextInput {
         id: toonion
         anchors.bottom: callbutton.top
+        anchors.right: parent.right
+        font.pointSize: 10
     }
 
     Button {
@@ -15,7 +17,9 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: keyboard.top
 
-        onClicked: console.log("Call: " + toonion.text)
+        onClicked: { console.log("Call: " + toonion.text)
+                     voipclient.call(toonion.text)
+                   }
     }
 
     Button {
@@ -27,6 +31,7 @@ Rectangle {
 
         onClicked: { console.log("Cancel")
                      toonion.text = ""
+                     voipclient.end()
                    }
     }
 
