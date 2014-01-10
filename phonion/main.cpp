@@ -14,14 +14,17 @@
 
 int main(int argc, char** argv) {
 
+#ifdef VOIP
     QAppMumble a(argc, argv);
-
     setupMumble(a, argc, argv);
     qDebug() << "Mumble initialization complete.";
+    VoipClient voip;
+#else
+    QGuiApplication a(argc, argv);
+#endif
 
     AppLauncher applauncher;
     MessageApp msgApp;
-    VoipClient voip;
 
     // Proxy for WebView
     //QNetworkProxy proxy;
@@ -36,6 +39,9 @@ int main(int argc, char** argv) {
     v.rootContext()->setContextProperty("MessageApp", &msgApp);
     v.rootContext()->setContextProperty("messagemodel", msgApp.chatModel());
     v.rootContext()->setContextProperty("buddylistmodel", msgApp.buddyListModel());
+#ifdef VOIP
+    v.rootContext()->setContextProperty("voipclient", &voip);
+#endif
     v.setSource(QUrl("qrc:/qml/main.qml"));
     v.showFullScreen();
 
