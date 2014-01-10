@@ -1,0 +1,8 @@
+
+This is the Phonion prototype repository. The intention is to prototype an
+a secure voip and messaging device.
+
+Security Concerns:
+==================
+    * Mumble using OpenSSL v1.0. This should be restricted to at least v2.0 if not v3.0.
+    * Buffer attacks in messaging. Set hard limit on characters.
