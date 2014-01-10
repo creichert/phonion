@@ -35,7 +35,11 @@ VoipClient::VoipClient(QObject* parent)
   : QObject(parent)
   , _serverHandler()
 {
+}
 
+void VoipClient::call(const QString& onion)
+{
+    qDebug() << "Placing call to onion: " << onion;
     recreateServerHandler();
     _serverHandler = g.sh.get();
     connect(_serverHandler, SIGNAL(connected()), SLOT(serverConnected()));
@@ -49,6 +53,12 @@ VoipClient::VoipClient(QObject* parent)
 
     _serverHandler->setConnectionInfo(host, port, user, pass);
     _serverHandler->start();
+
+}
+
+void VoipClient::end()
+{
+    _serverHandler->disconnect();
 }
 
 void VoipClient::serverConnected()
