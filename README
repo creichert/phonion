@@ -1,6 +1,40 @@
+Phonion: a secure voip and messaging device
+===========================================
 
-This is the Phonion prototype repository. The intention is to prototype an
-a secure voip and messaging device.
+Dependendencies:
+================
+    Install on Raspberry Pi::
+    * # Install Qt deps
+    * sudo apt-get install libdbus1-dev
+    *./configure -release -opengl es2 -dbus -lrt -lpthread
+                 -optimized-qmake -no-pch
+                 -make libs -make tools -reduce-exports -sysroot /mnt/rasp-pi-rootfs
+                 -device linux-rasp-pi-g++
+                 -device-option CROSS_COMPILE=/home/christopher/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+                 -prefix /usr/local/qt5pi/ -opensource -confirm-license -qt-xcb
+
+    * # Install Tortalk deps
+    * sudo apt-get install libboost-python
+
+    * # Install Mumble deps
+    * sudo apt-get install build-essential pkg-config qt4-dev-tools libqt4-dev libspeex1 \
+                libspeex-dev libboost-dev libasound2-dev libssl-dev g++ \
+                libspeechd-dev libzeroc-ice-dev ice-slice libpulse-dev slice2cpp \
+                libcap-dev libspeexdsp-dev libprotobuf-dev protobuf-compiler \
+                libogg-dev libavahi-compat-libdnssd-dev libsndfile1-dev \
+                libg15daemon-client-dev libxi-dev libopus-dev
+
+Building:
+=========
+
+Cross-Compiling:
+================
+    * Use http://www.ics.com/blog/building-qt-5-raspberry-pi#.UtFeKZCldhE to setup
+      a toolchain and cross compile Qt5.
+    * Setup a base raspbian image with all dependencies as a loopback device.
+    * /usr/local/qt5pi/bin/qmake && make
+    * # Rsync to the pi.
+    * rsync -av -e ssh phonion/ pi@<PI_IP_ADDR>:phonion
 
 Security Concerns:
 ==================
