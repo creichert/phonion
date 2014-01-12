@@ -1,8 +1,10 @@
+include(../phonion.pri)
+
 TEMPLATE = app
 TARGET = phonion
 INSTALL += phonion
 
-QT += core gui qml quick widgets webkit
+QT += core gui qml quick widgets
 
 DEFINES += "VOIP"
 
@@ -10,14 +12,17 @@ INCLUDEPATH += .
 INCLUDEPATH += ../integrator
 LIBS += -L../integrator -lintegrator
 
-# Boost Python
-INCLUDEPATH += /usr/include/boost /usr/include/python2.7
-LIBS += -L/usr/local/lib -L/usr/lib/python2.7 -lpython2.7 -lboost_python
-
 INCLUDEPATH += $$QT_INSTALL_IMPORTS
 INCLUDEPATH += ../mumble/src
 INCLUDEPATH += ../mumble/src/mumble
-LIBS += -L../mumble/debug -lmumble
+
+debug {
+    LIBS += -L../mumble/debug -lmumble
+}
+
+release {
+    LIBS += -L../mumble/release -lmumble
+}
 
 HEADERS += applauncher.h \
            messageapp.h \
