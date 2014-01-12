@@ -16,6 +16,10 @@ int main(int argc, char** argv) {
 
 #ifdef VOIP
     QAppMumble a(argc, argv);
+	a.setApplicationName(QLatin1String("Phonion"));
+	a.setOrganizationName(QLatin1String("Phonion"));
+	a.setOrganizationDomain(QLatin1String("phonion.phonion.co"));
+
     setupMumble(a, argc, argv);
     qDebug() << "Mumble initialization complete.";
     VoipClient voip;
@@ -43,7 +47,8 @@ int main(int argc, char** argv) {
     v.rootContext()->setContextProperty("voipclient", &voip);
 #endif
     v.setSource(QUrl("qrc:/qml/main.qml"));
-    v.showFullScreen();
+    //v.showFullScreen();
+    v.show();
 
     return a.exec();
 }
