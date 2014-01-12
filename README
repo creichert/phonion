@@ -6,7 +6,7 @@ Dependendencies:
     Install on Raspberry Pi::
     * # Install Qt deps
     * sudo apt-get install libdbus1-dev
-    *./configure -release -opengl es2 -dbus -lrt -lpthread
+    *./configure -releaseordebug -opengl es2 -dbus -lrt -lpthread
                  -optimized-qmake -no-pch
                  -make libs -make tools -reduce-exports -sysroot /mnt/rasp-pi-rootfs
                  -device linux-rasp-pi-g++
