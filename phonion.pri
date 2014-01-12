@@ -1,4 +1,6 @@
-#SYSROOT = /mnt/rasp-pi-rootfs
+CONFIG(rpi) {
+    SYSROOT = /mnt/rasp-pi-rootfs
+}
 
 DEFINES += BOOST_PYTHON_DYNAMIC_LIB
 INCLUDEPATH += $$SYSROOT/usr/include $$SYSROOT/usr/include/boost $$SYSROOT/usr/include/python2.7
