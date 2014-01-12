@@ -1,12 +1,15 @@
 
 import QtQuick 2.0
 
+
 Rectangle {
 
     TextInput {
         id: toonion
+        maximumLength: 16
         anchors.bottom: callbutton.top
-        anchors.right: parent.right
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: TextInput.AlignHCenter
         font.pointSize: 10
     }
 
