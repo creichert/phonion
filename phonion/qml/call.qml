@@ -4,11 +4,27 @@ import QtQuick 2.0
 
 Rectangle {
 
+    property int seconds: 0
+
     Button {
         text: "ro2jdbdfhj57b5cj.onion"
         onClicked: { console.log("Calling friend.")
                      toonion.text = text
                    }
+    }
+
+    Timer {
+        id: timer
+        interval: 1000
+        repeat: true
+        onTriggered: seconds++
+    }
+
+    Text {
+        id: elapsedtime
+        text: seconds
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     TextInput {
@@ -29,6 +45,7 @@ Rectangle {
 
         onClicked: { console.log("Call: " + toonion.text)
                      voipclient.call(toonion.text)
+                     seconds = 0; timer.start()
                    }
     }
 
@@ -42,6 +59,7 @@ Rectangle {
         onClicked: { console.log("Cancel")
                      toonion.text = ""
                      voipclient.end()
+                     timer.stop()
                    }
     }
 
