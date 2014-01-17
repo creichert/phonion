@@ -4,6 +4,13 @@ import QtQuick 2.0
 
 Rectangle {
 
+    Button {
+        text: "ro2jdbdfhj57b5cj.onion"
+        onClicked: { console.log("Calling friend.")
+                     toonion.text = text
+                   }
+    }
+
     TextInput {
         id: toonion
         maximumLength: 16

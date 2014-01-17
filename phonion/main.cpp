@@ -1,5 +1,8 @@
 
 #include <QApplication>
+#include <QFileInfo>
+#include <QProcess>
+#include <QStringList>
 #include <QQuickView>
 #include <QQmlContext>
 #include <QUrl>
@@ -11,6 +14,11 @@
 #include "voipclient.h"
 
 #include "SetupMumble.h"
+
+void initializeMumbleServer() {
+    QProcess process;
+    process.start("murmurd", QStringList() << "-ini" << QFileInfo("mumble-server.ini").absoluteFilePath());
+}
 
 int main(int argc, char** argv) {
 
@@ -27,6 +35,7 @@ int main(int argc, char** argv) {
     QGuiApplication a(argc, argv);
 #endif
 
+    //initializeMumbleServer();
     AppLauncher applauncher;
     MessageApp msgApp;
 
@@ -47,7 +56,6 @@ int main(int argc, char** argv) {
     v.rootContext()->setContextProperty("voipclient", &voip);
 #endif
     v.setSource(QUrl("qrc:/qml/main.qml"));
-    //v.showFullScreen();
     v.show();
 
     return a.exec();

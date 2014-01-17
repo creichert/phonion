@@ -21,6 +21,7 @@ private slots:
 
 private:
     ServerHandler* _serverHandler;
+    QString _myonion;
 };
 
 #endif // VOIPCLIENT_H

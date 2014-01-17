@@ -13,7 +13,6 @@
 static void recreateServerHandler() {
     ServerHandlerPtr sh = g.sh;
     if (sh && sh->isRunning()) {
-        //g.mw->on_qaServerDisconnect_triggered();
         sh->disconnect();
         sh->wait();
         QCoreApplication::instance()->processEvents();
@@ -27,30 +26,36 @@ static void recreateServerHandler() {
     sh = ServerHandlerPtr(new ServerHandler());
     sh->moveToThread(sh.get());
     g.sh = sh;
-    //g.mw->connect(sh.get(), SIGNAL(connected()), g.mw, SLOT(serverConnected()));
-    //g.mw->connect(sh.get(), SIGNAL(disconnected(QAbstractSocket::SocketError, QString)), g.mw, SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
 }
 
 VoipClient::VoipClient(QObject* parent)
   : QObject(parent)
   , _serverHandler()
 {
+    QFile f("./phonion/torchat/src/Tor/hidden_service/hostname");
+    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Hidden service not found");
+        return;
+    }
+
+    _myonion = f.read(16);
+    qDebug() << "Registering as user: " << _myonion;
 }
 
 void VoipClient::call(const QString& onion)
 {
-    qDebug() << "Placing call to onion: " << onion;
     recreateServerHandler();
     _serverHandler = g.sh.get();
     connect(_serverHandler, SIGNAL(connected()), SLOT(serverConnected()));
     connect(_serverHandler, SIGNAL(disconnected(QAbstractSocket::SocketError, QString)),
             SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
 
-    const QString host = "ro2jdbdfhj57b5cj.onion";
+    const QString host = onion + ".onion";
     const short unsigned int port = 64738;
-    const QString user = "phonion___"; // AppLauncher.onion (nick)
+    const QString user =  _myonion; // AppLauncher.onion (nick)
     const QString pass = "phonion";
 
+    qDebug() << "Placing call to " << host;
     _serverHandler->setConnectionInfo(host, port, user, pass);
     _serverHandler->start();
 
