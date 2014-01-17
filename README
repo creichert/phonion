@@ -3,16 +3,15 @@ Phonion: a secure voip and messaging device
 
 Dependendencies:
 ================
-    Install on Raspberry Pi::
-    * # Install Qt deps
-    * sudo apt-get install libdbus1-dev
-    *./configure -releaseordebug -opengl es2 -dbus -lrt -lpthread
-                 -optimized-qmake -no-pch
-                 -make libs -make tools -reduce-exports -sysroot /mnt/rasp-pi-rootfs
-                 -device linux-rasp-pi-g++
-                 -device-option CROSS_COMPILE=/home/christopher/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
-                 -prefix /usr/local/qt5pi/ -opensource -confirm-license -qt-xcb
-
+    * # Qt deps [1][2]
+    * sudo apt-get install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev \
+                            libfontconfig1-dev libdbus-1-dev \
+                            libfreetype6-dev libudev-dev \
+                            libasound2-dev libavcodec-dev libavformat-dev \
+                            libswscale-dev libgstreamer0.10-dev \
+                            libgstreamer-plugins-base0.10-dev gstreamer-tools \
+                            gstreamer0.10-plugins-good gstreamer0.10-plugins-bad \
+                            libx11-dev libxcb-icccm4 libxfixes-dev
     * # Install Tortalk deps
     * sudo apt-get install libboost-python
 
@@ -24,19 +23,39 @@ Dependendencies:
                 libogg-dev libavahi-compat-libdnssd-dev libsndfile1-dev \
                 libg15daemon-client-dev libxi-dev libopus-dev
 
-Building:
-=========
+Building for Development Machine:
+=================================
+    * # Build Qt5
+        ** http://qt-project.org/wiki/Building_Qt_5_from_Git
+    * git clone git://gitorious.org/qt/qt5.git qt5
+    * export QT5PATH=$PWD/qt5
+    * cd $QT5PATH && perl ./init-repository
+    * ./configure -developer-build -opensource -confirm-license
+    * make -j5
+    * cd /path/to/phonion
+    * $QT5PATH/qtbase/bin/qmake
+    * make -j5
+    * source env.sh
+    * ./phonion/phonion
 
-Cross-Compiling:
-================
-    * Use http://www.ics.com/blog/building-qt-5-raspberry-pi#.UtFeKZCldhE to setup
-      a toolchain and cross compile Qt5.
-    * Setup a base raspbian image with all dependencies as a loopback device.
-    * /usr/local/qt5pi/bin/qmake && make
-    * # Rsync to the pi.
+Building for Raspberry Pi:
+==========================
+    * # If RPI
+        ** http://www.ics.com/blog/building-qt-5-raspberry-pi#.UtV6npCldhE
+    * ./configure -releaseordebug -opengl es2 # -dbus -lrt -lpthread -no-neon -qt-xcb
+                 -optimized-qmake -no-pch
+                 -make libs -make tools -reduce-exports -sysroot /mnt/rasp-pi-rootfs
+                 -device linux-rasp-pi-g++
+                 -device-option CROSS_COMPILE=~/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
+                 -prefix /usr/local/qt5pi/ -opensource -confirm-license
+    * /usr/local/qt5pi/bin/qmake CONFIG+=rpi
+    * make -j4
     * rsync -av -e ssh phonion/ pi@<PI_IP_ADDR>:phonion
 
 Security Concerns:
 ==================
     * Mumble using OpenSSL v1.0. This should be restricted to at least v2.0 if not v3.0.
     * Buffer attacks in messaging. Set hard limit on characters.
+
+Troubleshooting:
+================
