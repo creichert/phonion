@@ -46,9 +46,9 @@ void VoipClient::call(const QString& onion)
     connect(_serverHandler, SIGNAL(disconnected(QAbstractSocket::SocketError, QString)),
             SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
 
-    const QString host = "192.168.1.106";
+    const QString host = "ro2jdbdfhj57b5cj.onion";
     const short unsigned int port = 64738;
-    const QString user = "phonion"; // AppLauncher.onion (nick)
+    const QString user = "phonion___"; // AppLauncher.onion (nick)
     const QString pass = "phonion";
 
     _serverHandler->setConnectionInfo(host, port, user, pass);
