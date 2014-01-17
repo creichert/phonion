@@ -28,18 +28,12 @@ static void recreateServerHandler() {
     g.sh = sh;
 }
 
-VoipClient::VoipClient(QObject* parent)
+VoipClient::VoipClient(const QString& onion, QObject* parent)
   : QObject(parent)
   , _serverHandler()
+  , _myonion(onion)
 {
-    QFile f("./phonion/torchat/src/Tor/hidden_service/hostname");
-    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning("Hidden service not found");
-        return;
-    }
-
-    _myonion = f.read(16);
-    qDebug() << "Registering as user: " << _myonion;
+    qDebug() << Q_FUNC_INFO << "Registering VOIP Client As User: " << _myonion;
 }
 
 void VoipClient::call(const QString& onion)

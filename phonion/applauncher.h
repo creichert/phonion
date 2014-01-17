@@ -11,9 +11,9 @@ class AppLauncher : public QObject
 {
     Q_OBJECT
 public:
-    AppLauncher();
+    explicit AppLauncher(const QString& onion, QObject* parent=0);
 
-    Q_INVOKABLE QString onion();
+    Q_INVOKABLE QString prettyOnion();
     Q_INVOKABLE QString launch(int index);
 
 private:

@@ -14,7 +14,7 @@ class MessageApp : public QObject
 {
     Q_OBJECT
 public:
-    MessageApp(QObject* parent = 0);
+    explicit MessageApp(QObject* parent = 0);
     ~MessageApp();
 
     BuddyListModel* buddyListModel();

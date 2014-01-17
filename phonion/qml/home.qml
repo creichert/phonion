@@ -67,7 +67,7 @@ Rectangle  {
     Text {
         id: onion
         font.pointSize: 12
-        text: AppLauncher.onion()
+        text: AppLauncher.prettyOnion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
     }

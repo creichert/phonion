@@ -10,7 +10,7 @@ class VoipClient : public QObject
 {
     Q_OBJECT
 public:
-    VoipClient(QObject* parent = 0);
+    explicit VoipClient(const QString& onion, QObject* parent = 0);
 
     Q_INVOKABLE void call(const QString& onion);
     Q_INVOKABLE void end();

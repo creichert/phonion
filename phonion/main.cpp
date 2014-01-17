@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QFileInfo>
 #include <QProcess>
+#include <QString>
 #include <QStringList>
 #include <QQuickView>
 #include <QQmlContext>
@@ -16,8 +17,25 @@
 #include "SetupMumble.h"
 
 void initializeMumbleServer() {
-    QProcess process;
-    process.start("murmurd", QStringList() << "-ini" << QFileInfo("mumble-server.ini").absoluteFilePath());
+    //QProcess* process = new QProcess;
+    //process->start("murmurd", QStringList() << "-ini" << QFileInfo("mumble-server.ini").absoluteFilePath());
+    //qDebug() << "Murmurd Exit Code: " << process->exitCode();
+}
+
+const QString hiddenServiceAddress() {
+
+    QString onion;
+
+    // Use QFileInfo and also check against security key.
+    QFile f("./phonion/torchat/src/Tor/hidden_service/hostname");
+    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Hidden service not found");
+        return onion;
+    }
+
+    onion = f.read(16);
+    qDebug() << "Identified hidden service: " << onion;
+    return onion;
 }
 
 int main(int argc, char** argv) {
@@ -27,16 +45,16 @@ int main(int argc, char** argv) {
 	a.setApplicationName(QLatin1String("Phonion"));
 	a.setOrganizationName(QLatin1String("Phonion"));
 	a.setOrganizationDomain(QLatin1String("phonion.phonion.co"));
-
     setupMumble(a, argc, argv);
     qDebug() << "Mumble initialization complete.";
-    VoipClient voip;
 #else
     QGuiApplication a(argc, argv);
 #endif
 
-    //initializeMumbleServer();
-    AppLauncher applauncher;
+
+    const QString onion = hiddenServiceAddress();
+    initializeMumbleServer();
+    AppLauncher applauncher(onion);
     MessageApp msgApp;
 
     // Proxy for WebView
@@ -53,6 +71,7 @@ int main(int argc, char** argv) {
     v.rootContext()->setContextProperty("messagemodel", msgApp.chatModel());
     v.rootContext()->setContextProperty("buddylistmodel", msgApp.buddyListModel());
 #ifdef VOIP
+    VoipClient voip(onion);
     v.rootContext()->setContextProperty("voipclient", &voip);
 #endif
     v.setSource(QUrl("qrc:/qml/main.qml"));
@@ -60,4 +79,3 @@ int main(int argc, char** argv) {
 
     return a.exec();
 }
-

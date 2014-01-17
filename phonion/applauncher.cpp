@@ -8,20 +8,13 @@
 
 #include "applauncher.h"
 
-AppLauncher::AppLauncher()
+AppLauncher::AppLauncher(const QString& onion, QObject* parent)
+  : QObject(parent)
+  , _addr(onion)
 {
-    // Use QFileInfo and also check against security key.
-    QFile f("./phonion/torchat/src/Tor/hidden_service/hostname");
-    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning("Hidden service not found");
-        return;
-    }
-
-    _addr = f.read(16);
-    qDebug() << "Identified onion: " << _addr;
 }
 
-QString AppLauncher::onion()
+QString AppLauncher::prettyOnion()
 {
     return QString("%1 - %2 - %3 - %4").arg(_addr.mid(0,4))
                                  .arg(_addr.mid(4,4))
