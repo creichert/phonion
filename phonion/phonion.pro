@@ -6,13 +6,14 @@ INSTALL += phonion
 
 QT += core gui qml quick widgets
 
-DEFINES += "VOIP"
+CONFIG(voip) {
+    DEFINES += "VOIP"
+}
 
 INCLUDEPATH += .
 INCLUDEPATH += ../integrator
 LIBS += -L../integrator -lintegrator
 
-INCLUDEPATH += $$QT_INSTALL_IMPORTS
 INCLUDEPATH += ../mumble/src
 INCLUDEPATH += ../mumble/src/mumble
 
