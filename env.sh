@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PYTHONPATH=$PWD/integrator:$PWD/phonion/torchat/src
+export PYTHONPATH=$PWD/integrator:$PWD/phonion/torchat/torchat/src
 
 # Use this until a build layout has been finalised. Use qmake install targets.
 export LD_LIBRARY_PATH=$PWD/integrator:$PWD/mumble/debug
