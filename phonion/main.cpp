@@ -1,6 +1,7 @@
 
 #include <QApplication>
 #include <QFileInfo>
+#include <QNetworkProxy>
 #include <QProcess>
 #include <QString>
 #include <QStringList>
@@ -57,12 +58,12 @@ int main(int argc, char** argv) {
     AppLauncher applauncher(onion);
     MessageApp msgApp;
 
-    // Proxy for WebView
-    //QNetworkProxy proxy;
-    //proxy.setType(QNetworkProxy::HttpProxy);
-    //proxy.setHostName("127.0.0.1");
-    //proxy.setPort(9051);
-    //QNetworkProxy::setApplicationProxy(proxy);
+    // Proxy through TorChat for Mumble.
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::Socks5Proxy);
+    proxy.setHostName("127.0.0.1");
+    proxy.setPort(11109);
+    QNetworkProxy::setApplicationProxy(proxy);
 
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);

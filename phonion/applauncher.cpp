@@ -22,10 +22,10 @@ QString AppLauncher::prettyOnion()
                                  .arg(_addr.mid(12,4));
 }
 
-enum LaunchOptions { Message = 0,
-                     Call,
-                     Browse,
-                     Settings };
+enum LaunchOption { Message = 0,
+                    Call,
+                    Browse,
+                    Settings };
 
 QString AppLauncher::launch(int index)
 {
