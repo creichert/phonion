@@ -31,7 +31,7 @@ MessageApp::MessageApp(QObject* parent)
         py::exec("i = libintegrator.Integrator()", mn);
 
         //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
-        //_buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
+        _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
         py::list buddies = py::extract<py::list>(_buddyList.attr("list"));
         QStringList bs;
         int len = py::len(buddies);
