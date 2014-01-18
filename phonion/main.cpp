@@ -28,7 +28,7 @@ const QString hiddenServiceAddress() {
     QString onion;
 
     // Use QFileInfo and also check against security key.
-    QFile f("./phonion/torchat/src/Tor/hidden_service/hostname");
+    QFile f("./phonion/torchat/torchat/src/Tor/hidden_service/hostname");
     if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning("Hidden service not found");
         return onion;
@@ -39,19 +39,21 @@ const QString hiddenServiceAddress() {
     return onion;
 }
 
+class QAppPhonion: public QApplication {
+public:
+    QAppPhonion(int &argc, char **argv) : QApplication(argc, argv) {}
+};
+
 int main(int argc, char** argv) {
 
-#ifdef VOIP
-    QAppMumble a(argc, argv);
+    QAppPhonion a(argc, argv);
 	a.setApplicationName(QLatin1String("Phonion"));
 	a.setOrganizationName(QLatin1String("Phonion"));
 	a.setOrganizationDomain(QLatin1String("phonion.phonion.co"));
+#ifdef VOIP
     setupMumble(a, argc, argv);
     qDebug() << "Mumble initialization complete.";
-#else
-    QGuiApplication a(argc, argv);
 #endif
-
 
     const QString onion = hiddenServiceAddress();
     initializeMumbleServer();
