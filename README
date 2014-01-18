@@ -33,7 +33,7 @@ Building for Development Machine:
     * ./configure -developer-build -opensource -confirm-license
     * make -j5
     * cd /path/to/phonion
-    * $QT5PATH/qtbase/bin/qmake
+    * $QT5PATH/qtbase/bin/qmake CONFIG+=phonion CONFIG+=voip -recursive
     * make -j5
     * source env.sh
     * ./phonion/phonion
@@ -48,7 +48,7 @@ Building for Raspberry Pi:
                  -device linux-rasp-pi-g++
                  -device-option CROSS_COMPILE=~/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-
                  -prefix /usr/local/qt5pi/ -opensource -confirm-license
-    * /usr/local/qt5pi/bin/qmake CONFIG+=rpi
+    * /usr/local/qt5pi/bin/qmake CONFIG+=rpi CONFIG+=phonion CONFIG+=voip -recursive
     * make -j4
     * rsync -av -e ssh phonion/ pi@<PI_IP_ADDR>:phonion
 
