@@ -1,6 +1,7 @@
 
 #include <QFileInfo>
 #include <QProcess>
+#include <QNetworkProxy>
 #include <QString>
 #include <QStringList>
 #include <QQuickView>
@@ -15,6 +16,9 @@
 #include "qappphonion.h"
 #include "voipclient.h"
 
+#define PROXY_HOST "127.0.0.1"
+#define PROXY_PORT 11109
+
 void initializeMumbleServer() {
     //QProcess* process = new QProcess;
     //process->start("murmurd", QStringList() << "-ini" << QFileInfo("mumble-server.ini").absoluteFilePath());
@@ -27,7 +31,7 @@ const QString hiddenServiceAddress() {
 
     // Use QFileInfo and also check against security key.
     QFile f("./phonion/torchat/torchat/src/Tor/hidden_service/hostname");
-    if(!f.open(QIODevice::ReadOnly)) {
+    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning("Hidden service not found");
         return onion;
     }
@@ -41,16 +45,22 @@ int main(int argc, char** argv) {
 
     QAppPhonion a(argc, argv);
 
+    const QString onion = hiddenServiceAddress();
+    a.setOnion(onion);
+
 #ifdef VOIP
     setupMumble(a, argc, argv);
     initializeMumbleServer();
     qDebug() << "Mumble initialization complete.";
 #endif
 
-    const QString onion = hiddenServiceAddress();
-    a.setOnion(onion);
-
     MessageApp msgApp;
+
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::Socks5Proxy);
+    proxy.setHostName(PROXY_HOST);
+    proxy.setPort(PROXY_PORT);
+    QNetworkProxy::setApplicationProxy(proxy);
 
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
