@@ -66,8 +66,6 @@ void MessageApp::updateInterpreter()
 MessageApp::~MessageApp()
 {
     _buddyList.attr("stopClient");
-    // Not needed using boost::python apparently.
-    //Py_Finalize();
 }
 
 ChatModel* MessageApp::chatModel()

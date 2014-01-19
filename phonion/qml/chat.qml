@@ -8,10 +8,13 @@ Rectangle  {
         id: to
         text: messagemodel.currentBuddy()
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
     }
 
     ListView {
         id: messages
+
+        clip: true
 
         anchors.top: to.bottom
         anchors.bottom: input.top
@@ -29,7 +32,7 @@ Rectangle  {
                          wrapMode: Text.WordWrap
                        }
 
-        onCountChanged: { console.log("count changed."); }
+        onCountChanged: { console.log(count); positionViewAtIndex(count-1, ListView.Contain) }
     }
 
     TextInput {
@@ -47,8 +50,8 @@ Rectangle  {
         text: "send"
 
         anchors.right: parent.right
-        anchors.top: messages.bottom
-        anchors.bottom: parent.bottom
+        anchors.top: input.top
+        anchors.bottom: input.bottom
     }
 
     Component.onCompleted: {
