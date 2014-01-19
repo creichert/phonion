@@ -29,13 +29,15 @@ HEADERS += messageapp.h \
            buddylistmodel.h \
            chatmodel.h \
            voipclient.h \
-           qappphonion.h
+           qappphonion.h \
+           message.h
 
 SOURCES += main.cpp \
            messageapp.cpp \
            voipclient.cpp \
            buddylistmodel.cpp \
            chatmodel.cpp \
-           qappphonion.cpp
+           qappphonion.cpp \
+           message.cpp
 
 RESOURCES += main.qrc

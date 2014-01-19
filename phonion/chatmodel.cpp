@@ -7,15 +7,18 @@
 #include <QDebug>
 
 #include "chatmodel.h"
+#include "message.h"
 
-void ChatModel::newMessage(const QString& buddy, const QString& msg)
+void ChatModel::newMessage(Message* msg)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
 
-    qDebug() << "chat message:" << buddy << ": " << msg;
-    if (!_chats.keys().contains(buddy))
-        _chats[buddy] = QStringList();
-    _chats[buddy].append(msg);
+    qDebug() << "chat message:" << msg->buddy() << ": " << msg->text();
+
+    if (!_chats.keys().contains(msg->buddy()))
+        _chats[msg->buddy()] = QList<Message*>();
+
+    _chats[msg->buddy()].append(msg);
 
     endInsertRows();
 }
@@ -23,7 +26,7 @@ void ChatModel::newMessage(const QString& buddy, const QString& msg)
 void ChatModel::setCurrentBuddy(const QString& buddy)
 {
     if (!_chats.keys().contains(buddy))
-        _chats[buddy] = QStringList();
+        _chats[buddy] = QList<Message*>();
     _currentBuddy = buddy;
 }
 
@@ -35,7 +38,7 @@ QString ChatModel::currentBuddy()
 QVariant ChatModel::data(const QModelIndex& index, int role) const
 {
     if (role == MsgRole)
-        return QVariant(_chats[_currentBuddy].at(index.row()));
+        return QVariant::fromValue((_chats[_currentBuddy].at(index.row())));
 
     return QVariant();
 }
@@ -49,6 +52,7 @@ QHash<int, QByteArray> ChatModel::roleNames() const
 
 int ChatModel::rowCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
     if (_chats.empty())
         return 0;
     return _chats[_currentBuddy].size();

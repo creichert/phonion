@@ -19,7 +19,12 @@ Rectangle  {
         anchors.right: parent.right
 
         model: messagemodel
-        delegate: Text { text: msg
+        delegate: Text { text: msg.text()
+                         horizontalAlignment: { if (msg.fromme())
+                                                    Text.AlignRight
+                                                else
+                                                    Text.AlignLeft
+                                              }
                          width: parent.width
                          wrapMode: Text.WordWrap
                        }

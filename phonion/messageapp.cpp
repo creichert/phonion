@@ -9,6 +9,7 @@
 #include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "integrator.h"
+#include "message.h"
 #include "messageapp.h"
 
 using namespace std;
@@ -81,7 +82,7 @@ BuddyListModel* MessageApp::buddyListModel()
 
 void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
-    _chatModel->newMessage(buddy, msg);
+    _chatModel->newMessage(new Message(buddy, msg, false, _chatModel));
 }
 
 void MessageApp::addBuddy(const QString& buddy)
@@ -113,7 +114,7 @@ void MessageApp::sendChatMessage(const QString& msg)
     if (msg.isEmpty())
         return;
 
-    _chatModel->newMessage(_chatModel->currentBuddy(), msg);
+    _chatModel->newMessage(new Message(_chatModel->currentBuddy(), msg, true, _chatModel));
     try {
         const char* bdy = _chatModel->currentBuddy().toStdString().c_str();
         py::object buddy = _buddyList.attr("getBuddyFromAddress")(bdy);

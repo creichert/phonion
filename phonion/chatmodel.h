@@ -3,9 +3,10 @@
 
 #include <QAbstractListModel>
 #include <QHash>
-#include <QStringList>
+#include <QList>
 
 class QByteArray;
+class Message;
 
 class ChatModel : public QAbstractListModel
 {
@@ -13,10 +14,10 @@ class ChatModel : public QAbstractListModel
 public:
 
     enum ChatRoles {
-        MsgRole = Qt::UserRole + 1
+      MsgRole = Qt::UserRole + 1
     };
 
-    void newMessage(const QString& buddy, const QString& msg);
+    void newMessage(Message* msg);
 
     Q_INVOKABLE void setCurrentBuddy(const QString& buddy);
     Q_INVOKABLE QString currentBuddy();
@@ -27,7 +28,7 @@ public:
 
 private:
     // Don't hold all chats in memory all the time.
-    QHash<QString, QStringList> _chats;
+    QHash<QString, QList<Message*> > _chats;
     QString _currentBuddy;
 };
 
