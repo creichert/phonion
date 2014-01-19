@@ -25,17 +25,17 @@ release {
     LIBS += -L../mumble/release -lmumble
 }
 
-HEADERS += applauncher.h \
-           messageapp.h \
+HEADERS += messageapp.h \
            buddylistmodel.h \
            chatmodel.h \
-           voipclient.h
+           voipclient.h \
+           qappphonion.h
 
-SOURCES += applauncher.cpp \
-           main.cpp \
+SOURCES += main.cpp \
            messageapp.cpp \
            voipclient.cpp \
            buddylistmodel.cpp \
-           chatmodel.cpp
+           chatmodel.cpp \
+           qappphonion.cpp
 
 RESOURCES += main.qrc

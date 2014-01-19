@@ -1,33 +1,25 @@
 
 #include <QDebug>
-#include <QFile>
-#include <QIODevice>
-#include <QProcess>
 #include <QString>
-#include <QStringRef>
 
-#include "applauncher.h"
+#include "qappphonion.h"
 
-AppLauncher::AppLauncher(const QString& onion, QObject* parent)
-  : QObject(parent)
-  , _addr(onion)
+const QString QAppPhonion::prettyOnion()
 {
+    return QString("%1 - %2 - %3 - %4").arg(_onion.mid(0,4))
+                                       .arg(_onion.mid(4,4))
+                                       .arg(_onion.mid(8,4))
+                                       .arg(_onion.mid(12,4));
 }
 
-QString AppLauncher::prettyOnion()
-{
-    return QString("%1 - %2 - %3 - %4").arg(_addr.mid(0,4))
-                                 .arg(_addr.mid(4,4))
-                                 .arg(_addr.mid(8,4))
-                                 .arg(_addr.mid(12,4));
-}
-
+namespace {
 enum LaunchOption { Message = 0,
                     Call,
                     Browse,
                     Settings };
+}
 
-QString AppLauncher::launch(int index)
+const QString QAppPhonion::launch(int index)
 {
     switch (index) {
     case Message:
@@ -46,4 +38,3 @@ QString AppLauncher::launch(int index)
         return "qrc:/qml/home.qml";
     }
 }
-

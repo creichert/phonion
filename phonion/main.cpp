@@ -1,7 +1,5 @@
 
-#include <QApplication>
 #include <QFileInfo>
-#include <QNetworkProxy>
 #include <QProcess>
 #include <QString>
 #include <QStringList>
@@ -9,13 +7,13 @@
 #include <QQmlContext>
 #include <QUrl>
 
-#include "applauncher.h"
+#include "SetupMumble.h"
+
 #include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "messageapp.h"
+#include "qappphonion.h"
 #include "voipclient.h"
-
-#include "SetupMumble.h"
 
 void initializeMumbleServer() {
     //QProcess* process = new QProcess;
@@ -29,7 +27,7 @@ const QString hiddenServiceAddress() {
 
     // Use QFileInfo and also check against security key.
     QFile f("./phonion/torchat/torchat/src/Tor/hidden_service/hostname");
-    if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if(!f.open(QIODevice::ReadOnly)) {
         qWarning("Hidden service not found");
         return onion;
     }
@@ -39,37 +37,24 @@ const QString hiddenServiceAddress() {
     return onion;
 }
 
-class QAppPhonion: public QApplication {
-public:
-    QAppPhonion(int &argc, char **argv) : QApplication(argc, argv) {}
-};
-
 int main(int argc, char** argv) {
 
     QAppPhonion a(argc, argv);
-	a.setApplicationName(QLatin1String("Phonion"));
-	a.setOrganizationName(QLatin1String("Phonion"));
-	a.setOrganizationDomain(QLatin1String("phonion.phonion.co"));
+
 #ifdef VOIP
     setupMumble(a, argc, argv);
+    initializeMumbleServer();
     qDebug() << "Mumble initialization complete.";
 #endif
 
     const QString onion = hiddenServiceAddress();
-    initializeMumbleServer();
-    AppLauncher applauncher(onion);
-    MessageApp msgApp;
+    a.setOnion(onion);
 
-    // Proxy through TorChat for Mumble.
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::Socks5Proxy);
-    proxy.setHostName("127.0.0.1");
-    proxy.setPort(11109);
-    QNetworkProxy::setApplicationProxy(proxy);
+    MessageApp msgApp;
 
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
-    v.rootContext()->setContextProperty("AppLauncher", &applauncher);
+    v.rootContext()->setContextProperty("app", &a);
     v.rootContext()->setContextProperty("MessageApp", &msgApp);
     v.rootContext()->setContextProperty("messagemodel", msgApp.chatModel());
     v.rootContext()->setContextProperty("buddylistmodel", msgApp.buddyListModel());

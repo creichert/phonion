@@ -35,7 +35,7 @@ Rectangle  {
             MouseArea {
                 anchors.fill: parent
                 onClicked: { grid.currentIndex = index
-                             loader.source = AppLauncher.launch(index)
+                             loader.source = app.launch(index)
                            }
             }
         }
@@ -67,7 +67,7 @@ Rectangle  {
     Text {
         id: onion
         font.pointSize: 12
-        text: AppLauncher.prettyOnion()
+        text: app.prettyOnion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
     }
