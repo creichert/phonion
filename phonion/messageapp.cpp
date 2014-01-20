@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTimer>
 
+#include "buddy.h"
 #include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "integrator.h"
@@ -17,8 +18,7 @@ namespace py = boost::python;
 
 MessageApp::MessageApp(QObject* parent)
   : QObject(parent)
-  , _chatModel(new ChatModel())
-  , _buddyListModel(new BuddyListModel)
+  , _chatModel(new ChatModel(this))
 {
     Py_Initialize();
     try {
@@ -27,21 +27,19 @@ MessageApp::MessageApp(QObject* parent)
         py::object mn = mm.attr("__dict__");
         py::exec("import tc_client", mn);
         py::exec("import libintegrator", mn);
-
-        // Fix this ugliness.
         py::exec("i = libintegrator.Integrator()", mn);
-
         //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
+
         py::list buddies = py::extract<py::list>(_buddyList.attr("list"));
-        QStringList bs;
+        QList<Buddy*> bs;
         int len = py::len(buddies);
         for (int i=0; i<len; ++i) {
-            const char* p = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
-            bs.append(QString(p));
+            const char* address = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
+            // const char* display_name
+            bs.append(new Buddy(address, "", this));
         }
-        qDebug() << "Buddy List: " << bs.join(", ");
-        _buddyListModel->setStringList(bs);
+        _buddyListModel = new BuddyListModel(bs, this);
 
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
         connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
@@ -83,28 +81,29 @@ void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
     _chatModel->newMessage(new Message(buddy, msg, false, _chatModel));
 }
 
-void MessageApp::addBuddy(const QString& buddy)
+void MessageApp::addBuddy(const QString& newbuddy)
 {
-    if (buddy.length() != 16) {
+    if (newbuddy.length() != 16) {
         qDebug() << "[ERROR]: Incorrectly formatted buddy address.";
         return;
     }
 
-    QStringList buddies(_buddyListModel->stringList());
-    if (buddies.contains(buddy)) {
-        qDebug() << "Buddy already in list.";
-        return;
+    foreach(Buddy* buddy, _buddyListModel->buddies()) {
+
+        if (buddy->onion() == newbuddy) {
+            qDebug() << "Buddy already in list.";
+            return;
+        }
     }
 
     try {
-        py::extract<bool>(_buddyList.attr("addBuddy")(buddy.toStdString()));
+        py::extract<bool>(_buddyList.attr("addBuddy")(newbuddy.toStdString()));
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
         cout << "Error during configuration parsing: " << perror_str << endl;
     }
 
-    buddies.append(buddy);
-    _buddyListModel->setStringList(buddies);
+    _buddyListModel->addBuddy(new Buddy(newbuddy, "", this));
 }
 
 void MessageApp::sendChatMessage(const QString& msg)
