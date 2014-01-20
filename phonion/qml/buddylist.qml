@@ -18,6 +18,20 @@ Rectangle {
                                    messagemodel.setCurrentBuddy(name)
                                    messageapploader.source = "qrc:/qml/chat.qml"
                                  }
+                      Rectangle {
+                          width: 12; height: 12
+                          //border: 6
+                          color: { console.log("STATUS: " + status)
+                                   if (status == 1)
+                                       return "yellow"
+                                   else if (status == 2)
+                                       return "green"
+                                   else
+                                       return "red"
+                                 }
+
+                          anchors.right: parent.right
+                      }
                   }
     }
 
