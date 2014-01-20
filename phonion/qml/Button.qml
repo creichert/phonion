@@ -5,11 +5,11 @@ Rectangle  {
     id: container
 
     property string text: ""
+    property int fontpixelsize: 16
 
     signal clicked
 
-    width: buttonLabel.width
-    height: buttonLabel.height
+    width: buttonLabel.width; height: buttonLabel.height
 
     MouseArea  {
         id: mouseArea
@@ -21,5 +21,6 @@ Rectangle  {
         id: buttonLabel
         anchors.centerIn: container
         text: container.text
+        font.pixelSize: fontpixelsize
     }
 }

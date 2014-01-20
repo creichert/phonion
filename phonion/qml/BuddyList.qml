@@ -7,21 +7,24 @@ Rectangle {
 
     ListView {
         id: buddylist
+        clip: true
         anchors.fill: parent
         model: buddylistmodel
         delegate: Button {
-                      height: 15
+                      //height: 15
+                      fontpixelsize: 18
                       anchors.left: parent.left
                       anchors.right: parent.right
                       text: name
-                      onClicked: { console.log(name)
+                      onClicked: { console.log("Chatting with " + name)
                                    messagemodel.setCurrentBuddy(name)
                                    messageapploader.source = "qrc:/qml/Chat.qml"
                                  }
 
                       Rectangle {
-                          width: 12; height: 12
-                          //border: 6
+                          width: 18; height: 18
+                          radius: 6
+                          anchors.rightMargin: 2
                           color: { if (status == 1)
                                        return "steelblue"
                                    else if (status == 2)

@@ -20,9 +20,7 @@ Rectangle {
             model: numkeys.length
             Button {
                 width: 20; height: 25
-                border.color: "black"
-                border.width: 1
-                radius: 4
+                border.color: "black"; border.width: 1; radius: 4
                 text: numkeys.charAt( index )
                 onClicked: { letterClicked(text) }
             }
@@ -41,9 +39,7 @@ Rectangle {
             model: alphakeys.length
             Button {
                 width: 20; height: 25
-                border.color: "black"
-                border.width: 1
-                radius: 4
+                border.color: "black"; border.width: 1; radius: 4
                 text: alphakeys.charAt( index )
                 onClicked: { letterClicked(text) }
             }
