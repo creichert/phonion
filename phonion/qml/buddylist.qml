@@ -13,19 +13,21 @@ Rectangle {
                       height: 15
                       anchors.left: parent.left
                       anchors.right: parent.right
-                      text: name + ":" + status
+                      text: name
                       onClicked: { console.log(name)
                                    messagemodel.setCurrentBuddy(name)
                                    messageapploader.source = "qrc:/qml/chat.qml"
                                  }
+
                       Rectangle {
                           width: 12; height: 12
                           //border: 6
-                          color: { console.log("STATUS: " + status)
-                                   if (status == 1)
-                                       return "yellow"
+                          color: { if (status == 1)
+                                       return "steelblue"
                                    else if (status == 2)
                                        return "green"
+                                   else if (status == 3)
+                                       return "yellow"
                                    else
                                        return "red"
                                  }
