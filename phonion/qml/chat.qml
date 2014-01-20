@@ -32,7 +32,7 @@ Rectangle  {
                          wrapMode: Text.WordWrap
                        }
 
-        onCountChanged: { console.log(count); positionViewAtIndex(count-1, ListView.Contain) }
+        onCountChanged: { positionViewAtIndex(count-1, ListView.Contain) }
     }
 
     TextInput {

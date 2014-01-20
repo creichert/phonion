@@ -36,8 +36,8 @@ MessageApp::MessageApp(QObject* parent)
         int len = py::len(buddies);
         for (int i=0; i<len; ++i) {
             const char* address = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
-            // const char* display_name
-            bs.append(new Buddy(address, "", this));
+            const char* displayName = "";
+            bs.append(new Buddy(address, displayName, this));
         }
         _buddyListModel = new BuddyListModel(bs, this);
 
@@ -56,19 +56,9 @@ MessageApp::MessageApp(QObject* parent)
     timer->start(1000);
 }
 
-void MessageApp::updateInterpreter()
-{
-    py::exec("print \"updating interpreter\"");
-}
-
 MessageApp::~MessageApp()
 {
     _buddyList.attr("stopClient");
-}
-
-ChatModel* MessageApp::chatModel()
-{
-    return _chatModel;
 }
 
 BuddyListModel* MessageApp::buddyListModel()
@@ -76,9 +66,9 @@ BuddyListModel* MessageApp::buddyListModel()
     return _buddyListModel;
 }
 
-void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
+ChatModel* MessageApp::chatModel()
 {
-    _chatModel->newMessage(new Message(buddy, msg, false, _chatModel));
+    return _chatModel;
 }
 
 void MessageApp::addBuddy(const QString& newbuddy)
@@ -122,6 +112,16 @@ void MessageApp::sendChatMessage(const QString& msg)
     }
 }
 
+void MessageApp::updateInterpreter()
+{
+    py::exec("print \"updating interpreter\"");
+}
+
+void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
+{
+    _chatModel->newMessage(new Message(buddy, msg, false, _chatModel));
+}
+
 std::string MessageApp::parse_python_exception() {
 
     PyObject *type_ptr = NULL, *value_ptr = NULL, *traceback_ptr = NULL;
@@ -129,35 +129,35 @@ std::string MessageApp::parse_python_exception() {
 
     std::string ret("Unfetchable Python error");
 
-    if(type_ptr != NULL){
+    if (type_ptr != NULL) {
         py::handle<> h_type(type_ptr);
         py::str type_pstr(h_type);
         py::extract<std::string> e_type_pstr(type_pstr);
-        if(e_type_pstr.check())
+        if (e_type_pstr.check())
             ret = e_type_pstr();
         else
             ret = "Unknown exception type";
     }
 
-    if(value_ptr != NULL){
+    if (value_ptr != NULL) {
 
         py::handle<> h_val(value_ptr);
         py::str a(h_val);
         py::extract<std::string> returned(a);
-        if(returned.check())
+        if (returned.check())
             ret +=  ": " + returned();
         else
             ret += std::string(": Unparseable Python error: ");
     }
 
-    if(traceback_ptr != NULL){
+    if (traceback_ptr != NULL) {
         py::handle<> h_tb(traceback_ptr);
         py::object tb(py::import("traceback"));
         py::object fmt_tb(tb.attr("format_tb"));
         py::object tb_list(fmt_tb(h_tb));
         py::object tb_str(py::str("\n").join(tb_list));
         py::extract<std::string> returned(tb_str);
-        if(returned.check())
+        if (returned.check())
             ret += ": " + returned();
         else
             ret += std::string(": Unparseable Python traceback");

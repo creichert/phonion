@@ -11,6 +11,9 @@
 #include "voipclient.h"
 
 static void recreateServerHandler() {
+    /**
+     * g is a global data structure created in Mumble libs.
+     */
     ServerHandlerPtr sh = g.sh;
     if (sh && sh->isRunning()) {
         sh->disconnect();
@@ -23,6 +26,7 @@ static void recreateServerHandler() {
         QThread::yieldCurrentThread();
     sh.reset();
 
+    // ServerHandlerPtr is QSharedPointer.
     sh = ServerHandlerPtr(new ServerHandler());
     sh->moveToThread(sh.get());
     g.sh = sh;
@@ -46,13 +50,12 @@ void VoipClient::call(const QString& onion)
 
     const QString host = onion + ".onion";
     const short unsigned int port = 64738;
-    const QString user =  _myonion; // AppLauncher.onion (nick)
+    const QString user =  _myonion;
     const QString pass = "phonion";
 
-    qDebug() << "Placing call to " << host;
+    qDebug() << Q_FUNC_INFO << "Placing call to " << host;
     _serverHandler->setConnectionInfo(host, port, user, pass);
     _serverHandler->start();
-
 }
 
 void VoipClient::end()
@@ -62,11 +65,10 @@ void VoipClient::end()
 
 void VoipClient::serverConnected()
 {
-    qDebug() << "Server Connected";
+    qDebug() << Q_FUNC_INFO << "Server Connected " << _serverHandler;
 }
 
 void VoipClient::serverDisconnected(QAbstractSocket::SocketError err, QString reason)
 {
-    qDebug() << "Server disconnected: " << err << " : " << reason;
+    qDebug() << Q_FUNC_INFO << "Server disconnected: " << err << " : " << reason;
 }
-

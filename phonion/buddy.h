@@ -8,7 +8,7 @@ class Buddy : public QObject
 {
     Q_OBJECT
 public:
-    Buddy(const QString& onion, const QString& displayName = QString(), QObject* parent = 0);
+    explicit Buddy(const QString& onion, const QString& displayName = QString(), QObject* parent = 0);
 
     QString onion() { return _onion; }
     QString displayName() { return _displayName; }
