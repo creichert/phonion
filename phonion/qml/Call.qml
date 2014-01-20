@@ -44,8 +44,12 @@ Rectangle {
         anchors.bottom: keyboard.top
 
         onClicked: { console.log("Call: " + toonion.text)
-                     voipclient.call(toonion.text)
-                     seconds = 0; timer.start()
+                     if (toonion.text.length == 16) {
+                         voipclient.call(toonion.text)
+                         seconds = 0; timer.start()
+                     } else {
+                         console.log("Call to onion " + toonion.text + " failed. Incorrectly formatted.")
+                     }
                    }
     }
 
