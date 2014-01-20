@@ -28,7 +28,7 @@ void Integrator::callback(int type, PyObject* data)
     qDebug() << "CALLBACK DATA: " << str;
     switch (type) {
 
-    case CB_TYPE_CHAT:
+    case CB_TYPE_CHAT: {
 
         PyObject* budobj = PySequence_GetItem(data, 0);
         PyObject* add = PyObject_GetAttrString(budobj, "address");
@@ -39,10 +39,16 @@ void Integrator::callback(int type, PyObject* data)
 
         emit onChatMessage(address, str);
         break;
+    } // CB_TYPE_CHAT
 
-    //case CB_TYPE_STATUS:
-    //    //emit onStatusChange();
-    //    break;
+    case CB_TYPE_STATUS: {
+
+        PyObject* add = PyObject_GetAttrString(data, "address");
+        QString address(PyString_AsString(add));
+
+        emit statusChanged(address);
+        break;
+    } // CB_TYPE_STATUS
     }
 }
 

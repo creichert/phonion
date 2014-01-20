@@ -16,4 +16,5 @@ public:
 
 signals:
     void onChatMessage(const QString&, const QString& msg);
+    void statusChanged(const QString&);
 };
