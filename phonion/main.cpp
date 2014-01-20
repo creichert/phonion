@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
     VoipClient voip(onion);
     v.rootContext()->setContextProperty("voipclient", &voip);
 #endif
-    v.setSource(QUrl("qrc:/qml/main.qml"));
+    v.setSource(QUrl("qrc:/qml/Main.qml"));
     v.show();
 
     return a.exec();

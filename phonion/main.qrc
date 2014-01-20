@@ -1,14 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/buddylist.qml</file>
-        <file>qml/chat.qml</file>
-        <file>qml/main.qml</file>
-        <file>qml/home.qml</file>
-        <file>qml/call.qml</file>
-        <file>qml/browse.qml</file>
-        <file>qml/message.qml</file>
-        <file>qml/settings.qml</file>
+        <file>qml/Browse.qml</file>
+        <file>qml/BuddyList.qml</file>
         <file>qml/Button.qml</file>
+        <file>qml/Call.qml</file>
+        <file>qml/Chat.qml</file>
+        <file>qml/Home.qml</file>
+        <file>qml/Main.qml</file>
+        <file>qml/Message.qml</file>
+        <file>qml/Settings.qml</file>
         <file>qml/Keyboard.qml</file>
         <file>message.png</file>
         <file>phone.png</file>

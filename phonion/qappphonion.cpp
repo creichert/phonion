@@ -22,18 +22,18 @@ const QString QAppPhonion::launch(int index)
     switch (index) {
     case Message:
         qDebug() << Q_FUNC_INFO << "Message";
-        return "qrc:/qml/message.qml";
+        return "qrc:/qml/Message.qml";
     case Call:
         qDebug() << Q_FUNC_INFO << "Call";
-        return "qrc:/qml/call.qml";
+        return "qrc:/qml/Call.qml";
     case Browse:
         qDebug() << Q_FUNC_INFO << "Browse";
-        return "qrc:/qml/browse.qml";
+        return "qrc:/qml/Browse.qml";
     case Settings:
         qDebug() << Q_FUNC_INFO << "Settings";
-        return "qrc:/qml/settings.qml";
+        return "qrc:/qml/Settings.qml";
     default:
         qDebug() << Q_FUNC_INFO << "Unknown launch option. Going home.";
-        return "qrc:/qml/home.qml";
+        return "qrc:/qml/Home.qml";
     }
 }

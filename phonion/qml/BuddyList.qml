@@ -16,7 +16,7 @@ Rectangle {
                       text: name
                       onClicked: { console.log(name)
                                    messagemodel.setCurrentBuddy(name)
-                                   messageapploader.source = "qrc:/qml/chat.qml"
+                                   messageapploader.source = "qrc:/qml/Chat.qml"
                                  }
 
                       Rectangle {

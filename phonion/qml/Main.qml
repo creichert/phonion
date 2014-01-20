@@ -13,12 +13,12 @@ Rectangle  {
         anchors.bottom:  parent.bottom
         anchors.left:  parent.left
         anchors.right:  parent.right
-        source: "qrc:/qml/home.qml"
+        source: "qrc:/qml/Home.qml"
     }
 
     Button {
         id: homeButton
         text: "Home"
-        onClicked: loader.source = "qrc:/qml/home.qml"
+        onClicked: loader.source = "qrc:/qml/Home.qml"
     }
 }
