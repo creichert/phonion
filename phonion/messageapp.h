@@ -26,6 +26,7 @@ public:
 private slots:
     void updateInterpreter();
     void onChatMessage(const QString& buddy, const QString& msg);
+    void onStatusChanged(const QString& buddy);
 
 private:
     std::string parse_python_exception();

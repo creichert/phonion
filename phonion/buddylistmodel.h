@@ -5,21 +5,23 @@
 #include <QAbstractListModel>
 #include <QList>
 
-class Buddy;
+#include "buddy.h"
 
 class BuddyListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
     enum BuddyListRoles {
-        NameRole = Qt::UserRole + 1,
-        StatusRole
+      NameRole = Qt::UserRole + 1
+    , StatusRole
     };
 
     BuddyListModel(const QList<Buddy*>& buddies, QObject* parent=0);
 
     void addBuddy(Buddy* buddy);
     QList<Buddy*> buddies();
+
+    void updateStatus(const QString& buddy, Buddy::Status status);
 
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual QHash<int, QByteArray> roleNames() const;

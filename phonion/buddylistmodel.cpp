@@ -20,8 +20,7 @@ QVariant BuddyListModel::data(const QModelIndex& index, int role) const
     if (role == NameRole)
         return _buddies.at(index.row())->onion();
     else if (role == StatusRole)
-        //return QVariant(_buddies.at(index.row()).status());
-        return QVariant("status");
+        return QVariant(_buddies.at(index.row())->status());
 
     return QVariant();
 }
@@ -52,4 +51,16 @@ void BuddyListModel::addBuddy(Buddy* buddy)
 QList<Buddy*> BuddyListModel::buddies()
 {
     return _buddies;
+}
+
+void BuddyListModel::updateStatus(const QString& buddy, Buddy::Status status)
+{
+    QModelIndex idx;
+    for (int i = 0; i < _buddies.size(); ++i) {
+        if (_buddies.at(i)->onion() == buddy) {
+            idx = index(i);
+            _buddies.at(i)->setStatus(status);
+        }
+    }
+    emit dataChanged(idx, idx);
 }

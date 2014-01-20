@@ -44,6 +44,8 @@ MessageApp::MessageApp(QObject* parent)
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
         connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
                               SLOT(onChatMessage(const QString&, const QString&)));
+        connect(integrator, SIGNAL(statusChanged(const QString&)),
+                              SLOT(onStatusChanged(const QString&)));
 
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
@@ -90,7 +92,7 @@ void MessageApp::addBuddy(const QString& newbuddy)
         py::extract<bool>(_buddyList.attr("addBuddy")(newbuddy.toStdString()));
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
-        cout << "Error during configuration parsing: " << perror_str << endl;
+        cout << Q_FUNC_INFO << perror_str << endl;
     }
 
     _buddyListModel->addBuddy(new Buddy(newbuddy, "", this));
@@ -108,7 +110,7 @@ void MessageApp::sendChatMessage(const QString& msg)
         buddy.attr("sendChatMessage")(msg.toStdString().c_str());
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
-        cout << "Error during configuration parsing: " << perror_str << endl;
+        cout << Q_FUNC_INFO << perror_str << endl;
     }
 }
 
@@ -120,6 +122,23 @@ void MessageApp::updateInterpreter()
 void MessageApp::onChatMessage(const QString& buddy, const QString& msg)
 {
     _chatModel->newMessage(new Message(buddy, msg, false, _chatModel));
+}
+
+void MessageApp::onStatusChanged(const QString& newbuddy)
+{
+    Buddy::Status status = Buddy::STATUS_OFFLINE;
+    try {
+        const char* bdy = newbuddy.toStdString().c_str();
+        py::object buddy = _buddyList.attr("getBuddyFromAddress")(bdy);
+        int stat = py::extract<int>(buddy.attr("status"));
+        status = static_cast<Buddy::Status>(stat);
+        qDebug() << " ON STATUS CHANGED: " << newbuddy << status;
+    } catch(py::error_already_set const &){
+        string perror_str = parse_python_exception();
+        cout << Q_FUNC_INFO << perror_str << endl;
+    }
+
+    _buddyListModel->updateStatus(newbuddy, status);
 }
 
 std::string MessageApp::parse_python_exception() {
