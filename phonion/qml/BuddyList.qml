@@ -11,8 +11,7 @@ Rectangle {
         anchors.fill: parent
         model: buddylistmodel
         delegate: Button {
-                      //height: 15
-                      fontpixelsize: 12
+                      fontpixelsize: 14
                       anchors.left: parent.left
                       anchors.right: parent.right
                       text: name + " (" + displayName + ")"
@@ -22,8 +21,8 @@ Rectangle {
                                  }
 
                       Rectangle {
-                          width: 18; height: 18
-                          radius: 6
+                          width: 14; height: 14
+                          radius: 7
                           anchors.rightMargin: 2
                           color: { if (status == 1)
                                        return "steelblue"
