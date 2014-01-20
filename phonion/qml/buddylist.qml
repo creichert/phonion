@@ -25,7 +25,9 @@ Rectangle {
         id: addbuddybutton
         text: "+"
         anchors.bottom: parent.bottom
-        onClicked: { MessageApp.addBuddy(newbuddy.text) }
+        onClicked: { MessageApp.addBuddy(newbuddy.text)
+                     newbuddy.text = ""
+                   }
     }
 
     TextInput {

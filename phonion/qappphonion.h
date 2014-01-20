@@ -1,3 +1,5 @@
+#ifndef QAPPPHONION_H
+#define QAPPPHONION_H
 
 #include <QApplication>
 #include <QObject>
@@ -24,3 +26,5 @@ public slots:
 private:
     QString _onion;
 };
+
+#endif // QAPPPHONION_H

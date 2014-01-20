@@ -22,8 +22,8 @@ Rectangle  {
         anchors.right: parent.right
 
         model: messagemodel
-        delegate: Text { text: msg.text()
-                         horizontalAlignment: { if (msg.fromme())
+        delegate: Text { text: msg
+                         horizontalAlignment: { if (fromme)
                                                     Text.AlignRight
                                                 else
                                                     Text.AlignLeft

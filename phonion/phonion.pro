@@ -26,6 +26,7 @@ release {
 }
 
 HEADERS += messageapp.h \
+           buddy.h \
            buddylistmodel.h \
            chatmodel.h \
            voipclient.h \
@@ -35,6 +36,7 @@ HEADERS += messageapp.h \
 SOURCES += main.cpp \
            messageapp.cpp \
            voipclient.cpp \
+           buddy.cpp \
            buddylistmodel.cpp \
            chatmodel.cpp \
            qappphonion.cpp \
