@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include <QHash>
 #include <QList>
+#include <QObject>
 
 class QByteArray;
 class Message;
@@ -15,7 +16,10 @@ public:
 
     enum ChatRoles {
       MsgRole = Qt::UserRole + 1
+    , FromMeRole
     };
+
+    ChatModel(QObject* parent = 0);
 
     void newMessage(Message* msg);
 

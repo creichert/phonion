@@ -1,16 +1,27 @@
 
-#include <QDebug>
+#include <QAbstractListModel>
+#include <QList>
 #include <QVariant>
 #include <QHash>
 #include <QByteArray>
 #include <QModelIndex>
 
 #include "buddylistmodel.h"
+#include "buddy.h"
+
+BuddyListModel::BuddyListModel(const QList<Buddy*>& buddies, QObject* parent)
+  : QAbstractListModel(parent)
+  , _buddies(buddies)
+{
+}
 
 QVariant BuddyListModel::data(const QModelIndex& index, int role) const
 {
     if (role == NameRole)
-        return stringList()[index.row()];
+        return _buddies.at(index.row())->onion();
+    else if (role == StatusRole)
+        //return QVariant(_buddies.at(index.row()).status());
+        return QVariant("status");
 
     return QVariant();
 }
@@ -21,4 +32,24 @@ QHash<int, QByteArray> BuddyListModel::roleNames() const
     roles[NameRole] = "name";
     roles[StatusRole] = "status";
     return roles;
+}
+
+int BuddyListModel::rowCount(const QModelIndex& parent) const
+{
+    Q_UNUSED(parent)
+    return _buddies.size();
+}
+
+void BuddyListModel::addBuddy(Buddy* buddy)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+
+    _buddies.append(buddy);
+
+    endInsertRows();
+}
+
+QList<Buddy*> BuddyListModel::buddies()
+{
+    return _buddies;
 }

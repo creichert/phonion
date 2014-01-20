@@ -9,6 +9,11 @@
 #include "chatmodel.h"
 #include "message.h"
 
+ChatModel::ChatModel(QObject* parent)
+  : QAbstractListModel(parent)
+{
+}
+
 void ChatModel::newMessage(Message* msg)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -38,7 +43,10 @@ QString ChatModel::currentBuddy()
 QVariant ChatModel::data(const QModelIndex& index, int role) const
 {
     if (role == MsgRole)
-        return QVariant::fromValue((_chats[_currentBuddy].at(index.row())));
+        return QVariant::fromValue(_chats[_currentBuddy].at(index.row())->text());
+    else if (role == FromMeRole) {
+        return QVariant::fromValue(_chats[_currentBuddy].at(index.row())->fromme());
+    }
 
     return QVariant();
 }
@@ -47,6 +55,7 @@ QHash<int, QByteArray> ChatModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[MsgRole] = "msg";
+    roles[FromMeRole] = "fromme";
     return roles;
 }
 
