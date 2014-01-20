@@ -13,6 +13,7 @@ class BuddyListModel : public QAbstractListModel
 public:
     enum BuddyListRoles {
       NameRole = Qt::UserRole + 1
+    , DisplayNameRole
     , StatusRole
     };
 

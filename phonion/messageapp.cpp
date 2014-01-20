@@ -35,8 +35,9 @@ MessageApp::MessageApp(QObject* parent)
         QList<Buddy*> bs;
         int len = py::len(buddies);
         for (int i=0; i<len; ++i) {
+            // const char* compatible with utf-8?
             const char* address = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
-            const char* displayName = "";
+            const char* displayName = py::extract<const char*>(py::str(buddies[i].attr("name")).encode("utf-8"));
             bs.append(new Buddy(address, displayName, this));
         }
         _buddyListModel = new BuddyListModel(bs, this);

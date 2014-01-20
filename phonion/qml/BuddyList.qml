@@ -12,10 +12,10 @@ Rectangle {
         model: buddylistmodel
         delegate: Button {
                       //height: 15
-                      fontpixelsize: 18
+                      fontpixelsize: 12
                       anchors.left: parent.left
                       anchors.right: parent.right
-                      text: name
+                      text: name + " (" + displayName + ")"
                       onClicked: { console.log("Chatting with " + name)
                                    messagemodel.setCurrentBuddy(name)
                                    messageapploader.source = "qrc:/qml/Chat.qml"

@@ -19,6 +19,8 @@ QVariant BuddyListModel::data(const QModelIndex& index, int role) const
 {
     if (role == NameRole)
         return _buddies.at(index.row())->onion();
+    else if (role == DisplayNameRole)
+        return _buddies.at(index.row())->displayName();
     else if (role == StatusRole)
         return QVariant(_buddies.at(index.row())->status());
 
@@ -29,6 +31,7 @@ QHash<int, QByteArray> BuddyListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[DisplayNameRole] = "displayName";
     roles[StatusRole] = "status";
     return roles;
 }
