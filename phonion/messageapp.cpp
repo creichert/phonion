@@ -132,7 +132,6 @@ void MessageApp::onStatusChanged(const QString& newbuddy)
         py::object buddy = _buddyList.attr("getBuddyFromAddress")(bdy);
         int stat = py::extract<int>(buddy.attr("status"));
         status = static_cast<Buddy::Status>(stat);
-        qDebug() << " ON STATUS CHANGED: " << newbuddy << status;
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
         cout << Q_FUNC_INFO << perror_str << endl;
