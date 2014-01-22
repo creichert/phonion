@@ -1,6 +1,6 @@
 [submodule "mumble"]
 	path = mumble
-	url = git@github.com:mumble-voip/mumble.git
+	url = git@phonion.co:mumble.git
 [submodule "phonion/torchat"]
 	path = phonion/torchat
-	url = https://github.com/prof7bit/TorChat.git
+	url = git@phonion.co:torchat.git
