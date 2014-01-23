@@ -2,7 +2,13 @@
 import QtQuick 2.0
 
 Rectangle  {
-    width: 210; height: 400
+    /* If height is needed, for development, then
+     * use these values.
+     *
+     * Derive all other measurements from parent
+     * measurement to get resolution independence.
+     */
+    width: 320; height: 480
     color: "white"
 
     // Used to switch between qml views. Should be

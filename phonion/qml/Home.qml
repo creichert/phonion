@@ -17,31 +17,40 @@ Rectangle  {
         id: delegate
         Rectangle  {
 
-            width: 100; height: 100
-            border.color: "black"
-            radius: 6
+            width: grid.cellWidth; height: grid.cellHeight
+            Rectangle {
+                id: iconrect
 
-            Image  {
-                id: appIcon
-                source: icon
+                width: parent.width / 1.5; height: parent.height / 1.5
 
-                width: 60; height: 60
-                y: 20; anchors.horizontalCenter: parent.horizontalCenter
-                fillMode: Image.PreserveAspectFit
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                border.color: "black"
+                radius: 6
+
+                Image  {
+                    id: appIcon
+                    source: icon
+
+                    width: parent.width - 5; height: parent.height - 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: { grid.currentIndex = index
+                                 loader.source = app.launch(index)
+                               }
+                }
             }
 
             Text  {
-                anchors { top: appIcon.bottom;
+                anchors { top: iconrect.bottom;
                           horizontalCenter: parent.horizontalCenter
                         }
                 text: name
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: { grid.currentIndex = index
-                             loader.source = app.launch(index)
-                           }
             }
         }
     }
@@ -50,9 +59,9 @@ Rectangle  {
         id: grid
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
-        cellWidth: 100; cellHeight: 100
-        highlight: highlight
-        focus: true
+
+        cellWidth: width / 2; cellHeight: height / 3.5
+        //focus: true
         model: model
         delegate: delegate
     }
