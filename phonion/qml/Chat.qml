@@ -1,4 +1,3 @@
-
 import QtQuick 2.0
 
 Rectangle  {
@@ -7,6 +6,7 @@ Rectangle  {
     Text {
         id: to
         text: messagemodel.currentBuddy()
+        font.bold: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
     }
@@ -41,6 +41,7 @@ Rectangle  {
         anchors.bottom: parent.bottom
         anchors.right: send.left
         anchors.left: parent.left
+        wrapMode: TextInput.WordWrap
 
         Keys.onReturnPressed: { send.clicked() }
     }
@@ -52,6 +53,7 @@ Rectangle  {
         anchors.right: parent.right
         anchors.top: input.top
         anchors.bottom: input.bottom
+        border.color: "black"; border.width: 1; radius: 3
     }
 
     Component.onCompleted: {
