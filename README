@@ -16,7 +16,7 @@ Run
 Cross-compile for Raspberry Pi
 ------------------------------
 
-    $ qmake CONFIG+=rpi CONFIG+=phonion CONFIG+=voip -recursive
+    $ qmake CONFIG+=rpi CONFIG+=phonion CONFIG+=voip CONFIG+=debug -recursive
     $ make -j4
 
     $ export PIIP=192.168.1.107
