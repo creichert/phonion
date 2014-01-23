@@ -15,16 +15,20 @@ Rectangle  {
     // the only instance of Loader.
     Loader {
         id: loader
-        anchors.top: homeButton.bottom
-        anchors.bottom:  parent.bottom
-        anchors.left:  parent.left
-        anchors.right:  parent.right
+        width: parent.width
+        anchors.top: statusbar.bottom
+        anchors.bottom: toolbar.bottom
         source: "qrc:/qml/Home.qml"
     }
 
-    Button {
-        id: homeButton
-        text: "Home"
-        onClicked: loader.source = "qrc:/qml/Home.qml"
+    StatusBar {
+        id: statusbar
+        anchors.top: parent.top
+        anchors.bottom: loader.top
+    }
+
+    ToolBar {
+        id: toolbar
+        anchors.bottom:  parent.bottom
     }
 }

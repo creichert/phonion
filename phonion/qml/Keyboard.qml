@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     id: keyboard
 
-    height: 105
+    height: parent.height / 1.75
 
     property string numkeys: "0123456789"
     property string alphakeys: "qwertyuiopasdfghjklzxcvbnm"
@@ -14,12 +14,13 @@ Rectangle {
     Grid {
         id: numgrid
 
-        columns: 10
+        columns: 5
+        rows: 2
         spacing: 1
         Repeater {
             model: numkeys.length
             Button {
-                width: 20; height: 25
+                width: 60; height: 60
                 border.color: "black"; border.width: 1; radius: 4
                 text: numkeys.charAt( index )
                 onClicked: { letterClicked(text) }
