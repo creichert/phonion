@@ -52,7 +52,6 @@ Rectangle  {
         anchors.right: parent.right
         anchors.top: input.top
         anchors.bottom: input.bottom
-        border.color: "black"; border.width: 1; radius: 3
     }
 
     Component.onCompleted: {
