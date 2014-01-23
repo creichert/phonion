@@ -15,6 +15,7 @@ Rectangle  {
         id: messages
 
         clip: true
+        verticalLayoutDirection: ListView.BottomToTop
 
         anchors.top: to.bottom
         anchors.bottom: input.top
