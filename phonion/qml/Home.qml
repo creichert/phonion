@@ -4,18 +4,23 @@ Rectangle  {
 
     ListModel  {
         id: model
+        ListElement { name: "Phone"; icon: "qrc:/phone.png" }
         ListElement { name: "Message"; icon: "qrc:/message.png" }
-        ListElement { name: "Call"; icon: "qrc:/phone.png" }
-        ListElement { name: "Browse"; icon: "" }
+        ListElement { name: "Browser"; icon: "" }
+        ListElement { name: "Email"; icon: "" }
+        ListElement { name: "Wallet"; icon: "" }
         ListElement { name: "Settings"; icon: "" }
     }
 
     Component  {
 
         id: delegate
-        Item  {
+        Rectangle  {
 
             width: 100; height: 100
+            border.color: "black"
+            radius: 6
+
             Image  {
                 id: appIcon
                 source: icon
@@ -38,18 +43,6 @@ Rectangle  {
                              loader.source = app.launch(index)
                            }
             }
-        }
-    }
-
-    Component {
-        id: highlight
-        Rectangle {
-            width: grid.cellWidth; height: grid.cellHeight
-            color: "lightsteelblue"; radius: 5
-            x: grid.currentItem.x
-            y: grid.currentItem.y
-            Behavior on x { SpringAnimation { spring: 3; damping: 0.2 } }
-            Behavior on y { SpringAnimation { spring: 3; damping: 0.2 } }
         }
     }
 

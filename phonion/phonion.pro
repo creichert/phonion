@@ -42,4 +42,4 @@ SOURCES += main.cpp \
            qappphonion.cpp \
            message.cpp
 
-RESOURCES += main.qrc
+RESOURCES += phonion.qrc
