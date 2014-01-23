@@ -32,8 +32,6 @@ Rectangle  {
                          width: parent.width
                          wrapMode: Text.WordWrap
                        }
-
-        onCountChanged: { positionViewAtIndex(count-1, ListView.Contain) }
     }
 
     TextInput {
