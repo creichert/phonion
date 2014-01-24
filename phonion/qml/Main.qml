@@ -24,7 +24,6 @@ Rectangle  {
     StatusBar {
         id: statusbar
         anchors.top: parent.top
-        anchors.bottom: loader.top
     }
 
     ToolBar {
