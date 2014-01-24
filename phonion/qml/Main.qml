@@ -17,7 +17,7 @@ Rectangle  {
         id: loader
         width: parent.width
         anchors.top: statusbar.bottom
-        anchors.bottom: toolbar.bottom
+        anchors.bottom: toolbar.top
         source: "qrc:/qml/Home.qml"
     }
 
