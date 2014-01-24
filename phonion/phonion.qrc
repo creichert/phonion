@@ -17,7 +17,11 @@
         <file>qml/Wallet.qml</file>
 
         <!-- Images -->
+        <!-- file>browser.png</file -->
+        <!-- file>email.png</file -->
         <file>message.png</file>
         <file>phone.png</file>
+        <!--file>settings.png</file-->
+        <!--file>wallet.png</file-->
     </qresource>
 </RCC>
