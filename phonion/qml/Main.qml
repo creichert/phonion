@@ -29,5 +29,12 @@ Rectangle  {
     ToolBar {
         id: toolbar
         anchors.bottom:  parent.bottom
+
+        // Border line
+        Rectangle {
+            color: "black"
+            anchors.top: parent.top
+            width: parent.width; height: 1
+        }
     }
 }
