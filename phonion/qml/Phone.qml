@@ -67,7 +67,7 @@ Rectangle {
                    }
     }
 
-    Keyboard {
+    DialPad {
         id: keyboard
         anchors.bottom: parent.bottom
         onLetterClicked: toonion.text += letter
