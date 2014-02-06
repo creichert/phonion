@@ -6,7 +6,7 @@
         <file>qml/Button.qml</file>
         <file>qml/Email.qml</file>
         <file>qml/Home.qml</file>
-        <file>qml/Keyboard.qml</file>
+        <file>qml/DialPad.qml</file>
         <file>qml/Main.qml</file>
         <file>qml/Message.qml</file>
         <file>qml/Messages.qml</file>
