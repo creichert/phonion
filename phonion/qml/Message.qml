@@ -59,6 +59,8 @@ Rectangle  {
     }
 
     function onMessageSend() {
+        notifications.text = input.text
+        notifications.show()
         MessageApp.sendChatMessage(input.text)
         input.text = ""
     }

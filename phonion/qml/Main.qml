@@ -11,6 +11,11 @@ Rectangle  {
     width: 320; height: 480
     color: "white"
 
+    NotificationArea {
+        id: notifications
+        anchors.top: parent.top
+    }
+
     // Used to switch between qml views. Should be
     // the only instance of Loader.
     Loader {

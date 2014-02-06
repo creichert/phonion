@@ -10,6 +10,7 @@
         <file>qml/Main.qml</file>
         <file>qml/Message.qml</file>
         <file>qml/Messages.qml</file>
+        <file>qml/NotificationArea.qml</file>
         <file>qml/Phone.qml</file>
         <file>qml/Settings.qml</file>
         <file>qml/StatusBar.qml</file>
