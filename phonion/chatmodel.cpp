@@ -23,7 +23,16 @@ void ChatModel::newMessage(Message* msg)
     if (!_chats.keys().contains(msg->buddy()))
         _chats[msg->buddy()] = QList<Message*>();
 
-    // First item in the list is the most recent.
+    /**
+     * First item in the list is the most recent.
+     *
+     * Using QList allows for the quickest insertion at the beginning.  We
+     * should be caching outdated messages and only showing the most recent
+     * messages here anyways so there should not be a performance bottleneck
+     * even with a sizeable backlog. If the user chooses to view more of the
+     * chat history we can then use a database model to handle a larger message
+     * set.
+     */
     _chats[msg->buddy()].prepend(msg);
 
     endInsertRows();
