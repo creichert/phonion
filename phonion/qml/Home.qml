@@ -2,16 +2,6 @@ import QtQuick 2.0
 
 Rectangle  {
 
-    ListModel  {
-        id: model
-        ListElement { name: "Phone"; icon: "qrc:/phone.png" }
-        ListElement { name: "Message"; icon: "qrc:/message.png" }
-        ListElement { name: "Browser"; icon: "" }
-        ListElement { name: "Email"; icon: "" }
-        ListElement { name: "Wallet"; icon: "" }
-        ListElement { name: "Settings"; icon: "" }
-    }
-
     Component  {
 
         id: delegate
@@ -62,14 +52,14 @@ Rectangle  {
 
         cellWidth: width / 2; cellHeight: height / 3.5
         //focus: true
-        model: model
+        model: appmodel
         delegate: delegate
     }
 
     Text {
         id: onion
         font.pointSize: 12
-        text: app.prettyOnion()
+        text: app.onion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
     }

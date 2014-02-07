@@ -1,0 +1,15 @@
+<RCC>
+    <!-- Not sure how to add this to the message prefix as it
+         can no longer load the sdk qml. -->
+    <qresource prefix="/">
+        <!-- QML -->
+        <file>qml/BuddyList.qml</file>
+        <file>qml/Chat.qml</file>
+        <file>qml/Messages.qml</file>
+    </qresource>
+
+    <qresource prefix="/message/">
+        <!-- Images -->
+        <file>message.png</file>
+    </qresource>
+</RCC>

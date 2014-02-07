@@ -1,4 +1,4 @@
-include(../phonion.pri)
+include(../message.pri)
 
 TEMPLATE = lib
 TARGET = integrator

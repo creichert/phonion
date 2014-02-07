@@ -4,8 +4,6 @@
 #include <QModelIndex>
 #include <QVariant>
 
-#include <QDebug>
-
 #include "chatmodel.h"
 #include "message.h"
 
@@ -17,8 +15,6 @@ ChatModel::ChatModel(QObject* parent)
 void ChatModel::newMessage(Message* msg)
 {
     beginInsertRows(QModelIndex(), 0, 0);
-
-    qDebug() << "chat message:" << msg->buddy() << ": " << msg->text();
 
     if (!_chats.keys().contains(msg->buddy()))
         _chats[msg->buddy()] = QList<Message*>();

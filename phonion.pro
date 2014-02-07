@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = mumble/src/mumble \
-          integrator \
-          phonion
-
-CONFIG += ordered
+SUBDIRS = sdk\
+          phonion \
+          apps
+CONFIG+=ordered

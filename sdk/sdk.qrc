@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- QML -->
+        <file>qml/Button.qml</file>
+        <file>qml/DialPad.qml</file>
+    </qresource>
+</RCC>

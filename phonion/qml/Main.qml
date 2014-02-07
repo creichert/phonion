@@ -2,6 +2,7 @@
 import QtQuick 2.0
 
 Rectangle  {
+
     /* If height is needed, for development, then
      * use these values.
      *

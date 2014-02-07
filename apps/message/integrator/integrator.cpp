@@ -9,7 +9,6 @@
 using namespace std;
 using namespace boost::python;
 
-
 enum { CB_TYPE_CHAT = 1
      , CB_TYPE_FILE = 2
      , CB_TYPE_OFFLINE_SENT = 3

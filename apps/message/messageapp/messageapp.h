@@ -1,21 +1,31 @@
 #ifndef MESSAGEAPP_H
 #define MESSAGEAPP_H
 
-#include <QObject>
-#include <QThread>
-
 #include <boost/python.hpp>
+
+#include <QObject>
+
+#include "app.h"
 
 class BuddyListModel;
 class ChatModel;
+class Notifier;
+class QQmlContext;
 class QString;
 
-class MessageApp : public QObject
+class MessageApp : public App
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "co.phonion.Phonion.AppInterface" FILE "messageapp.json")
 public:
-    explicit MessageApp(QObject* parent = 0);
+
     ~MessageApp();
+
+    virtual void startApp(QQmlContext* context, const QString& onion, Notifier* notifier);
+    virtual QString id();
+    virtual QString name();
+    virtual QString icon();
+    virtual QString source();
 
     BuddyListModel* buddyListModel();
     ChatModel* chatModel();
@@ -30,7 +40,6 @@ private slots:
 
 private:
     std::string parse_python_exception();
-
     boost::python::object _buddyList;
 
     ChatModel* _chatModel;

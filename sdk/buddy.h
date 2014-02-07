@@ -7,7 +7,6 @@
 class Buddy : public QObject
 {
     Q_OBJECT
-
 public:
     enum Status {
       STATUS_OFFLINE = 0

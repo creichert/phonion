@@ -1,25 +1,36 @@
 
-#include <iostream>
 #include <boost/python.hpp>
+#include <iostream>
 
-#include <QString>
 #include <QDebug>
+#include <QIcon>
+#include <QQmlContext>
+#include <QString>
 #include <QTimer>
 
+#include "app.h"
 #include "buddy.h"
 #include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "integrator.h"
 #include "message.h"
 #include "messageapp.h"
+#include "notifier.h"
 
 using namespace std;
 namespace py = boost::python;
 
-MessageApp::MessageApp(QObject* parent)
-  : QObject(parent)
-  , _chatModel(new ChatModel(this))
+MessageApp::~MessageApp()
 {
+    _buddyList.attr("stopClient");
+}
+
+// TODO: Find a way to parameterize the input here as it will almost certainly grow.
+void MessageApp::startApp(QQmlContext* context, const QString& onion, Notifier* notifier)
+{
+    App::startApp(context, onion, notifier);
+    _chatModel = new ChatModel(this);
+
     Py_Initialize();
     try {
 
@@ -53,15 +64,39 @@ MessageApp::MessageApp(QObject* parent)
         cout << "Error during configuration parsing: " << perror_str << endl;
     }
 
+    // TODO: Only used to add buddy. bad architechture. Don't pass this here.
+    context->setContextProperty("MessageApp", this);
+    context->setContextProperty("messagemodel", _chatModel);
+    // TODO: What if this is not setup properyl?
+    context->setContextProperty("buddylistmodel", _buddyListModel);
+
+    connect(_chatModel, SIGNAL(messageNotification(const QString&)),
+            notifier, SIGNAL(messageNotification(const QString&)));
+
     // Needed to keep app up to date.
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateInterpreter()));
     timer->start(1000);
 }
 
-MessageApp::~MessageApp()
+QString MessageApp::id()
 {
-    _buddyList.attr("stopClient");
+    return "MessageApp";
+}
+
+QString MessageApp::name()
+{
+    return "Message";
+}
+
+QString MessageApp::icon()
+{
+    return "qrc:/message/message.png";
+}
+
+QString MessageApp::source()
+{
+    return "qrc:/qml/Messages.qml";
 }
 
 BuddyListModel* MessageApp::buddyListModel()
@@ -74,6 +109,11 @@ ChatModel* MessageApp::chatModel()
     return _chatModel;
 }
 
+/*TODO: https://quality.reichertbrothers.com/phonion/issue5
+ *
+ * Don't sync with the buddylist model at the end. Just let the BuddyListModel
+ * update with it's own QFileSystemWatcher.
+ */
 void MessageApp::addBuddy(const QString& newbuddy)
 {
     if (newbuddy.length() != 16) {

@@ -1,28 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <!-- QML -->
-        <file>qml/Browser.qml</file>
-        <file>qml/BuddyList.qml</file>
-        <file>qml/Button.qml</file>
-        <file>qml/Chat.qml</file>
-        <file>qml/Email.qml</file>
         <file>qml/Home.qml</file>
-        <file>qml/DialPad.qml</file>
         <file>qml/Main.qml</file>
-        <file>qml/Messages.qml</file>
         <file>qml/NotificationArea.qml</file>
-        <file>qml/Phone.qml</file>
-        <file>qml/Settings.qml</file>
         <file>qml/StatusBar.qml</file>
         <file>qml/ToolBar.qml</file>
-        <file>qml/Wallet.qml</file>
-
-        <!-- Images -->
-        <!-- file>browser.png</file -->
-        <!-- file>email.png</file -->
-        <file>message.png</file>
-        <file>phone.png</file>
-        <!--file>settings.png</file-->
-        <!--file>wallet.png</file-->
     </qresource>
 </RCC>

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- QML -->
+        <file>qml/Phone.qml</file>
+    </qresource>
+
+    <qresource prefix="/phone">
+        <!-- Images -->
+        <file>phone.png</file>
+    </qresource>
+</RCC>
