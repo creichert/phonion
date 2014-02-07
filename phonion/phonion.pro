@@ -31,6 +31,7 @@ HEADERS += messageapp.h \
            chatmodel.h \
            voipclient.h \
            qappphonion.h \
+           notifier.h \
            message.h
 
 SOURCES += main.cpp \
@@ -40,6 +41,7 @@ SOURCES += main.cpp \
            buddylistmodel.cpp \
            chatmodel.cpp \
            qappphonion.cpp \
+           notifier.cpp \
            message.cpp
 
 RESOURCES += phonion.qrc

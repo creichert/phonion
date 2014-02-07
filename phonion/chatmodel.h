@@ -30,10 +30,14 @@ public:
     virtual QHash<int, QByteArray> roleNames() const;
     virtual int rowCount (const QModelIndex& parent = QModelIndex()) const;
 
+signals:
+    void messageNotification(const QString& msg);
+
 private:
     // Don't hold all chats in memory all the time.
     QHash<QString, QList<Message*> > _chats;
     QString _currentBuddy;
 };
 
+//qmlRegisterType<Message>("co.phonion.chatmodel", 1, 0, "ChatModel");
 #endif // CHATMODEL_H

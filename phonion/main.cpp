@@ -15,6 +15,7 @@
 #include "messageapp.h"
 #include "qappphonion.h"
 #include "voipclient.h"
+#include "notifier.h"
 
 #define PROXY_HOST "127.0.0.1"
 #define PROXY_PORT 11109
@@ -62,11 +63,15 @@ int main(int argc, char** argv) {
     proxy.setPort(PROXY_PORT);
     QNetworkProxy::setApplicationProxy(proxy);
 
+    Notifier notifier;
+    QObject::connect(msgApp.chatModel(), SIGNAL(messageNotification(const QString&)), &notifier, SIGNAL(messageNotification(const QString&)));
+
     QQuickView v;
     v.setResizeMode(QQuickView::SizeRootObjectToView);
     v.rootContext()->setContextProperty("app", &a);
     v.rootContext()->setContextProperty("MessageApp", &msgApp);
     v.rootContext()->setContextProperty("messagemodel", msgApp.chatModel());
+    v.rootContext()->setContextProperty("notifier", &notifier);
     v.rootContext()->setContextProperty("buddylistmodel", msgApp.buddyListModel());
 #ifdef VOIP
     VoipClient voip(onion);

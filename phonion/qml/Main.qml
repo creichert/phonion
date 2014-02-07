@@ -11,9 +11,24 @@ Rectangle  {
     width: 320; height: 480
     color: "white"
 
+    /* Global Notification Handler. */
     NotificationArea {
         id: notifications
         anchors.top: parent.top
+        Connections {
+            target: notifier
+            onMessageNotification: {
+
+                /* TODO: Implement a system to test which 'qmlfile:buddy'
+                 * combo is open. We can propogate value up from the signal
+                 * with a Notification object and if both conditions are met
+                 * we do not need to push a notification; presumably, because
+                 * user is using that app with that buddy.
+                 */
+                notifications.text = msg
+                notifications.show()
+            }
+        }
     }
 
     // Used to switch between qml views. Should be
