@@ -10,9 +10,9 @@
 
 #include "SetupMumble.h"
 
-void PhoneApp::startApp(QQmlContext* context, const QString& onion, Notifier* notifier)
+void PhoneApp::start(QQmlContext* context, const QString& onion, Notifier* notifier)
 {
-    App::startApp(context, onion, notifier);
+    App::start(context, onion, notifier);
 #ifdef VOIP
     setupMumble(*qApp, 0, NULL);
 

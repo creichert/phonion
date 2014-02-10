@@ -21,7 +21,6 @@ public:
 
     ~MessageApp();
 
-    virtual void startApp(QQmlContext* context, const QString& onion, Notifier* notifier);
     virtual QString id();
     virtual QString name();
     virtual QString icon();
@@ -32,6 +31,9 @@ public:
 
     Q_INVOKABLE void addBuddy(const QString& buddy);
     Q_INVOKABLE void sendChatMessage(const QString& msg);
+
+protected:
+    virtual void start(QQmlContext* context, const QString& onion, Notifier* notifier);
 
 private slots:
     void updateInterpreter();

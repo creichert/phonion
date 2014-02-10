@@ -70,11 +70,13 @@ const QString Phonion::onion()
 
 const QString Phonion::launch(int index)
 {
+    /* TODO: Callback to current app which
+     *       puts all non-critical jobs in
+     *       the background.
+     */
+
     App* app = _appModel->app(index);
-
-    if (!app->initialized())
-        app->startApp(_view->rootContext(), onion(), _notifier);
-
+    app->launch(_view->rootContext(), onion(), _notifier);
     return app->source();
 }
 

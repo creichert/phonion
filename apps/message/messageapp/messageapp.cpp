@@ -26,9 +26,10 @@ MessageApp::~MessageApp()
 }
 
 // TODO: Find a way to parameterize the input here as it will almost certainly grow.
-void MessageApp::startApp(QQmlContext* context, const QString& onion, Notifier* notifier)
+void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* notifier)
 {
-    App::startApp(context, onion, notifier);
+    App::start(context, onion, notifier);
+
     _chatModel = new ChatModel(this);
 
     Py_Initialize();

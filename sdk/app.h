@@ -20,11 +20,13 @@ class AppInterface {
 public:
     //virtual ~App();
 
-    // virtual void launch();
     virtual QString id() = 0;
     virtual QString name() = 0;
     virtual QString icon() = 0;
     virtual QString source() = 0;
+
+protected:
+    virtual void start(QQmlContext* context, const QString& onion, Notifier* notifier) = 0;
 };
 
 #define AppInterface_iid "co.phonion.Phonion.AppInterface"
@@ -36,28 +38,33 @@ class App : public QObject, public AppInterface {
     Q_OBJECT
     Q_INTERFACES(AppInterface)
 public:
-
     /* The standard constructor for each app sets up only the data necessary
      * to display information on the app.
      */
     QQmlContext* context() { return _context; }
     QString onion() { return _onion; }
 
-    /* `startApp` launches the application and initializes data models.
-     */
-    virtual void startApp(QQmlContext* context, const QString& onion, Notifier* notifier) {
+    virtual void launch(QQmlContext* context, const QString& onion, Notifier* notifier) {
         Q_UNUSED(notifier);
         _context = context;
         _onion = onion;
-        _initialized = true;
+        if (!_started) {
+            start(context, onion, notifier);
+            _started = true;
+        }
     }
 
-    bool initialized() { return _initialized; }
+protected:
+    virtual void start(QQmlContext* context, const QString& onion, Notifier* notifier) {
+        Q_UNUSED(context);
+        Q_UNUSED(onion);
+        Q_UNUSED(notifier);
+    }
 
 private:
     QPointer<QQmlContext> _context;
     QString _onion;
-    bool _initialized;
+    bool _started = false;
 };
 
 #endif // APP_H
