@@ -73,6 +73,8 @@ const QString Phonion::launch(int index)
     /* TODO: Callback to current app which
      *       puts all non-critical jobs in
      *       the background.
+     *
+     *       currentApp->pause();
      */
 
     App* app = _appModel->app(index);
