@@ -1,18 +1,25 @@
 
 #include <QAbstractListModel>
-#include <QList>
-#include <QVariant>
-#include <QHash>
 #include <QByteArray>
+#include <QDebug>
+#include <QFile>
+#include <QFileSystemWatcher>
+#include <QHash>
+#include <QList>
 #include <QModelIndex>
+#include <QVariant>
 
-#include "buddylistmodel.h"
 #include "buddy.h"
+#include "buddylistmodel.h"
 
-BuddyListModel::BuddyListModel(const QList<Buddy*>& buddies, QObject* parent)
+BuddyListModel::BuddyListModel(QObject* parent)
   : QAbstractListModel(parent)
-  , _buddies(buddies)
 {
+    QString blfile = "./apps/message/torchat/torchat/src/buddy-list.txt";
+    QFileSystemWatcher* watcher = new QFileSystemWatcher(this);
+    watcher->addPath(blfile);
+    connect(watcher, SIGNAL(fileChanged(const QString&)), SLOT(onBuddyListChanged(const QString&)));
+    onBuddyListChanged(blfile);
 }
 
 QVariant BuddyListModel::data(const QModelIndex& index, int role) const
@@ -66,4 +73,41 @@ void BuddyListModel::updateStatus(const QString& buddy, Buddy::Status status)
         }
     }
     emit dataChanged(idx, idx);
+}
+
+void BuddyListModel::onBuddyListChanged(const QString& path)
+{
+    // TODO: Called only once and file will not open.
+    //qDebug() << path;
+    QFile inputFile(path);
+    if (inputFile.open(QIODevice::ReadOnly)) {
+
+        // Completely re-build the buddy list.
+        beginRemoveRows(QModelIndex(), 0, rowCount());
+        _buddies.clear();
+        endRemoveRows();
+
+        QTextStream in(&inputFile);
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            QString address = line.split(' ').at(0);
+            QString name;
+            //if (line.count() > 1)
+            //    line.split(' ').at(1);
+            qDebug() << address;
+            if(!buddyFromAddress(address))
+                addBuddy(new Buddy(address, name, this));
+        }
+        inputFile.close();
+    } else
+        qDebug() << inputFile.errorString();
+}
+
+Buddy* BuddyListModel::buddyFromAddress(const QString& address)
+{
+    foreach(Buddy* buddy, _buddies) {
+        if (buddy->onion() == address)
+            return buddy;
+    }
+    return 0;
 }

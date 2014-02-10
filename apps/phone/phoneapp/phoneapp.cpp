@@ -16,8 +16,8 @@ void PhoneApp::start(QQmlContext* context, const QString& onion, Notifier* notif
 #ifdef VOIP
     setupMumble(*qApp, 0, NULL);
 
-    VoipClient voip(onion);
-    context->setContextProperty("voipclient", &voip);
+    _voipClient = new VoipClient(onion, this);
+    context->setContextProperty("voipclient", _voipClient);
 #endif
 }
 

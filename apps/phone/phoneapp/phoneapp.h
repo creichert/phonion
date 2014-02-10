@@ -1,10 +1,13 @@
 #ifndef PHONEAPP_H
 #define PHONEAPP_H
 
+#include <QPointer>
+
 #include "app.h"
 
 class Notifier;
 class QQmlContext;
+class VoipClient;
 
 class PhoneApp : public App
 {
@@ -18,6 +21,9 @@ public:
 
 protected:
     virtual void start(QQmlContext* context, const QString& onion, Notifier* notifier);
+
+private:
+    QPointer<VoipClient> _voipClient;
 };
 
 #endif // PHONEAPP_H 

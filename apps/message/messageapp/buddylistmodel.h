@@ -17,7 +17,7 @@ public:
     , StatusRole
     };
 
-    BuddyListModel(const QList<Buddy*>& buddies, QObject* parent=0);
+    BuddyListModel(QObject* parent=0);
 
     void addBuddy(Buddy* buddy);
     QList<Buddy*> buddies();
@@ -28,7 +28,13 @@ public:
     virtual QHash<int, QByteArray> roleNames() const;
     virtual int rowCount (const QModelIndex& parent = QModelIndex()) const;
 
+private slots:
+    void onBuddyListChanged(const QString& path);
+
 private:
+    void loadBuddies();
+    Buddy* buddyFromAddress(const QString& address);
+
     QList<Buddy*> _buddies;
 };
 

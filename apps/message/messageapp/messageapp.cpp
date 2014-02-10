@@ -31,6 +31,7 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
     App::start(context, onion, notifier);
 
     _chatModel = new ChatModel(this);
+    _buddyListModel = new BuddyListModel(this);
 
     Py_Initialize();
     try {
@@ -43,17 +44,7 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
         //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
 
-        py::list buddies = py::extract<py::list>(_buddyList.attr("list"));
-        QList<Buddy*> bs;
-        int len = py::len(buddies);
-        for (int i=0; i<len; ++i) {
-            // const char* compatible with utf-8?
-            const char* address = py::extract<const char*>(py::str(buddies[i].attr("address")).encode("utf-8"));
-            const char* displayName = py::extract<const char*>(py::str(buddies[i].attr("name")).encode("utf-8"));
-            bs.append(new Buddy(address, displayName, this));
-        }
-        _buddyListModel = new BuddyListModel(bs, this);
-
+        // (boost::python) Who manages the memory of Integrator now.
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
         connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
                               SLOT(onChatMessage(const QString&, const QString&)));
@@ -122,22 +113,12 @@ void MessageApp::addBuddy(const QString& newbuddy)
         return;
     }
 
-    foreach(Buddy* buddy, _buddyListModel->buddies()) {
-
-        if (buddy->onion() == newbuddy) {
-            qDebug() << "Buddy already in list.";
-            return;
-        }
-    }
-
     try {
         py::extract<bool>(_buddyList.attr("addBuddy")(newbuddy.toStdString()));
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
         cout << Q_FUNC_INFO << perror_str << endl;
     }
-
-    _buddyListModel->addBuddy(new Buddy(newbuddy, "", this));
 }
 
 void MessageApp::sendChatMessage(const QString& msg)
