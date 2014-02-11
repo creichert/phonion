@@ -59,10 +59,10 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
     // TODO: Only used to add buddy. bad architechture. Don't pass this here.
     context->setContextProperty("MessageApp", this);
     context->setContextProperty("messagemodel", _chatModel);
-    // TODO: What if this is not setup properyl?
+    // TODO: What if this is not setup properly?
     context->setContextProperty("buddylistmodel", _buddyListModel);
 
-    connect(_chatModel, SIGNAL(messageNotification(const QString&)),
+    connect(_chatModel, SIGNAL(message(const QString&)),
             notifier, SIGNAL(messageNotification(const QString&)));
 
     // Needed to keep app up to date.

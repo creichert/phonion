@@ -31,7 +31,7 @@ public:
     virtual int rowCount (const QModelIndex& parent = QModelIndex()) const;
 
 signals:
-    void messageNotification(const QString& msg);
+    void message(const QString& msg);
 
 private:
     // Don't hold all chats in memory all the time.
