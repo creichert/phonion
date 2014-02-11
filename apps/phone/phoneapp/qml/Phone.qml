@@ -7,7 +7,7 @@ Rectangle {
     property int seconds: 0
 
     Button {
-        text: "ro2jdbdfhj57b5cj.onion"
+        text: "tvtcxcxssrxrbhkq.onion"
         onClicked: { console.log("Calling friend.")
                      toonion.text = text
                    }

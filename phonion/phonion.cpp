@@ -46,16 +46,10 @@ Phonion::Phonion(int &argc, char **argv)
     context()->setContextProperty("notifier", _notifier);
     context()->setContextProperty("appmodel", _appModel);
 
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::Socks5Proxy);
-    proxy.setHostName(PROXY_HOST);
-    proxy.setPort(PROXY_PORT);
-    QNetworkProxy::setApplicationProxy(proxy);
-
-    loadApps();
-
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
+
+    loadApps();
 }
 
 QQmlContext* Phonion::context()
@@ -79,6 +73,23 @@ const QString Phonion::launch(int index)
 
     App* app = _appModel->app(index);
     app->launch(_view->rootContext(), onion(), _notifier);
+
+    /* TODO: (Fix) This has to be called after the Phone (or
+     *        any app that uses a QSocket).
+     *
+     *        Ideally, our infrastructure is fully worked around
+     *        a SOCKS5 Proxy for every future QSocket.
+     *
+     *
+     *        Utilitze QNetworkAccessManager to build a network
+     *        access layer.
+     */
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::Socks5Proxy);
+    proxy.setHostName(PROXY_HOST);
+    proxy.setPort(PROXY_PORT);
+    QNetworkProxy::setApplicationProxy(proxy);
+
     return app->source();
 }
 
