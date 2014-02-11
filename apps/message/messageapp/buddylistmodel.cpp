@@ -8,6 +8,8 @@
 #include <QHash>
 #include <QList>
 #include <QModelIndex>
+#include <QString>
+#include <QStringList>
 #include <QVariant>
 
 #include "buddy.h"
