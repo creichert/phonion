@@ -1,6 +1,6 @@
 [submodule "mumble"]
-	path = mumble
+	path = apps/phone/mumble
 	url = git@git.reichertbrothers.com:mumble.git
-[submodule "phonion/torchat"]
-	path = phonion/torchat
+[submodule "torchat"]
+	path = apps/message/torchat
 	url = git@git.reichertbrothers.com:torchat.git
