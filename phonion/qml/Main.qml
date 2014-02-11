@@ -19,15 +19,10 @@ Rectangle  {
         Connections {
             target: notifier
             onMessageNotification: {
-
-                /* TODO: Implement a system to test which 'qmlfile:buddy'
-                 * combo is open. We can propogate value up from the signal
-                 * with a Notification object and if both conditions are met
-                 * we do not need to push a notification; presumably, because
-                 * user is using that app with that buddy.
-                 */
-                notifications.text = msg
-                notifications.show()
+                if (!msg.fromme()) {
+                    notifications.text = msg.buddy() + ": " + msg.text()
+                    notifications.show()
+                }
             }
         }
     }

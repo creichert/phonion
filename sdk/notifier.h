@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class Message;
+#include "message.h"
 
 class Notifier : public QObject {
     Q_OBJECT
@@ -11,7 +11,7 @@ public:
     explicit Notifier(QObject* parent=0);
 
 signals:
-    void messageNotification(const QString& msg);
+    void messageNotification(Message* msg);
 };
 
 #endif // NOTIFIER_H

@@ -30,7 +30,7 @@ void ChatModel::newMessage(Message* msg)
      * set.
      */
     _chats[msg->buddy()].prepend(msg);
-    emit message(msg->text());
+    emit message(msg);
 
     endInsertRows();
 }

@@ -62,8 +62,8 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
     // TODO: What if this is not setup properly?
     context->setContextProperty("buddylistmodel", _buddyListModel);
 
-    connect(_chatModel, SIGNAL(message(const QString&)),
-            notifier, SIGNAL(messageNotification(const QString&)));
+    connect(_chatModel, SIGNAL(message(Message*)),
+            notifier, SIGNAL(messageNotification(Message*)));
 
     // Needed to keep app up to date.
     QTimer *timer = new QTimer(this);
