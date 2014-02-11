@@ -3,6 +3,7 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QFile>
+#include <QFileInfo>
 #include <QFileSystemWatcher>
 #include <QHash>
 #include <QList>
@@ -15,7 +16,7 @@
 BuddyListModel::BuddyListModel(QObject* parent)
   : QAbstractListModel(parent)
 {
-    QString blfile = "./apps/message/torchat/torchat/src/buddy-list.txt";
+    QString blfile = QFileInfo("./apps/message/torchat/torchat/src/buddy-list.txt").absoluteFilePath();
     QFileSystemWatcher* watcher = new QFileSystemWatcher(this);
     watcher->addPath(blfile);
     connect(watcher, SIGNAL(fileChanged(const QString&)), SLOT(onBuddyListChanged(const QString&)));
@@ -77,8 +78,6 @@ void BuddyListModel::updateStatus(const QString& buddy, Buddy::Status status)
 
 void BuddyListModel::onBuddyListChanged(const QString& path)
 {
-    // TODO: Called only once and file will not open.
-    //qDebug() << path;
     QFile inputFile(path);
     if (inputFile.open(QIODevice::ReadOnly)) {
 
@@ -94,7 +93,8 @@ void BuddyListModel::onBuddyListChanged(const QString& path)
             QString name;
             //if (line.count() > 1)
             //    line.split(' ').at(1);
-            qDebug() << address;
+
+            // Test if buddy is already in the list
             if(!buddyFromAddress(address))
                 addBuddy(new Buddy(address, name, this));
         }
