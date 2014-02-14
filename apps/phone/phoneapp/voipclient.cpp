@@ -63,6 +63,11 @@ void VoipClient::end()
     _serverHandler->disconnect();
 }
 
+QString VoipClient::latency()
+{
+	return QString::fromLatin1("%1").arg(sqrt(boost::accumulators::variance(_serverHandler->accTCP)),0,'f',2);
+}
+
 void VoipClient::serverConnected()
 {
     qDebug() << Q_FUNC_INFO << "Server Connected " << _serverHandler;

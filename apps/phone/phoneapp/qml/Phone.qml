@@ -4,8 +4,6 @@ import QtQuick 2.0
 
 Rectangle {
 
-    property int seconds: 0
-
     Button {
         text: "tvtcxcxssrxrbhkq.onion"
         onClicked: { console.log("Calling friend.")
@@ -15,16 +13,16 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: 1000
+        interval: 15000
         repeat: true
-        onTriggered: seconds++
+        onTriggered: info.text = "Latency: " + voipclient.latency()
     }
 
     Text {
-        id: elapsedtime
-        text: seconds
+        // TODO: Property bind voipclient.latency here.
+        id: info
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: toonion.top
     }
 
     TextInput {
@@ -46,7 +44,7 @@ Rectangle {
         onClicked: { console.log("Call: " + toonion.text)
                      if (toonion.text.length == 16) {
                          voipclient.call(toonion.text)
-                         seconds = 0; timer.start()
+                         timer.start()
                      } else {
                          console.log("Call to onion " + toonion.text + " failed. Incorrectly formatted.")
                      }

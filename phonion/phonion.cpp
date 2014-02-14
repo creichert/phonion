@@ -80,7 +80,6 @@ const QString Phonion::launch(int index)
      *        Ideally, our infrastructure is fully worked around
      *        a SOCKS5 Proxy for every future QSocket.
      *
-     *
      *        Utilitze QNetworkAccessManager to build a network
      *        access layer.
      */

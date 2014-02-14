@@ -14,6 +14,7 @@ public:
 
     Q_INVOKABLE void call(const QString& onion);
     Q_INVOKABLE void end();
+    Q_INVOKABLE QString latency();
 
 private slots:
     void serverConnected();
