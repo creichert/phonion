@@ -1,3 +1,5 @@
+include(../phonion.pri)
+
 TEMPLATE = app
 TARGET = phonion
 INSTALL += phonion

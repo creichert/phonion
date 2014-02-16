@@ -1,3 +1,5 @@
+include(../../../phonion.pri)
+
 TEMPLATE = lib
 TARGET = phoneapp
 DEPENDS = mumbl
