@@ -26,7 +26,6 @@ static void recreateServerHandler() {
         QThread::yieldCurrentThread();
     sh.reset();
 
-    // ServerHandlerPtr is QSharedPointer.
     sh = ServerHandlerPtr(new ServerHandler());
     sh->moveToThread(sh.get());
     g.sh = sh;
@@ -65,7 +64,8 @@ void VoipClient::end()
 
 QString VoipClient::latency()
 {
-	return QString::fromLatin1("%1").arg(sqrt(boost::accumulators::variance(_serverHandler->accTCP)),0,'f',2);
+	return QString::fromLatin1("%1").arg(
+            sqrt(boost::accumulators::variance(_serverHandler->accTCP)),0,'f',2);
 }
 
 void VoipClient::serverConnected()

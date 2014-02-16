@@ -12,10 +12,10 @@ Rectangle {
     Text {
         id: time
         property variant now: new Date()
-        text: Qt.formatDateTime(now, "hh:mm:ss")
+        text: Qt.formatDateTime(now, "hh:mm")
         anchors.horizontalCenter: parent.horizontalCenter
         Timer {
-            interval: 1000
+            interval: 60000
             running: true
             repeat: true
             onTriggered: time.now = new Date()
