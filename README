@@ -25,27 +25,7 @@ Cross-compile for Raspberry Pi
 
 Compile Qt
 ----------
-
-Developer build: http://qt-project.org/wiki/Building_Qt_5_from_Git
-
-    $ git clone git://gitorious.org/qt/qt5.git qt5
-    $ cd $QT5PATH && perl ./init-repository
-    $ ./configure -developer-build -opensource -confirm-license
-    $ make -j5
-
-Cross compile Qt5 for Raspberry Pi:  http://www.ics.com/blog/building-qt-5-raspberry-pi#.UtV6npCldhE
-
-    $ sudo ./fixQualifiedLibraryPaths /mnt/rasp-pi-rootfs/ ~/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc
-    
-
-    $ ./configure -releaseordebug -opengl es2 \ # -dbus -lrt -lpthread -no-neon -qt-xcb \
-               -optimized-qmake -no-pch \
-               -make libs -make tools -reduce-exports -sysroot /mnt/rasp-pi-rootfs \
-               -device linux-rasp-pi-g++ \
-               -device-option CROSS_COMPILE=~/workspace/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf- \
-               -prefix /usr/local/qt5pi/ -opensource -confirm-license
-    $ make -j4
-    $ sudo make install
+* Use instructions here: http://www.ics.com/blog/building-qt-and-qtwayland-raspberry-pi
 
 
 Security Concerns
@@ -69,14 +49,17 @@ Dependendencies
 ----------------
 
     # Qt deps
-    sudo apt-get install "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev \
-                          libfontconfig1-dev libdbus-1-dev libegl1-mesa-dev libgegl-dev \
-                          libfreetype6-dev libudev-dev \
-                          libasound2-dev libavcodec-dev libavformat-dev \
-                          libswscale-dev libgstreamer0.10-dev \
-                          libgstreamer-plugins-base0.10-dev gstreamer-tools \
-                          gstreamer0.10-plugins-good gstreamer0.10-plugins-bad \
-                          libx11-dev libxcb-icccm4 libxfixes-dev
+    $ sudo apt-get install libxcb1 libxcb1-dev libx11-xcb1 libx11-xcb-dev \
+                   libxcb-keysyms1 libxcb-keysyms1-dev libxcb-image0 libxcb-image0-dev libxcb-shm0 \
+                   libxcb-shm0-dev libxcb-icccm4 libxcb-icccm4-dev libxcb-sync0 libxcb-sync0-dev \
+                   libxcb-render-util0 libxcb-render-util0-dev libxcb-xfixes0-dev libxrender-dev \
+                   libxcb-shape0-dev libxcb-randr0-dev libxcb-glx0-dev
+
+    $ sudo apt-get install libxkbcommon-dev libudev-dev libwayland-dev libpng12-dev \
+                   libjpeg8-dev libmtdev-dev autotools-dev autoconf automake bison flex \
+                   libasound2-dev libxext-dev x11proto-xext-dev libxcursor-dev libxfixes-dev \
+                   x11proto-fixes-dev libffi-dev libsm-dev libxcomposite-dev
+
     # Install Tortalk deps
     sudo apt-get install libboost-python
     
