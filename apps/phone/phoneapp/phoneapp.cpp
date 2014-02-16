@@ -14,9 +14,11 @@ void PhoneApp::start(QQmlContext* context, const QString& onion, Notifier* notif
 {
     App::start(context, onion, notifier);
 #ifdef VOIP
-    setupMumble(*qApp, 0, NULL);
 
     _voipClient = new VoipClient(onion, this);
+    // Use this as parent to manage mumble resources:
+    // setupMumble(*qApp, _voipClient, 0, NULL);
+    setupMumble(*qApp, 0, NULL);
     context->setContextProperty("voipclient", _voipClient);
 #endif
 }
