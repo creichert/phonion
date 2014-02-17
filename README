@@ -1,50 +1,6 @@
 Phonion: a secure voip and messaging device
 ============================================
 
-Compiling
----------
-    $ qmake CONFIG+=phonion CONFIG+=voip -recursive
-    $ make
-
-
-Run
----
-    $ source env.sh
-    $ ./phonion/phonion
-
-
-Cross-compile for Raspberry Pi
-------------------------------
-
-    $ qmake CONFIG+=rpi CONFIG+=phonion CONFIG+=voip CONFIG+=debug -recursive
-    $ make -j4
-
-    $ export PIIP=192.168.1.107
-    $ rsync -av -e ssh ../phonion/ pi@PIIP:phonion
-
-
-Compile Qt
-----------
-* Use instructions here: http://www.ics.com/blog/building-qt-and-qtwayland-raspberry-pi
-
-
-Security Concerns
------------------
-
-* Mumble defaulting to OpenSSL v1.0. This should be restricted to at least v2.0 if not v3.0.
-* Set hard limit on number of characters allowed per message.
-
-
-TODO
-----
-
-1. Website
-..* Basic landing page.
-2. Documentation
-..* Technical security documentation outlining software libraries, encryption used, etc.
-..* User documentation and FAQ.
-
-
 Dependendencies
 ----------------
 
@@ -62,7 +18,7 @@ Dependendencies
 
     # Install Tortalk deps
     sudo apt-get install libboost-python
-    
+
     # Install Mumble deps
     sudo apt-get install build-essential pkg-config qt4-dev-tools libqt4-dev libspeex1 \
               libspeex-dev libboost-dev libasound2-dev libssl-dev g++ \
@@ -70,3 +26,30 @@ Dependendencies
               libcap-dev libspeexdsp-dev libprotobuf-dev protobuf-compiler \
               libogg-dev libavahi-compat-libdnssd-dev libsndfile1-dev \
               libg15daemon-client-dev libxi-dev libopus-dev libcelt0-0 libcelt-dev
+Compiling
+---------
+    $ qmake CONFIG+=phonion CONFIG+=voip CONFIG+=debug -recursive
+    $ make
+
+
+Run
+---
+    $ source env.sh
+    $ ./phonion/phonion
+
+
+Security Concerns
+-----------------
+
+* Mumble defaulting to OpenSSL v1.0. This should be restricted to at least v2.0 if not v3.0.
+* Set hard limit on number of characters allowed per message.
+
+
+TODO
+----
+
+1. Website
+..* Basic landing page.
+2. Documentation
+..* Technical security documentation outlining software libraries, encryption used, etc.
+..* User documentation and FAQ.
