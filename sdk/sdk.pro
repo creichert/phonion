@@ -14,6 +14,7 @@ HEADERS += app.h \
            notifier.h
 
 SOURCES += appmodel.cpp \
+           buddy.cpp \
            buddylistmodel.cpp \
            message.cpp \
            notification.cpp \

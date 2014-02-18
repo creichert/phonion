@@ -3,7 +3,6 @@
          can no longer load the sdk qml. -->
     <qresource prefix="/">
         <!-- QML -->
-        <file>qml/BuddyList.qml</file>
         <file>qml/Chat.qml</file>
         <file>qml/Messages.qml</file>
     </qresource>
