@@ -12,12 +12,10 @@ INCLUDEPATH += ../../../sdk
 
 LIBS += -L../integrator -lintegrator -L../../../sdk -lphonion
 
-HEADERS += buddylistmodel.h \
-           chatmodel.h \
+HEADERS += chatmodel.h \
            messageapp.h
 
-SOURCES += buddylistmodel.cpp \
+SOURCES += chatmodel.cpp
            messageapp.cpp \
-           chatmodel.cpp
 
 RESOURCES += messageapp.qrc
