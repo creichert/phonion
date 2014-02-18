@@ -91,11 +91,6 @@ QString MessageApp::source()
     return "qrc:/qml/Messages.qml";
 }
 
-BuddyListModel* MessageApp::buddyListModel()
-{
-    return _buddyListModel;
-}
-
 ChatModel* MessageApp::chatModel()
 {
     return _chatModel;

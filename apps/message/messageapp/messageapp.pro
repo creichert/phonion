@@ -15,7 +15,7 @@ LIBS += -L../integrator -lintegrator -L../../../sdk -lphonion
 HEADERS += chatmodel.h \
            messageapp.h
 
-SOURCES += chatmodel.cpp
-           messageapp.cpp \
+SOURCES += chatmodel.cpp \
+           messageapp.cpp
 
 RESOURCES += messageapp.qrc

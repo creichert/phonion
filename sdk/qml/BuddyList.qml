@@ -3,6 +3,8 @@ import QtQuick 2.0
 
 Rectangle {
 
+    signal buddyClicked(string buddy)
+
     anchors.fill: parent
 
     ListView {
@@ -15,10 +17,7 @@ Rectangle {
                       anchors.left: parent.left
                       anchors.right: parent.right
                       text: name + " (" + displayName + ")"
-                      onClicked: { console.log("Chatting with " + name)
-                                   messagemodel.setCurrentBuddy(name)
-                                   messageapploader.source = "qrc:/qml/Chat.qml"
-                                 }
+                      onClicked: buddyClicked(name)
 
                       Rectangle {
                           width: 14; height: 14
@@ -37,21 +36,5 @@ Rectangle {
                           anchors.right: parent.right
                       }
                   }
-    }
-
-    Button {
-        id: addbuddybutton
-        text: "+"
-        anchors.bottom: parent.bottom
-        onClicked: { MessageApp.addBuddy(newbuddy.text)
-                     newbuddy.text = ""
-                   }
-    }
-
-    TextInput {
-        id: newbuddy
-        anchors.left: addbuddybutton.right
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
     }
 }

@@ -8,6 +8,6 @@ Rectangle  {
     Loader {
         id: messageapploader
         anchors.fill: parent
-        source: "qrc:/qml/BuddyList.qml"
+        source: "qrc:/qml/MessageBuddyList.qml"
     }
 }

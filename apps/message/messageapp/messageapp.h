@@ -26,7 +26,6 @@ public:
     virtual QString icon();
     virtual QString source();
 
-    BuddyListModel* buddyListModel();
     ChatModel* chatModel();
 
     Q_INVOKABLE void addBuddy(const QString& buddy);

@@ -4,6 +4,7 @@
     <qresource prefix="/">
         <!-- QML -->
         <file>qml/Chat.qml</file>
+        <file>qml/MessageBuddyList.qml</file>
         <file>qml/Messages.qml</file>
     </qresource>
 

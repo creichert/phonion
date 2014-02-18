@@ -4,11 +4,10 @@ import QtQuick 2.0
 
 Rectangle {
 
-    Button {
-        text: "tvtcxcxssrxrbhkq.onion"
-        onClicked: { console.log("Calling friend.")
-                     toonion.text = text
-                   }
+    BuddyList {
+        onBuddyClicked: { console.log("Calling Buddy " + buddy)
+                          toonion.text = buddy
+                        }
     }
 
     Timer {
@@ -46,7 +45,8 @@ Rectangle {
                          voipclient.call(toonion.text)
                          timer.start()
                      } else {
-                         console.log("Call to onion " + toonion.text + " failed. Incorrectly formatted.")
+                         console.log("Call to onion " + toonion.text +
+                                     " failed. Incorrectly formatted.")
                      }
                    }
     }
