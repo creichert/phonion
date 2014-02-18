@@ -93,8 +93,8 @@ void BuddyListModel::onBuddyListChanged(const QString& path)
             QString line = in.readLine();
             QString address = line.split(' ').at(0);
             QString name;
-            //if (line.count() > 1)
-            //    line.split(' ').at(1);
+            if (line.length() > 0)
+                name = line.split(' ').at(1);
 
             // Test if buddy is already in the list
             if(!buddyFromAddress(address))
