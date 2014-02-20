@@ -18,11 +18,14 @@ LIBS += -L../../../sdk -lphonion
 
 debug {
     LIBS += -L../mumble/debug -lmumble
+    QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../mumble/debug
 }
 
 release {
     LIBS += -L../mumble/release -lmumble
+    QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../mumble/release
 }
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../../../sdk
 
 HEADERS += phoneapp.h \
            voipclient.h

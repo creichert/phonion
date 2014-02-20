@@ -19,3 +19,6 @@ SOURCES += chatmodel.cpp \
            messageapp.cpp
 
 RESOURCES += messageapp.qrc
+
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../integrator
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../../../sdk

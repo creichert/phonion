@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export PYTHONPATH=$PWD/apps/message/integrator:$PWD/apps/message/torchat/torchat/src
+export QT_QPA_EGLFS_PHYSICAL_WIDTH=320
+       QT_QPA_EGLFS_PHYSICAL_HEIGHT=480
+       QT_QPA_EGLFS_DEPTH=32
+
+# TODO: Change the name of this file to configure and do this.
+git submodule update --init --recursive

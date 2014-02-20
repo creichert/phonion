@@ -17,3 +17,5 @@ SOURCES += main.cpp \
            phonion.cpp \
 
 RESOURCES += phonion.qrc
+
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../sdk

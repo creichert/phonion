@@ -1,10 +1,15 @@
 #!/bin/bash
 
 export PYTHONPATH=$PWD/apps/message/integrator:$PWD/apps/message/torchat/torchat/src
-
-# Use this until a build layout has been finalised. Use qmake install targets.
-export LD_LIBRARY_PATH=$PWD/apps/message/integrator:$PWD/apps/phone/mumble/debug:$PWD/sdk
-
 export QT_QPA_EGLFS_PHYSICAL_WIDTH=100
        QT_QPA_EGLFS_PHYSICAL_HEIGHT=100
        QT_QPA_EGLFS_DEPTH=32
+
+# TODO: Change the name of this file to configure and do this.
+git submodule update --init
+cd apps/phone/mumble
+git submodule update --init
+cd ../../..
+
+# Read cmd line args for more CONFIG options
+qmake CONFIG+=phonion CONFIG+=voip -recursive
