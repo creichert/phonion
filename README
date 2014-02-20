@@ -26,17 +26,12 @@ Dependendencies
               libcap-dev libspeexdsp-dev libprotobuf-dev protobuf-compiler \
               libogg-dev libavahi-compat-libdnssd-dev libsndfile1-dev \
               libg15daemon-client-dev libxi-dev libopus-dev libcelt0-0 libcelt-dev
-Compiling
----------
+Build
+-----
+
+    $ ./configure
     $ qmake CONFIG+=phonion CONFIG+=voip CONFIG+=debug -recursive
     $ make
-
-
-Run
----
-    $ source env.sh
-    $ ./phonion/phonion
-
 
 Security Concerns
 -----------------
