@@ -34,10 +34,9 @@ signals:
     void message(Message*);
 
 private:
-    // Don't hold all chats in memory all the time.
+    // TODO: Don't hold all chats in memory all the time.
     QHash<QString, QList<Message*> > _chats;
     QString _currentBuddy;
 };
 
-//qmlRegisterType<Message>("co.phonion.chatmodel", 1, 0, "ChatModel");
 #endif // CHATMODEL_H

@@ -20,6 +20,14 @@
 using namespace std;
 namespace py = boost::python;
 
+MessageApp::MessageApp(QObject* parent)
+    : App(parent)
+    , _chatModel(0)
+    , _buddyListModel(0)
+{
+    qmlRegisterType<ChatModel>("Phonion", 1, 0, "ChatModel");
+}
+
 MessageApp::~MessageApp()
 {
     _buddyList.attr("stopClient");
@@ -56,18 +64,17 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
         cout << "Error during configuration parsing: " << perror_str << endl;
     }
 
-    // TODO: Only used to add buddy. bad architechture. Don't pass this here.
+    /* TODO: Remove this monstrosity when the Tor and BuddyList handling
+     *       are decoupled from TorChat
+     */
     context->setContextProperty("MessageApp", this);
-    context->setContextProperty("messagemodel", _chatModel);
-    // TODO: What if this is not setup properly?
-    context->setContextProperty("buddylistmodel", _buddyListModel);
 
     connect(_chatModel, SIGNAL(message(Message*)),
             notifier, SIGNAL(messageNotification(Message*)));
 
     // Needed to keep app up to date.
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateInterpreter()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(onUpdateInterpreter()));
     timer->start(1000);
 }
 
@@ -96,20 +103,20 @@ ChatModel* MessageApp::chatModel()
     return _chatModel;
 }
 
-/*TODO: https://quality.reichertbrothers.com/phonion/issue5
- *
- * Don't sync with the buddylist model at the end. Just let the BuddyListModel
- * update with it's own QFileSystemWatcher.
- */
-void MessageApp::addBuddy(const QString& newbuddy)
+BuddyListModel* MessageApp::buddyListModel()
 {
-    if (newbuddy.length() != 16) {
+    return _buddyListModel;
+}
+
+void MessageApp::addBuddy(const QString& buddy)
+{
+    if (buddy.length() != 16) {
         qDebug() << "[ERROR]: Incorrectly formatted buddy address.";
         return;
     }
 
     try {
-        py::extract<bool>(_buddyList.attr("addBuddy")(newbuddy.toStdString()));
+        py::extract<bool>(_buddyList.attr("addBuddy")(buddy.toStdString()));
     } catch(py::error_already_set const &){
         string perror_str = parse_python_exception();
         cout << Q_FUNC_INFO << perror_str << endl;
@@ -132,7 +139,7 @@ void MessageApp::sendChatMessage(const QString& msg)
     }
 }
 
-void MessageApp::updateInterpreter()
+void MessageApp::onUpdateInterpreter()
 {
     py::exec("print \"updating interpreter\"");
 }

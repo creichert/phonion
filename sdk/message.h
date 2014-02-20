@@ -12,6 +12,7 @@ public:
     Q_INVOKABLE QString text() { return _text; }
     Q_INVOKABLE QString buddy() { return _buddy; }
     Q_INVOKABLE bool fromme() { return _fromme; }
+
 private:
     QString _buddy;
     QString _text;

@@ -5,9 +5,9 @@ BuddyList {
     anchors.fill: parent
 
     onBuddyClicked: { console.log("Chatting with " + buddy)
-                 messagemodel.setCurrentBuddy(buddy)
-                 messageapploader.source = "qrc:/qml/Chat.qml"
-               }
+                      messagemodel.setCurrentBuddy(buddy)
+                      messageapploader.source = "qrc:/qml/Chat.qml"
+                    }
 
     Button {
         id: addbuddybutton

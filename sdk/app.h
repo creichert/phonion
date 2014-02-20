@@ -5,6 +5,9 @@
 #include <QPointer>
 #include <QQmlContext>
 #include <QString>
+#include <QtQml>
+
+#include "buddylistmodel.h"
 
 class Notifier;
 class QString;
@@ -38,12 +41,20 @@ class App : public QObject, public AppInterface {
     Q_OBJECT
     Q_INTERFACES(AppInterface)
 public:
+
+    App(QObject* parent=0)
+        : QObject(parent) {
+        qmlRegisterType<BuddyListModel>("Phonion", 1, 0, "BuddyListModel");
+    };
+
     /* The standard constructor for each app sets up only the data necessary
      * to display information on the app.
      */
     QQmlContext* context() { return _context; }
     QString onion() { return _onion; }
 
+    /* TODO: Move all the methods to a cpp file.
+     */
     virtual void launch(QQmlContext* context, const QString& onion, Notifier* notifier) {
         Q_UNUSED(notifier);
         _context = context;

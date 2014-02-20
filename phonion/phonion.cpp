@@ -41,7 +41,7 @@ Phonion::Phonion(int &argc, char **argv)
         qDebug() << "Identified hidden service: " << _onion;
     }
 
-    // TODO: Managed context properties in another subsystem.
+    // TODO: Phonion should use rootContext.
     context()->setContextProperty("app", this);
     context()->setContextProperty("notifier", _notifier);
     context()->setContextProperty("appmodel", _appModel);
@@ -49,6 +49,11 @@ Phonion::Phonion(int &argc, char **argv)
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
 
+    /* TODO: The home screen grid view should read the
+     *       info about each app in it;s corresponding
+     *       JSON file. The app (plugin) should not be
+     *       instantiated until use clicks launch.
+     */
     loadApps();
 }
 
@@ -73,6 +78,9 @@ const QString Phonion::launch(int index)
 
     App* app = _appModel->app(index);
     app->launch(_view->rootContext(), onion(), _notifier);
+
+    // TODO: Don't use root context. Create a new context per app.
+    _view->rootContext()->setContextObject(app);
 
     /* TODO: (Fix) This has to be called after the Phone (or
      *        any app that uses a QSocket).
