@@ -18,8 +18,6 @@ class MessageApp : public App
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "co.phonion.Phonion.AppInterface" FILE "messageapp.json")
-
-    // Properties accessible in Qml context.
     Q_PROPERTY(ChatModel* messagemodel READ chatModel CONSTANT)
     Q_PROPERTY(BuddyListModel* buddylistmodel READ buddyListModel CONSTANT)
 public:

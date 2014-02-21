@@ -32,7 +32,7 @@ Phonion::Phonion(int &argc, char **argv)
 
     _view->setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Use QFileInfo and also check against security key.
+    /* Use QFileInfo and also check against security key. */
     QFile f("./apps/message/torchat/torchat/src/Tor/hidden_service/hostname");
     if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning("Hidden service not found");
@@ -41,7 +41,7 @@ Phonion::Phonion(int &argc, char **argv)
         qDebug() << "Identified hidden service: " << _onion;
     }
 
-    // TODO: Phonion should use rootContext.
+    /* TODO: Phonion should use rootContext. */
     context()->setContextProperty("app", this);
     context()->setContextProperty("notifier", _notifier);
     context()->setContextProperty("appmodel", _appModel);
@@ -77,9 +77,11 @@ const QString Phonion::launch(int index)
      */
 
     App* app = _appModel->app(index);
+
+    /* TODO: Only pass QQmlContext. */
     app->launch(_view->rootContext(), onion(), _notifier);
 
-    // TODO: Don't use root context. Create a new context per app.
+    /* TODO: Don't use root context. Create a new context per app. */
     _view->rootContext()->setContextObject(app);
 
     /* TODO: (Fix) This has to be called after the Phone (or
@@ -102,8 +104,9 @@ const QString Phonion::launch(int index)
 
 void Phonion::loadApps()
 {
-    // We can clean this up once we are copying
-    // all apps to a proper plugins or `apps dir.
+    /* TODO: Clean this up once we are copying
+     *       all apps to a proper plugins or apps dir.
+     */
     QDirIterator it("./apps", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         QPluginLoader loader(it.next());

@@ -33,13 +33,19 @@ MessageApp::~MessageApp()
     _buddyList.attr("stopClient");
 }
 
-// TODO: Find a way to parameterize the input here as it will almost certainly grow.
 void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* notifier)
 {
     App::start(context, onion, notifier);
 
-    _chatModel = new ChatModel(this);
+    /* TODO: On the first run, this is called before the buddy-list
+     *       file is established. Moving it after the torchat initialization
+     *       results in a "No such file or directory".
+     */
     _buddyListModel = new BuddyListModel(this);
+
+    _chatModel = new ChatModel(this);
+    connect(_chatModel, SIGNAL(message(Message*)),
+            notifier, SIGNAL(messageNotification(Message*)));
 
     Py_Initialize();
     try {
@@ -68,9 +74,6 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
      *       are decoupled from TorChat
      */
     context->setContextProperty("MessageApp", this);
-
-    connect(_chatModel, SIGNAL(message(Message*)),
-            notifier, SIGNAL(messageNotification(Message*)));
 
     // Needed to keep app up to date.
     QTimer *timer = new QTimer(this);
