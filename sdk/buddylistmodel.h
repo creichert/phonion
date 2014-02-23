@@ -17,7 +17,7 @@ public:
     , StatusRole
     };
 
-    BuddyListModel(QObject* parent=0);
+    explicit BuddyListModel(QObject* parent=0);
 
     void addBuddy(Buddy* buddy);
     QList<Buddy*> buddies();

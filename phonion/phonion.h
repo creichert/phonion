@@ -16,7 +16,7 @@ class Phonion: public QApplication {
     Q_PROPERTY(AppModel* appmodel READ appModel CONSTANT)
     Q_PROPERTY(Notifier* notifier READ notifier CONSTANT)
 public:
-    Phonion(int &argc, char **argv);
+    explicit Phonion(int &argc, char **argv);
 
     Notifier* notifier();
     AppModel* appModel();

@@ -13,11 +13,16 @@ class PhoneApp : public App
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "co.phonion.Phonion.AppInterface" FILE "phoneapp.json")
+    Q_PROPERTY(VoipClient* voipclient READ voipClient CONSTANT)
 public:
+    explicit PhoneApp(QObject* parent = 0);
+
     virtual QString id();
     virtual QString name();
     virtual QString icon();
     virtual QString source();
+
+    VoipClient* voipClient();
 
 protected:
     virtual void start(QQmlContext* context, const QString& onion, Notifier* notifier);

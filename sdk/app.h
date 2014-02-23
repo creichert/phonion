@@ -43,7 +43,7 @@ class App : public QObject, public AppInterface {
     Q_PROPERTY(BuddyListModel* buddylistmodel READ buddyListModel CONSTANT)
 public:
 
-    App(QObject* parent=0)
+    explicit App(QObject* parent=0)
         : QObject(parent)
         , _buddyListModel(0) {
         qmlRegisterType<BuddyListModel>("Phonion", 1, 0, "BuddyListModel");

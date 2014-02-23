@@ -18,7 +18,7 @@ public:
     , IconRole 
     };
 
-    AppModel(QObject* parent=0);
+    explicit AppModel(QObject* parent=0);
 
     void addApp(App* app);
     App* app(int index);
