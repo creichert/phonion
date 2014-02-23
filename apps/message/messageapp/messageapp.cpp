@@ -10,7 +10,6 @@
 
 #include "app.h"
 #include "buddy.h"
-#include "buddylistmodel.h"
 #include "chatmodel.h"
 #include "integrator.h"
 #include "message.h"
@@ -23,7 +22,6 @@ namespace py = boost::python;
 MessageApp::MessageApp(QObject* parent)
     : App(parent)
     , _chatModel(0)
-    , _buddyListModel(0)
 {
     qmlRegisterType<ChatModel>("Phonion", 1, 0, "ChatModel");
 }
@@ -37,12 +35,6 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
 {
     App::start(context, onion, notifier);
 
-    /* TODO: On the first run, this is called before the buddy-list
-     *       file is established. Moving it after the torchat initialization
-     *       results in a "No such file or directory".
-     */
-    _buddyListModel = new BuddyListModel(this);
-
     _chatModel = new ChatModel(this);
     connect(_chatModel, SIGNAL(message(Message*)),
             notifier, SIGNAL(messageNotification(Message*)));
@@ -55,10 +47,9 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
         py::exec("import tc_client", mn);
         py::exec("import libintegrator", mn);
         py::exec("i = libintegrator.Integrator()", mn);
-        //py::exec("socket = tc_client.tryBindPort(\"127.0.0.1\", 11009)", mn);
         _buddyList = py::eval("tc_client.BuddyList(i.callback)", mn);
 
-        // (boost::python) Who manages the memory of Integrator now.
+        /* (boost::python) Who manages the memory of Integrator now. */
         Integrator* integrator = py::extract<Integrator*>(mn["i"]);
         connect(integrator, SIGNAL(onChatMessage(const QString&, const QString&)),
                               SLOT(onChatMessage(const QString&, const QString&)));
@@ -70,12 +61,7 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
         cout << "Error during configuration parsing: " << perror_str << endl;
     }
 
-    /* TODO: Remove this monstrosity when the Tor and BuddyList handling
-     *       are decoupled from TorChat
-     */
-    context->setContextProperty("MessageApp", this);
-
-    // Needed to keep app up to date.
+    /* Needed to keep torchat up-to-date. */
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdateInterpreter()));
     timer->start(1000);
@@ -106,15 +92,10 @@ ChatModel* MessageApp::chatModel()
     return _chatModel;
 }
 
-BuddyListModel* MessageApp::buddyListModel()
-{
-    return _buddyListModel;
-}
-
 void MessageApp::addBuddy(const QString& buddy)
 {
     if (buddy.length() != 16) {
-        qDebug() << "[ERROR]: Incorrectly formatted buddy address.";
+        qDebug() << "Incorrectly formatted buddy address.";
         return;
     }
 
@@ -128,8 +109,7 @@ void MessageApp::addBuddy(const QString& buddy)
 
 void MessageApp::sendChatMessage(const QString& msg)
 {
-    if (msg.isEmpty())
-        return;
+    if (msg.isEmpty()) return;
 
     _chatModel->newMessage(new Message(_chatModel->currentBuddy(), msg, true, _chatModel));
     try {
@@ -165,7 +145,7 @@ void MessageApp::onStatusChanged(const QString& newbuddy)
         cout << Q_FUNC_INFO << perror_str << endl;
     }
 
-    _buddyListModel->updateStatus(newbuddy, status);
+    buddyListModel()->updateStatus(newbuddy, status);
 }
 
 std::string MessageApp::parse_python_exception() {

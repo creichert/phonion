@@ -30,6 +30,9 @@ Phonion::Phonion(int &argc, char **argv)
     setOrganizationName(QLatin1String("Phonion"));
     setOrganizationDomain(QLatin1String("phonion.phonion.co"));
 
+    qmlRegisterType<Notifier>("Phonion", 1, 0, "Notifier");
+    qmlRegisterType<AppModel>("Phonion", 1, 0, "AppModel");
+
     _view->setResizeMode(QQuickView::SizeRootObjectToView);
 
     /* Use QFileInfo and also check against security key. */
@@ -41,10 +44,14 @@ Phonion::Phonion(int &argc, char **argv)
         qDebug() << "Identified hidden service: " << _onion;
     }
 
+    /* Only the Phonion object should be the contextObject
+     * for the rootContext. We will dervice a context for
+     * each app.
+     */
+    _view->rootContext()->setContextObject(this);
+
     /* TODO: Phonion should use rootContext. */
-    context()->setContextProperty("app", this);
-    context()->setContextProperty("notifier", _notifier);
-    context()->setContextProperty("appmodel", _appModel);
+    _view->rootContext()->setContextProperty("app", this);
 
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
@@ -57,14 +64,25 @@ Phonion::Phonion(int &argc, char **argv)
     loadApps();
 }
 
-QQmlContext* Phonion::context()
+Notifier* Phonion::notifier()
 {
-    return _view->rootContext();
+    return _notifier;
+}
+
+AppModel* Phonion::appModel()
+{
+    return _appModel;
 }
 
 const QString Phonion::onion()
 {
     return _onion;
+}
+
+const QString Phonion::home()
+{
+    _view->rootContext()->setContextObject(this);
+    return "qrc:/qml/Home.qml";
 }
 
 const QString Phonion::launch(int index)
@@ -78,17 +96,16 @@ const QString Phonion::launch(int index)
 
     App* app = _appModel->app(index);
 
-    /* TODO: Only pass QQmlContext. */
-    app->launch(_view->rootContext(), onion(), _notifier);
+    /* TODO: Ideally, we derive a new QQmlContext for each app. However, when i
+     *       dynamically create a new QQmlContext the properties are not set.
+     */
+    QQmlContext* context = _view->rootContext();
 
-    /* TODO: Don't use root context. Create a new context per app. */
-    _view->rootContext()->setContextObject(app);
+    /* TODO: Only pass QQmlContext. */
+    app->launch(context, onion(), _notifier);
 
     /* TODO: (Fix) This has to be called after the Phone (or
      *        any app that uses a QSocket).
-     *
-     *        Ideally, our infrastructure is fully worked around
-     *        a SOCKS5 Proxy for every future QSocket.
      *
      *        Utilitze QNetworkAccessManager to build a network
      *        access layer.
@@ -102,6 +119,8 @@ const QString Phonion::launch(int index)
     return app->source();
 }
 
+/* TODO: Move to the app model.
+ */
 void Phonion::loadApps()
 {
     /* TODO: Clean this up once we are copying
@@ -113,8 +132,9 @@ void Phonion::loadApps()
         QObject* plugin = loader.instance();
         if (plugin) {
             App* app = qobject_cast<App*>(plugin);
-            if (app)
+            if (app) {
                 _appModel->addApp(app);
+            }
         }
     }
 }

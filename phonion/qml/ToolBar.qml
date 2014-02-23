@@ -10,6 +10,6 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "Home"
-        onClicked: loader.source = "qrc:/qml/Home.qml"
+        onClicked: loader.source = app.home()
     }
 }

@@ -21,7 +21,7 @@ class QQmlContext;
 class AppInterface {
 
 public:
-    //virtual ~App();
+    /* virtual ~App(); */
 
     virtual QString id() = 0;
     virtual QString name() = 0;
@@ -40,10 +40,12 @@ Q_DECLARE_INTERFACE(AppInterface, AppInterface_iid)
 class App : public QObject, public AppInterface {
     Q_OBJECT
     Q_INTERFACES(AppInterface)
+    Q_PROPERTY(BuddyListModel* buddylistmodel READ buddyListModel CONSTANT)
 public:
 
     App(QObject* parent=0)
-        : QObject(parent) {
+        : QObject(parent)
+        , _buddyListModel(0) {
         qmlRegisterType<BuddyListModel>("Phonion", 1, 0, "BuddyListModel");
     };
 
@@ -52,9 +54,8 @@ public:
      */
     QQmlContext* context() { return _context; }
     QString onion() { return _onion; }
+    BuddyListModel* buddyListModel() { return _buddyListModel; }
 
-    /* TODO: Move all the methods to a cpp file.
-     */
     virtual void launch(QQmlContext* context, const QString& onion, Notifier* notifier) {
         Q_UNUSED(notifier);
         _context = context;
@@ -62,7 +63,18 @@ public:
         if (!_started) {
             start(context, onion, notifier);
             _started = true;
+
+            /* TODO: On the first run, this is called before the buddy-list
+             *       file is established. Moving it after the torchat initialization
+             *       results in a "No such file or directory".
+             */
+            _buddyListModel = new BuddyListModel(this);
         }
+
+        _context->setContextObject(this);
+
+        /* Exposes the app through it's id field. e.g. MessageApp. */
+        _context->setContextProperty(id(), this);
     }
 
 protected:
@@ -74,6 +86,7 @@ protected:
 
 private:
     QPointer<QQmlContext> _context;
+    QPointer<BuddyListModel> _buddyListModel;
     QString _onion;
     bool _started = false;
 };

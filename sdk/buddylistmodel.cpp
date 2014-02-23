@@ -18,7 +18,7 @@
 BuddyListModel::BuddyListModel(QObject* parent)
   : QAbstractListModel(parent)
 {
-    QString blfile = QFileInfo("./apps/message/torchat/torchat/src/buddy-list.txt").absoluteFilePath();
+    QString blfile = QFileInfo("buddy-list.txt").absoluteFilePath();
     QFileSystemWatcher* watcher = new QFileSystemWatcher(this);
     watcher->addPath(blfile);
     connect(watcher, SIGNAL(fileChanged(const QString&)), SLOT(onBuddyListChanged(const QString&)));

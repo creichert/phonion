@@ -13,11 +13,15 @@ class QQuickView;
 
 class Phonion: public QApplication {
     Q_OBJECT
+    Q_PROPERTY(AppModel* appmodel READ appModel CONSTANT)
+    Q_PROPERTY(Notifier* notifier READ notifier CONSTANT)
 public:
     Phonion(int &argc, char **argv);
 
-    QQmlContext* context();
+    Notifier* notifier();
+    AppModel* appModel();
 
+    Q_INVOKABLE const QString home();
     Q_INVOKABLE const QString launch(int index);
     Q_INVOKABLE const QString onion();
 
