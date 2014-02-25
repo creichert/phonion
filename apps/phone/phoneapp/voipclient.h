@@ -1,8 +1,9 @@
 #ifndef VOIPCLIENT_H
 #define VOIPCLIENT_H
 
-#include <QObject>
 #include <QAbstractSocket>
+#include <QObject>
+#include <QProcess>
 
 class ServerHandler;
 
@@ -17,8 +18,9 @@ public:
     Q_INVOKABLE QString latency();
 
 private slots:
-    void serverConnected();
-    void serverDisconnected(QAbstractSocket::SocketError, QString reason);
+    void onServerConnected();
+    void onServerDisconnected(QAbstractSocket::SocketError, QString reason);
+    void onMurmurError(QProcess::ProcessError err);
 
 private:
     ServerHandler* _serverHandler;

@@ -30,7 +30,7 @@ Build
 -----
 
     $ ./configure
-    $ qmake CONFIG+=phonion CONFIG+=voip CONFIG+=debug -recursive
+    $ qmake CONFIG+=phonion CONFIG+=debug -recursive
     $ make
 
 Security Concerns

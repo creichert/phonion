@@ -1,7 +1,10 @@
 
-#include <QObject>
 #include <QAbstractSocket>
 #include <QDebug>
+#include <QDir>
+#include <QObject>
+#include <QProcess>
+#include <QStringList>
 #include <QThread>
 
 #include "ServerHandler.h"
@@ -37,15 +40,35 @@ VoipClient::VoipClient(const QString& onion, QObject* parent)
   , _myonion(onion)
 {
     qDebug() << Q_FUNC_INFO << "Registering VOIP Client As User: " << _myonion;
+
+    /* Start Murmurd. */
+#ifdef QT_DEBUG
+    QString murmurd = QDir::currentPath() + "/apps/phone/mumble/debug/murmurd";
+#else
+    QString murmurd = QDir::currentPath() + "/apps/phone/mumble/release/murmurd";
+#endif // QT_DEBUG
+
+    QStringList args;
+    args << "-ini" << QDir::currentPath() + "/apps/phone/murmur.ini";
+
+    QProcess* proc = new QProcess(this);
+    QObject::connect(proc, SIGNAL(error(QProcess::ProcessError)), SLOT(onMurmurError(QProcess::ProcessError)));
+
+    proc->start(murmurd, args);
+}
+
+void VoipClient::onMurmurError(QProcess::ProcessError err)
+{
+    qDebug() << "***Murmur Error***" << err;
 }
 
 void VoipClient::call(const QString& onion)
 {
     recreateServerHandler();
     _serverHandler = g.sh.get();
-    connect(_serverHandler, SIGNAL(connected()), SLOT(serverConnected()));
+    connect(_serverHandler, SIGNAL(connected()), SLOT(onServerConnected()));
     connect(_serverHandler, SIGNAL(disconnected(QAbstractSocket::SocketError, QString)),
-            SLOT(serverDisconnected(QAbstractSocket::SocketError, QString)));
+            SLOT(onServerDisconnected(QAbstractSocket::SocketError, QString)));
 
     const QString host = onion + ".onion";
     const short unsigned int port = 64738;
@@ -65,15 +88,15 @@ void VoipClient::end()
 QString VoipClient::latency()
 {
 	return QString::fromLatin1("%1").arg(
-            sqrt(boost::accumulators::variance(_serverHandler->accTCP)),0,'f',2);
+            sqrt(boost::accumulators::variance(_serverHandler->accTCP)), 0,'f', 2);
 }
 
-void VoipClient::serverConnected()
+void VoipClient::onServerConnected()
 {
     qDebug() << Q_FUNC_INFO << "Server Connected " << _serverHandler;
 }
 
-void VoipClient::serverDisconnected(QAbstractSocket::SocketError err, QString reason)
+void VoipClient::onServerDisconnected(QAbstractSocket::SocketError err, QString reason)
 {
     qDebug() << Q_FUNC_INFO << "Server disconnected: " << err << " : " << reason;
 }

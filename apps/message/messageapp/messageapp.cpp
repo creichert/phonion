@@ -42,8 +42,14 @@ void MessageApp::start(QQmlContext* context, const QString& onion, Notifier* not
     Py_Initialize();
     try {
 
+        QString pythonpath1 = QString("sys.path.append(\"%1\")").arg(QDir::currentPath() + "/apps/message/integrator");
+        QString pythonpath2 = QString("sys.path.append(\"%1\")").arg(QDir::currentPath() + "/apps/message/torchat/torchat/src");
         py::object mm = py::import("__main__");
         py::object mn = mm.attr("__dict__");
+        py::exec("import sys", mn);
+        py::exec(pythonpath1.toStdString().c_str(), mn);
+        py::exec(pythonpath2.toStdString().c_str(), mn);
+        py::exec("sys.path.append", mn);
         py::exec("import tc_client", mn);
         py::exec("import libintegrator", mn);
         py::exec("i = libintegrator.Integrator()", mn);

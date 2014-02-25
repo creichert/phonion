@@ -2,8 +2,8 @@
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
-#include <QFileInfo>
 #include <QFileSystemWatcher>
 #include <QHash>
 #include <QList>
@@ -18,7 +18,7 @@
 BuddyListModel::BuddyListModel(QObject* parent)
   : QAbstractListModel(parent)
 {
-    QString blfile = QFileInfo("buddy-list.txt").absoluteFilePath();
+    QString blfile = QDir::currentPath() + "/apps/message/torchat/torchat/src/buddy-list.txt";
     QFileSystemWatcher* watcher = new QFileSystemWatcher(this);
     watcher->addPath(blfile);
     connect(watcher, SIGNAL(fileChanged(const QString&)), SLOT(onBuddyListChanged(const QString&)));

@@ -61,14 +61,15 @@ public:
         _context = context;
         _onion = onion;
         if (!_started) {
-            start(context, onion, notifier);
-            _started = true;
 
             /* TODO: On the first run, this is called before the buddy-list
              *       file is established. Moving it after the torchat initialization
              *       results in a "No such file or directory".
              */
             _buddyListModel = new BuddyListModel(this);
+
+            start(context, onion, notifier);
+            _started = true;
         }
 
         _context->setContextObject(this);

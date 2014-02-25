@@ -20,14 +20,12 @@ PhoneApp::PhoneApp(QObject* parent)
 void PhoneApp::start(QQmlContext* context, const QString& onion, Notifier* notifier)
 {
     App::start(context, onion, notifier);
-#ifdef VOIP
 
     _voipClient = new VoipClient(onion, this);
     /* TODO: Use this as parent to manage mumble resources:
      *       `setupMumble(*qApp, _voipClient, 0, NULL);`
      */
     setupMumble(*qApp, 0, NULL);
-#endif
 }
 
 QString PhoneApp::id()

@@ -6,10 +6,6 @@ DEPENDS = mumbl
 
 QT += gui widgets qml
 
-CONFIG(voip) {
-    DEFINES += "VOIP"
-}
-
 INCLUDEPATH += ../mumble/src
 INCLUDEPATH += ../mumble/src/mumble
 INCLUDEPATH += ../../../sdk

@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = mumble/src/mumble \
+SUBDIRS = mumble/src/murmur \
+          mumble/src/mumble \
           phoneapp
 CONFIG += ordered
