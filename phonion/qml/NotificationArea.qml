@@ -114,14 +114,14 @@ Rectangle {
         to: 0
         duration: notificationArea.fadetime
 
-        onRunningChanged:{
-            if (!numAni.running) {
-                notificationArea.visible = false;
-                console.log("numAni Animation completed");
-            } else {
-                console.log("numAni Animation started");
-            }
-        }
+        //onRunningChanged:{
+        //    if (!numAni.running) {
+        //        notificationArea.visible = false;
+        //        console.log("numAni Animation completed");
+        //    } else {
+        //        console.log("numAni Animation started");
+        //    }
+        //}
     }
 
     // notification timer

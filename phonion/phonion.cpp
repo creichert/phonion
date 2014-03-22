@@ -7,6 +7,9 @@
 #include <QNetworkProxy>
 #include <QPluginLoader>
 #include <QQmlContext>
+#include <QQmlEngine>
+#include <QQmlProperty>
+#include <QQuickItem>
 #include <QQuickView>
 #include <QString>
 #include <QUrl>
@@ -25,6 +28,7 @@ Phonion::Phonion(int &argc, char **argv)
   , _notifier(new Notifier(this))
   , _view(new QQuickView(this->modalWindow()))
   , _appModel(new AppModel(this))
+  , _currentAppItem(0)
 {
     setApplicationName(QLatin1String("Phonion"));
     setOrganizationName(QLatin1String("Phonion"));
@@ -32,8 +36,6 @@ Phonion::Phonion(int &argc, char **argv)
 
     qmlRegisterType<Notifier>("Phonion", 1, 0, "Notifier");
     qmlRegisterType<AppModel>("Phonion", 1, 0, "AppModel");
-
-    _view->setResizeMode(QQuickView::SizeRootObjectToView);
 
     /* Use QFileInfo and also check against security key. */
     QFile f("./apps/message/torchat/torchat/src/Tor/hidden_service/hostname");
@@ -44,20 +46,14 @@ Phonion::Phonion(int &argc, char **argv)
         qDebug() << "Identified hidden service: " << _onion;
     }
 
-    /* Only the Phonion object should be the contextObject
-     * for the rootContext. We will dervice a context for
-     * each app.
-     */
     _view->rootContext()->setContextObject(this);
-
-    /* TODO: Phonion should use rootContext. */
-    _view->rootContext()->setContextProperty("app", this);
-
+    _view->rootContext()->setContextProperty("phonion", this);
+    _view->setResizeMode(QQuickView::SizeRootObjectToView);
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
 
     /* TODO: The home screen grid view should read the
-     *       info about each app in it;s corresponding
+     *       info about each app in it's corresponding
      *       JSON file. The app (plugin) should not be
      *       instantiated until use clicks launch.
      */
@@ -79,13 +75,15 @@ const QString Phonion::onion()
     return _onion;
 }
 
-const QString Phonion::home()
+/* TODO: Refactor this method into pure qml.
+ */
+void Phonion::home()
 {
-    _view->rootContext()->setContextObject(this);
-    return "qrc:/qml/Home.qml";
+    _currentAppItem->setParentItem(0);
+    _currentAppItem->deleteLater();
 }
 
-const QString Phonion::launch(int index)
+void Phonion::launch(int index)
 {
     /* TODO: Callback to current app which
      *       puts all non-critical jobs in
@@ -96,12 +94,11 @@ const QString Phonion::launch(int index)
 
     App* app = _appModel->app(index);
 
-    /* TODO: Ideally, we derive a new QQmlContext for each app. However, when i
-     *       dynamically create a new QQmlContext the properties are not set.
-     */
-    QQmlContext* context = _view->rootContext();
+    QQmlContext* context = app->context();
+    if (!context) {
+        context = new QQmlContext(_view->engine(), app);
+    }
 
-    /* TODO: Only pass QQmlContext. */
     app->launch(context, onion(), _notifier);
 
     /* TODO: (Fix) This has to be called after the Phone (or
@@ -116,7 +113,20 @@ const QString Phonion::launch(int index)
     proxy.setPort(PROXY_PORT);
     QNetworkProxy::setApplicationProxy(proxy);
 
-    return app->source();
+    /* Inject component for app into object tree.
+     *
+     * A new component is created each time the app is launched but the
+     * context for the app is persistent.
+     */
+    QQmlComponent* component = new QQmlComponent(_view->engine(), QUrl(app->source()));
+
+    QObject* root = _view->rootObject();
+    QObject* apprect = root->findChild<QObject*>("apprect");
+
+    //TODO: refactor. Port to QQmlIncubator.
+    _currentAppItem = qobject_cast<QQuickItem*>(component->beginCreate(context));
+    _currentAppItem->setParentItem(qobject_cast<QQuickItem*>(apprect));
+    component->completeCreate();
 }
 
 /* TODO: Move to the app model.

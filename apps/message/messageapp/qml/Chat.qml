@@ -9,6 +9,7 @@ Rectangle  {
         font.bold: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
+        renderType: Text.NativeRendering
     }
 
     ListView {
@@ -31,6 +32,7 @@ Rectangle  {
                                               }
                          width: parent.width
                          wrapMode: Text.WordWrap
+                         renderType: Text.NativeRendering
                        }
     }
 
@@ -41,6 +43,7 @@ Rectangle  {
         anchors.right: send.left
         anchors.left: parent.left
         wrapMode: TextInput.WordWrap
+        renderType: Text.NativeRendering
 
         Keys.onReturnPressed: { send.clicked() }
     }

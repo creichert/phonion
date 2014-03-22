@@ -8,7 +8,9 @@
 class App;
 class AppModel;
 class Notifier;
+class QObject;
 class QQmlContext;
+class QQuickItem;
 class QQuickView;
 
 class Phonion: public QApplication {
@@ -21,8 +23,8 @@ public:
     Notifier* notifier();
     AppModel* appModel();
 
-    Q_INVOKABLE const QString home();
-    Q_INVOKABLE const QString launch(int index);
+    Q_INVOKABLE void home();
+    Q_INVOKABLE void launch(int index);
     Q_INVOKABLE const QString onion();
 
 private:
@@ -31,6 +33,8 @@ private:
     QPointer<Notifier> _notifier;
     QPointer<QQuickView> _view;
     QPointer<AppModel> _appModel;
+    QPointer<QQmlContext> _appContext;
+    QPointer<QQuickItem> _currentAppItem;
 
     QString _onion;
 };

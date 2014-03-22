@@ -22,5 +22,6 @@ Rectangle  {
         anchors.centerIn: container
         text: container.text
         font.pixelSize: fontpixelsize
+        renderType: Text.NativeRendering
     }
 }

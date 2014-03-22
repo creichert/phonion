@@ -45,6 +45,7 @@ public:
 
     explicit App(QObject* parent=0)
         : QObject(parent)
+        , _context(0)
         , _buddyListModel(0) {
         qmlRegisterType<BuddyListModel>("Phonion", 1, 0, "BuddyListModel");
     };
@@ -60,6 +61,11 @@ public:
         Q_UNUSED(notifier);
         _context = context;
         _onion = onion;
+
+        /* Exposes the app through it's id field. e.g. MessageApp. */
+        context->setContextObject(this);
+        context->setContextProperty(id(), this);
+
         if (!_started) {
 
             /* TODO: On the first run, this is called before the buddy-list
@@ -71,11 +77,6 @@ public:
             start(context, onion, notifier);
             _started = true;
         }
-
-        _context->setContextObject(this);
-
-        /* Exposes the app through it's id field. e.g. MessageApp. */
-        _context->setContextProperty(id(), this);
     }
 
 protected:

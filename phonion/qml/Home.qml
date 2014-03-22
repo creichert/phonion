@@ -31,7 +31,7 @@ Rectangle  {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: { grid.currentIndex = index
-                                 loader.source = app.launch(index)
+                                 phonion.launch(index)
                                }
                 }
             }
@@ -41,6 +41,7 @@ Rectangle  {
                           horizontalCenter: parent.horizontalCenter
                         }
                 text: name
+                renderType: Text.NativeRendering
             }
         }
     }
@@ -51,7 +52,6 @@ Rectangle  {
         anchors.horizontalCenter: parent.horizontalCenter
 
         cellWidth: width / 2; cellHeight: height / 3.5
-        //focus: true
         model: appmodel
         delegate: delegate
     }
@@ -59,8 +59,9 @@ Rectangle  {
     Text {
         id: onion
         font.pointSize: 12
-        text: app.onion()
+        text: phonion.onion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
+        renderType: Text.NativeRendering
     }
 }

@@ -7,6 +7,7 @@ Rectangle {
 
     Text {
         text: "wifi"
+        renderType: Text.NativeRendering
     }
 
     Text {
@@ -14,6 +15,7 @@ Rectangle {
         property variant now: new Date()
         text: Qt.formatDateTime(now, "hh:mm")
         anchors.horizontalCenter: parent.horizontalCenter
+        renderType: Text.NativeRendering
         Timer {
             interval: 60000
             running: true
@@ -25,5 +27,6 @@ Rectangle {
     Text {
         text: "batt"
         anchors.right:  parent.right
+        renderType: Text.NativeRendering
     }
 }

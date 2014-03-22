@@ -27,14 +27,11 @@ Rectangle  {
         }
     }
 
-    // Used to switch between qml views. Should be
-    // the only instance of Loader.
-    Loader {
-        id: loader
+    Home {
         width: parent.width
         anchors.top: statusbar.bottom
         anchors.bottom: toolbar.top
-        source: "qrc:/qml/Home.qml"
+        objectName: "apprect"
     }
 
     StatusBar {

@@ -20,11 +20,13 @@ Rectangle {
                           id: dname
                           font.pixelSize: 20
                           text: "<b>" + displayName + "</b>"
+                          renderType: Text.NativeRendering
                       }
                       Text {
                           anchors.left: dname.right
                           font.pixelSize: 20
                           text: " (" + name + ")"
+                          renderType: Text.NativeRendering
                       }
                       onClicked: buddyClicked(name)
 
