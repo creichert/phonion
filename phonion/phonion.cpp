@@ -75,8 +75,6 @@ const QString Phonion::onion()
     return _onion;
 }
 
-/* TODO: Refactor this method into pure qml.
- */
 void Phonion::home()
 {
     _currentAppItem->setParentItem(0);
@@ -85,13 +83,6 @@ void Phonion::home()
 
 void Phonion::launch(int index)
 {
-    /* TODO: Callback to current app which
-     *       puts all non-critical jobs in
-     *       the background.
-     *
-     *       currentApp->pause();
-     */
-
     App* app = _appModel->app(index);
 
     QQmlContext* context = app->context();
@@ -123,11 +114,9 @@ void Phonion::launch(int index)
     QObject* root = _view->rootObject();
     QObject* apparea = root->findChild<QObject*>("apparea");
 
-    //TODO: refactor. Port to QQmlIncubator.
-    _currentAppItem = qobject_cast<QQuickItem*>(component->beginCreate(context));
+    _currentAppItem = qobject_cast<QQuickItem*>(component->create(context));
     _currentAppItem->setParentItem(qobject_cast<QQuickItem*>(apparea));
     QQmlProperty(_currentAppItem, "anchors.fill").write(QVariant::fromValue(apparea));
-    component->completeCreate();
 }
 
 /* TODO: Move to the app model.
