@@ -31,7 +31,7 @@ Rectangle  {
         width: parent.width
         anchors.top: statusbar.bottom
         anchors.bottom: toolbar.top
-        objectName: "apprect"
+        objectName: "apparea"
     }
 
     StatusBar {

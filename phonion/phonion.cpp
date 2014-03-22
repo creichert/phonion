@@ -121,11 +121,12 @@ void Phonion::launch(int index)
     QQmlComponent* component = new QQmlComponent(_view->engine(), QUrl(app->source()));
 
     QObject* root = _view->rootObject();
-    QObject* apprect = root->findChild<QObject*>("apprect");
+    QObject* apparea = root->findChild<QObject*>("apparea");
 
     //TODO: refactor. Port to QQmlIncubator.
     _currentAppItem = qobject_cast<QQuickItem*>(component->beginCreate(context));
-    _currentAppItem->setParentItem(qobject_cast<QQuickItem*>(apprect));
+    _currentAppItem->setParentItem(qobject_cast<QQuickItem*>(apparea));
+    QQmlProperty(_currentAppItem, "anchors.fill").write(QVariant::fromValue(apparea));
     component->completeCreate();
 }
 

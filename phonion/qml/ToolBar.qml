@@ -10,7 +10,6 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         text: "Home"
-        // TODO: "HERE"
         onClicked: phonion.home()
     }
 }
