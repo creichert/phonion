@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 Rectangle  {
 
@@ -10,7 +11,7 @@ Rectangle  {
      * measurement to get resolution independence.
      */
     width: 320; height: 480
-    color: "white"
+    color: Style.window.background
 
     /* Global Notification Handler. */
     NotificationArea {
@@ -45,9 +46,9 @@ Rectangle  {
 
         // Border line
         Rectangle {
-            color: "black"
+            color: Style.border.color.normal
             anchors.top: parent.top
-            width: parent.width; height: 1
+            width: parent.width; height: Style.border.width.normal
         }
     }
 }

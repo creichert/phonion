@@ -1,4 +1,6 @@
+
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 Rectangle  {
 
@@ -15,7 +17,7 @@ Rectangle  {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                border.color: "black"
+                border.color: Style.border.color.normal
                 radius: 6
 
                 Image  {

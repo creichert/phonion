@@ -4,5 +4,7 @@
         <file>qml/BuddyList.qml</file>
         <file>qml/Button.qml</file>
         <file>qml/DialPad.qml</file>
+        <file>qml/qmldir</file>
+        <file>qml/Style.qml</file>
     </qresource>
 </RCC>
