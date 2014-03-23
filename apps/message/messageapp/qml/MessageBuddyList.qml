@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 BuddyList {
     anchors.fill: parent
@@ -11,7 +12,9 @@ BuddyList {
 
     Button {
         id: addbuddybutton
-        text: "+"
+        fontfamily: Style.fontawesome.family
+        fontpixelsize: 16
+        text: Style.fontawesome.icon.plus
         anchors.bottom: parent.bottom
         onClicked: { MessageApp.addBuddy(newbuddy.text)
                      newbuddy.text = ""
@@ -23,5 +26,6 @@ BuddyList {
         anchors.left: addbuddybutton.right
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        renderType: Text.NativeRendering
     }
 }

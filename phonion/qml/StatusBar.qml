@@ -1,12 +1,14 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 Rectangle {
 
     width: parent.width; height: 20
 
     Text {
-        text: "wifi"
+        font.family: Style.fontawesome.family
+        text: Style.fontawesome.icon.signal
         renderType: Text.NativeRendering
     }
 
@@ -25,7 +27,8 @@ Rectangle {
     }
 
     Text {
-        text: "batt"
+        font.family: Style.fontawesome.family
+        text: Style.fontawesome.icon.heart
         anchors.right:  parent.right
         renderType: Text.NativeRendering
     }

@@ -13,6 +13,10 @@ Rectangle  {
     width: 320; height: 480
     color: Style.window.background
 
+    FontLoader {
+        source: Style.fontawesome.source
+    }
+
     /* Global Notification Handler. */
     NotificationArea {
         id: notifications

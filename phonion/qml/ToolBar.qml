@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 Rectangle {
 
@@ -9,7 +10,8 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        text: "Home"
+        fontfamily: Style.fontawesome.family
+        text: Style.fontawesome.icon.home
         onClicked: phonion.home()
     }
 }
