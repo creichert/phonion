@@ -6,5 +6,8 @@
         <file>qml/NotificationArea.qml</file>
         <file>qml/StatusBar.qml</file>
         <file>qml/ToolBar.qml</file>
+
+        <!-- Images -->
+        <file>img/bg.jpg</file>
     </qresource>
 </RCC>

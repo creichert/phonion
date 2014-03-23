@@ -32,6 +32,11 @@ Rectangle  {
         }
     }
 
+    Image {
+        anchors.fill: parent
+        source: "qrc:/img/bg.jpg"
+    }
+
     Home {
         width: parent.width
         anchors.top: statusbar.bottom
@@ -42,11 +47,13 @@ Rectangle  {
     StatusBar {
         id: statusbar
         anchors.top: parent.top
+        color: "transparent"
     }
 
     ToolBar {
         id: toolbar
         anchors.bottom:  parent.bottom
+        opacity: 0.5
 
         // Border line
         Rectangle {

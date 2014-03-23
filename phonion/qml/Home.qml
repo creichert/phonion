@@ -4,16 +4,19 @@ import "." // QTBUG-34418
 
 Rectangle  {
 
+    color: "transparent"
     Component  {
 
         id: delegate
         Rectangle  {
 
             width: grid.cellWidth; height: grid.cellHeight
+            color: "transparent"
             Rectangle {
                 id: iconrect
 
                 width: parent.width / 1.5; height: parent.height / 1.5
+                color: "transparent"
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
