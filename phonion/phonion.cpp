@@ -108,6 +108,8 @@ void Phonion::launch(int index)
      *
      * A new component is created each time the app is launched but the
      * context for the app is persistent.
+     *
+     * TODO: Memory management for component and _currentAppItem.
      */
     QQmlComponent* component = new QQmlComponent(_view->engine(), QUrl(app->source()));
 
