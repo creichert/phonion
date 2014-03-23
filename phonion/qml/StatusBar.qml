@@ -28,7 +28,7 @@ Rectangle {
 
     Text {
         font.family: Style.fontawesome.family
-        text: Style.fontawesome.icon.heart
+        text: "100%"
         anchors.right:  parent.right
         renderType: Text.NativeRendering
     }
