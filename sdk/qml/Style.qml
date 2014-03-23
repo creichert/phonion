@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 pragma Singleton
 
@@ -18,6 +19,10 @@ QtObject {
             property int big: 3
             property int normal: 1
         }
+    }
+
+    property QtObject font: QtObject {
+        property string family: "Helvetica"
     }
 
     property QtObject fontawesome: QtObject {
@@ -69,7 +74,7 @@ QtObject {
             property string tags                : "\uf02c"
             property string book                : "\uf02d"
             property string bookmark            : "\uf02e"
-            property string print_               : "\uf02f"
+            property string print_              : "\uf02f"
             property string camera              : "\uf030"
             property string font                : "\uf031"
             property string bold                : "\uf032"
@@ -101,7 +106,7 @@ QtObject {
             property string stop                : "\uf04d"
             property string forward             : "\uf04e"
             property string fastForward         : "\uf050"
-            // property string stepForward         : "\uf051"
+         // property string stepForward         : "\uf051"
             property string eject               : "\uf052"
             property string chevronLeft         : "\uf053"
             property string chevronRight        : "\uf054"
