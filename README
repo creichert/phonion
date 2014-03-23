@@ -30,7 +30,8 @@ Build
 -----
 
     $ ./configure
-    $ qmake CONFIG+=phonion CONFIG+=debug -recursive
+    $ mkdir build && cd build/
+    $ qmake CONFIG+=phonion CONFIG+=debug -recursive ..
     $ make
 
 Security Concerns
