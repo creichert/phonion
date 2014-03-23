@@ -5,7 +5,7 @@ import "." // QTBUG-34418
 Rectangle {
     id: keyboard
 
-    height: parent.height / 1.75
+    height: parent.height / 2.75
 
     property string numkeys: "234567"
     property string alphakeys: "qwertyuiopasdfghjklzxcvbnm"
