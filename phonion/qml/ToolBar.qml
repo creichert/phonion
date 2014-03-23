@@ -10,6 +10,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
+        fontpixelsize: 28
         fontfamily: Style.fontawesome.family
         text: Style.fontawesome.icon.home
         onClicked: phonion.home()

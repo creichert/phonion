@@ -31,6 +31,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: TextInput.AlignHCenter
         font.pointSize: 10
+        renderType: Text.NativeRendering
     }
 
     Button {

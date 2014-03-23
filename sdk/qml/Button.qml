@@ -5,7 +5,7 @@ Rectangle  {
     id: container
 
     property string text: ""
-    property int fontpixelsize: 24
+    property int fontpixelsize: 16
     property string fontfamily: "Helvetica"
 
     signal clicked
