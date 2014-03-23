@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import "." // QTBUG-34418
 
 Rectangle  {
     id: container
@@ -20,6 +21,7 @@ Rectangle  {
 
     Text  {
         id: buttonLabel
+        color: Style.font.color
         anchors.centerIn: container
         text: container.text
         font.pixelSize: fontpixelsize

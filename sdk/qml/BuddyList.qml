@@ -6,6 +6,7 @@ Rectangle {
     signal buddyClicked(string buddy)
 
     anchors.fill: parent
+    color: "transparent"
 
     ListView {
         id: buddylist

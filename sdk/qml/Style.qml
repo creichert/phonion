@@ -23,6 +23,7 @@ QtObject {
 
     property QtObject font: QtObject {
         property string family: "Helvetica"
+        property string color: "black"
     }
 
     property QtObject fontawesome: QtObject {

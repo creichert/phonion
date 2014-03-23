@@ -7,6 +7,7 @@ Rectangle {
     width: parent.width; height: 20
 
     Text {
+        color: Style.font.color
         font.family: Style.fontawesome.family
         text: Style.fontawesome.icon.signal
         renderType: Text.NativeRendering
@@ -16,6 +17,7 @@ Rectangle {
         id: time
         property variant now: new Date()
         text: Qt.formatDateTime(now, "hh:mm")
+        color: Style.font.color
         anchors.horizontalCenter: parent.horizontalCenter
         renderType: Text.NativeRendering
         Timer {
@@ -27,6 +29,7 @@ Rectangle {
     }
 
     Text {
+        color: Style.font.color
         font.family: Style.fontawesome.family
         text: "100%"
         anchors.right:  parent.right

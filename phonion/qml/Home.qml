@@ -20,7 +20,6 @@ Rectangle  {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                border.color: Style.border.color.normal
                 radius: 6
 
                 Image  {
@@ -45,6 +44,7 @@ Rectangle  {
                 anchors { top: iconrect.bottom;
                           horizontalCenter: parent.horizontalCenter
                         }
+                color: Style.font.color
                 text: name
                 renderType: Text.NativeRendering
             }
@@ -63,6 +63,7 @@ Rectangle  {
 
     Text {
         id: onion
+        color: Style.font.color
         font.pointSize: 12
         text: phonion.onion()
         anchors.bottom: grid.bottom
