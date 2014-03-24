@@ -4,7 +4,7 @@ import "." // QTBUG-34418
 
 Rectangle {
 
-    width: parent.width; height: 40
+    width: parent.width; height: Style.toolbar.height
     opacity: parent.opacity
     Button {
         id: homeButton
@@ -15,6 +15,6 @@ Rectangle {
         fontpixelsize: 28
         fontfamily: Style.fontawesome.family
         text: Style.fontawesome.icon.home
-        onClicked: phonion.home()
+        onClicked: Phonion.home()
     }
 }

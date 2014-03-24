@@ -1,3 +1,4 @@
 TEMPLATE = subdirs
 SUBDIRS = message \
-          phone
+          phone \
+          settings

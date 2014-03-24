@@ -10,7 +10,7 @@ Rectangle  {
      * Derive all other measurements from parent
      * measurement to get resolution independence.
      */
-    width: 320; height: 480
+    width: Style.window.width; height: Style.window.height
     color: Style.window.background
 
     FontLoader {
@@ -53,7 +53,7 @@ Rectangle  {
     ToolBar {
         id: toolbar
         anchors.bottom:  parent.bottom
-        opacity: 0.5
+        opacity: Style.toolbar.opacity
 
         // Border line
         Rectangle {

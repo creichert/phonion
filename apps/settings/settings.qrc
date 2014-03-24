@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- QML -->
+        <file>qml/Settings.qml</file>
+    </qresource>
+
+    <qresource prefix="/settings/">
+        <!-- Images -->
+        <file>settings.png</file>
+    </qresource>
+</RCC>

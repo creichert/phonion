@@ -244,7 +244,14 @@ QtObject {
         }
     }
 
+    property QtObject toolbar: QtObject {
+        property int height: 40
+        property real opacity: 0.5
+    }
+
     property QtObject window: QtObject {
         property color background: "white"
+        property int height: 480
+        property int width: 320
     }
 }

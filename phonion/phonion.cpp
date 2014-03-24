@@ -47,7 +47,7 @@ Phonion::Phonion(int &argc, char **argv)
     }
 
     _view->rootContext()->setContextObject(this);
-    _view->rootContext()->setContextProperty("phonion", this);
+    _view->rootContext()->setContextProperty("Phonion", this);
     _view->setResizeMode(QQuickView::SizeRootObjectToView);
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
@@ -77,8 +77,10 @@ const QString Phonion::onion()
 
 void Phonion::home()
 {
-    _currentAppItem->setParentItem(0);
-    _currentAppItem->deleteLater();
+    if (_currentAppItem) {
+        _currentAppItem->setParentItem(0);
+        _currentAppItem->deleteLater();
+    }
 }
 
 void Phonion::launch(int index)

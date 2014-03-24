@@ -35,7 +35,7 @@ Rectangle  {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: { grid.currentIndex = index
-                                 phonion.launch(index)
+                                 Phonion.launch(index)
                                }
                 }
             }
@@ -65,7 +65,7 @@ Rectangle  {
         id: onion
         color: Style.font.color
         font.pointSize: 12
-        text: phonion.onion()
+        text: Phonion.onion()
         anchors.bottom: grid.bottom
         anchors.horizontalCenter: grid.horizontalCenter
         renderType: Text.NativeRendering
