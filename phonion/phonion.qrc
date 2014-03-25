@@ -9,5 +9,6 @@
 
         <!-- Images -->
         <file>img/bg.jpg</file>
+        <file>img/home.jpg</file>
     </qresource>
 </RCC>

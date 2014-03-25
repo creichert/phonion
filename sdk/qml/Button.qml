@@ -8,6 +8,7 @@ Rectangle  {
     property string text: ""
     property int fontpixelsize: 16
     property string fontfamily: "Helvetica"
+    property color fontcolor: Style.font.color
 
     signal clicked
 
@@ -21,7 +22,7 @@ Rectangle  {
 
     Text  {
         id: buttonLabel
-        color: Style.font.color
+        color: parent.fontcolor
         anchors.centerIn: container
         text: container.text
         font.pixelSize: fontpixelsize

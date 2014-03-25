@@ -36,6 +36,10 @@ Rectangle  {
                     anchors.fill: parent
                     onClicked: { grid.currentIndex = index
                                  Phonion.launch(index)
+                                 { //TODO: Hacks. add function to "swap style"
+                                    Style.font.color = "black"
+                                    statusbar.color = "white"
+                                 }
                                }
                 }
             }

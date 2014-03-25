@@ -23,7 +23,7 @@ QtObject {
 
     property QtObject font: QtObject {
         property string family: "Helvetica"
-        property string color: "black"
+        property string color: "white"
     }
 
     property QtObject fontawesome: QtObject {
@@ -251,6 +251,7 @@ QtObject {
 
     property QtObject window: QtObject {
         property color background: "white"
+        property string backgroundImage: "qrc:/img/bg.jpg"
         property int height: 480
         property int width: 320
     }

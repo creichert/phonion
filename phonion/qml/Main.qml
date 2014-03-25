@@ -34,7 +34,7 @@ Rectangle  {
 
     Image {
         anchors.fill: parent
-        source: "qrc:/img/bg.jpg"
+        source: Style.window.backgroundImage
     }
 
     Home {
