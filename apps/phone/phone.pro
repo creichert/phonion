@@ -4,11 +4,7 @@ TEMPLATE = subdirs
 #
 # Copying the proto file is necessary when shadow building.
 !equals(PWD, $${OUT_PWD}) {
-    copymumbleproto.commands = $(COPY) $$PWD/mumble/src/Mumble.proto $$OUT_PWD/mumble/src/
-    first.depends = $(first) copydata
-    export(first.depends)
-    export(copymumbleproto.commands)
-    QMAKE_EXTRA_TARGETS += first copymumbleproto
+    system(cp $$PWD/mumble/src/Mumble.proto $$OUT_PWD/mumble/src/)
 
     copymurmurini.commands = $(COPY) $$PWD/murmur.ini $$OUT_PWD
     first.depends = $(first) copymurmurini
