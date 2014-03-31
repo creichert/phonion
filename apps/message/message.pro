@@ -4,10 +4,10 @@ SUBDIRS = integrator \
 CONFIG+=ordered
 
 # Copy torchat to build dir
-!exists($$OUT_PWD/torchat) {
-    copydata.commands = $(COPY_DIR) $$PWD/torchat $$OUT_PWD
-    first.depends = $(first) copydata
+!equals(PWD, $${OUT_PWD}) {
+    copytorchat.commands = $(COPY_DIR) $$PWD/torchat $$OUT_PWD
+    first.depends = $(first) copytorchat
     export(first.depends)
-    export(copydata.commands)
-    QMAKE_EXTRA_TARGETS += first copydata
+    export(copytorchat.commands)
+    QMAKE_EXTRA_TARGETS += first copytorchat
 }
