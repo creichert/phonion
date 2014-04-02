@@ -1,5 +1,5 @@
-Phonion: a secure voip and messaging device
-============================================
+Phonion: Secure Communications Framework
+========================================
 
 Dependendencies
 ----------------
@@ -34,12 +34,12 @@ Build
     $ qmake CONFIG+=phonion CONFIG+=debug -recursive ..
     $ make
 
-Security Concerns
------------------
+Security
+--------
 
-* Mumble defaulting to OpenSSL v1.0. This should be restricted to at least v2.0 if not v3.0.
-* Set hard limit on number of characters allowed per message.
+* Test for DNS Leaks
 
+    tcpdump -vvvv -i <your_device> dst port 64738
 
 TODO
 ----
