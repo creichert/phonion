@@ -38,6 +38,7 @@ VoipClient::VoipClient(const QString& onion, QObject* parent)
   : QObject(parent)
   , _serverHandler()
   , _myonion(onion)
+  , _connected(false)
 {
     qDebug() << Q_FUNC_INFO << "Registering VOIP Client As User: " << _myonion;
 
@@ -85,6 +86,11 @@ void VoipClient::end()
     _serverHandler->disconnect();
 }
 
+bool VoipClient::connected()
+{
+    return _connected;
+}
+
 QString VoipClient::latency()
 {
 	return QString::fromLatin1("%1").arg(
@@ -94,9 +100,11 @@ QString VoipClient::latency()
 void VoipClient::onServerConnected()
 {
     qDebug() << Q_FUNC_INFO << "Server Connected " << _serverHandler;
+    _connected = true;
 }
 
 void VoipClient::onServerDisconnected(QAbstractSocket::SocketError err, QString reason)
 {
     qDebug() << Q_FUNC_INFO << "Server disconnected: " << err << " : " << reason;
+    _connected = false;
 }

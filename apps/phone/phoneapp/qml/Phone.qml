@@ -14,7 +14,11 @@ Rectangle {
         id: timer
         interval: 15000
         repeat: true
-        onTriggered: info.text = "Latency: " + voipclient.latency()
+        onTriggered: { console.log(voipclient.connected())
+                       if (voipclient.connected()) {
+                           info.text = "Latency: " + voipclient.latency()
+                       }
+                     }
     }
 
     Text {
@@ -22,10 +26,13 @@ Rectangle {
         id: info
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: toonion.top
+        renderType: Text.NativeRendering
     }
 
     TextInput {
         id: toonion
+        // test service.
+        text: "rtasbxxhle55nnin"
         maximumLength: 16
         anchors.bottom: callbutton.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -43,8 +50,8 @@ Rectangle {
 
         onClicked: { console.log("Call: " + toonion.text)
                      if (toonion.text.length == 16) {
-                         voipclient.call(toonion.text)
                          timer.start()
+                         voipclient.call(toonion.text)
                      } else {
                          console.log("Call to onion " + toonion.text +
                                      " failed. Incorrectly formatted.")
@@ -60,9 +67,9 @@ Rectangle {
         anchors.bottom: keyboard.top
 
         onClicked: { console.log("Cancel")
-                     toonion.text = ""
                      voipclient.end()
                      timer.stop()
+                     info.text = ""
                    }
     }
 

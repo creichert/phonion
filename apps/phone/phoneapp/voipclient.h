@@ -15,6 +15,7 @@ public:
 
     Q_INVOKABLE void call(const QString& onion);
     Q_INVOKABLE void end();
+    Q_INVOKABLE bool connected();
     Q_INVOKABLE QString latency();
 
 private slots:
@@ -25,6 +26,7 @@ private slots:
 private:
     ServerHandler* _serverHandler;
     QString _myonion;
+    bool _connected;
 };
 
 #endif // VOIPCLIENT_H
