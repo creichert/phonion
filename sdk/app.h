@@ -15,8 +15,6 @@ class QQmlContext;
 
 /* Interface which defines the methods and App needs
  * to run in the Phonion client.
- *
- * All functions must be pure.
  */
 class AppInterface {
 
@@ -50,9 +48,6 @@ public:
         qmlRegisterType<BuddyListModel>("Phonion", 1, 0, "BuddyListModel");
     };
 
-    /* The standard constructor for each app sets up only the data necessary
-     * to display information on the app.
-     */
     QQmlContext* context() { return _context; }
     QString onion() { return _onion; }
     BuddyListModel* buddyListModel() { return _buddyListModel; }
@@ -62,8 +57,9 @@ public:
         _context = context;
         _onion = onion;
 
-        /* Exposes the app through it's id field. e.g. MessageApp. */
+        /* Each app is the context object of the context it is running under. */
         context->setContextObject(this);
+        /* Exposes the app through it's id field. e.g. MessageApp. */
         context->setContextProperty(id(), this);
 
         if (!_started) {

@@ -83,7 +83,7 @@ void BuddyListModel::onBuddyListChanged(const QString& path)
     QFile inputFile(path);
     if (inputFile.open(QIODevice::ReadOnly)) {
 
-        // Completely re-build the buddy list.
+        /* Completely re-build the buddy list. */
         beginRemoveRows(QModelIndex(), 0, rowCount());
         _buddies.clear();
         endRemoveRows();
@@ -96,13 +96,12 @@ void BuddyListModel::onBuddyListChanged(const QString& path)
             if (line.length() > 0)
                 name = line.split(' ').at(1);
 
-            // Test if buddy is already in the list
+            /* Test if buddy is already in the list. */
             if(!buddyFromAddress(address))
                 addBuddy(new Buddy(address, name, this));
         }
         inputFile.close();
-    } else
-        qDebug() << inputFile.errorString();
+    }
 }
 
 Buddy* BuddyListModel::buddyFromAddress(const QString& address)
@@ -111,5 +110,6 @@ Buddy* BuddyListModel::buddyFromAddress(const QString& address)
         if (buddy->onion() == address)
             return buddy;
     }
+
     return 0;
 }

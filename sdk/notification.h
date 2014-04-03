@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-/* Notification type.
- */
 class Notification : public QObject {
     Q_OBJECT
 public:
