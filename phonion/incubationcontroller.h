@@ -14,17 +14,15 @@ public:
       , _apparea(apparea) {
     }
 
-    ~AppIncubator() {
-        qDebug() << " DELETING APP INCUBATOR";
-    }
-
     void statusChanged(Status status) {
-        qDebug() << "Status: " << status;
         switch (status) {
         case Ready: {
             QQuickItem* app = qobject_cast<QQuickItem*>(object());
-            if (app) { app->setParentItem(_apparea); app->setParent(_apparea); }
-            QQmlProperty(app, "anchors.fill").write(QVariant::fromValue(_apparea));
+            if (app) {
+                app->setParentItem(_apparea);
+                app->setParent(_apparea);
+                QQmlProperty(app, "anchors.fill").write(QVariant::fromValue(_apparea));
+            }
             break;
           }
         case Null:

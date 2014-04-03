@@ -37,6 +37,14 @@ Phonion::Phonion(int &argc, char **argv)
     qmlRegisterType<Notifier>("Phonion", 1, 0, "Notifier");
     qmlRegisterType<AppModel>("Phonion", 1, 0, "AppModel");
 
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::Socks5Proxy);
+    proxy.setHostName(PROXY_HOST);
+    proxy.setPort(PROXY_PORT);
+    //proxy.setUser("");
+    //proxy.setPassword("");
+    QNetworkProxy::setApplicationProxy(proxy);
+
     /* Use QFileInfo and also check against security key. */
     QFile f("./apps/message/torchat/torchat/src/Tor/hidden_service/hostname");
     if(!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -56,19 +64,6 @@ Phonion::Phonion(int &argc, char **argv)
     _view->setResizeMode(QQuickView::SizeRootObjectToView);
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
-
-    /* This has to be called after the Phone (or any app that uses a QSocket).
-     *
-     * This can be fixed when moving the proxy to a commmitted service
-     * within Phonion.
-     */
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::Socks5Proxy);
-    proxy.setHostName(PROXY_HOST);
-    proxy.setPort(PROXY_PORT);
-    //proxy.setUser("");
-    //proxy.setPassword("");
-    QNetworkProxy::setApplicationProxy(proxy);
 
     /* TODO: The home screen grid view should read the
      *       info about each app in it's corresponding
