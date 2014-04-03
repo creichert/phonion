@@ -17,6 +17,7 @@
 
 #include "app.h"
 #include "appmodel.h"
+#include "incubationcontroller.h"
 #include "phonion.h"
 #include "notifier.h"
 
@@ -28,7 +29,6 @@ Phonion::Phonion(int &argc, char **argv)
   , _notifier(new Notifier(this))
   , _view(new QQuickView(this->modalWindow()))
   , _appModel(new AppModel(this))
-  , _currentAppItem(0)
 {
     setApplicationName(QLatin1String("Phonion"));
     setOrganizationName(QLatin1String("Phonion"));
@@ -46,11 +46,29 @@ Phonion::Phonion(int &argc, char **argv)
         qDebug() << "Identified hidden service: " << _onion;
     }
 
+    // set the engines qqmlnetworkaccessmanager here. pass in our phonionnetworkproxy.
+    // and return it when create() is called.
+
+    _view->engine()->setIncubationController(new PhonionIncubationController(_view->engine()));
+    /* Phonion is the context of the root object. */
     _view->rootContext()->setContextObject(this);
     _view->rootContext()->setContextProperty("Phonion", this);
     _view->setResizeMode(QQuickView::SizeRootObjectToView);
     _view->setSource(QUrl("qrc:/qml/Main.qml"));
     _view->show();
+
+    /* This has to be called after the Phone (or any app that uses a QSocket).
+     *
+     * This can be fixed when moving the proxy to a commmitted service
+     * within Phonion.
+     */
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::Socks5Proxy);
+    proxy.setHostName(PROXY_HOST);
+    proxy.setPort(PROXY_PORT);
+    //proxy.setUser("");
+    //proxy.setPassword("");
+    QNetworkProxy::setApplicationProxy(proxy);
 
     /* TODO: The home screen grid view should read the
      *       info about each app in it's corresponding
@@ -77,10 +95,7 @@ const QString Phonion::onion()
 
 void Phonion::home()
 {
-    if (_currentAppItem) {
-        _currentAppItem->setParentItem(0);
-        _currentAppItem->deleteLater();
-    }
+    _currentAppItem.clear();
 }
 
 void Phonion::launch(int index)
@@ -94,32 +109,20 @@ void Phonion::launch(int index)
 
     app->launch(context, onion(), _notifier);
 
-    /* This has to be called after the Phone (or any app that uses a QSocket).
-     *
-     * This can be fixed when moving the proxy to a commmitted service
-     * within Phonion.
-     */
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::Socks5Proxy);
-    proxy.setHostName(PROXY_HOST);
-    proxy.setPort(PROXY_PORT);
-    QNetworkProxy::setApplicationProxy(proxy);
+    /* Get the area which contains the app. */
+    QObject* apparea = _view->rootObject()->findChild<QObject*>("apparea");
 
-    /* Inject component for app into object tree.
+    /* Use an AppIncubator to prepare component to be injected into apparea.
      *
      * A new component is created each time the app is launched but the
      * context for the app is persistent.
-     *
-     * TODO: Memory management for component and _currentAppItem.
      */
-    QQmlComponent* component = new QQmlComponent(_view->engine(), QUrl(app->source()));
+    AppIncubator incubator(qobject_cast<QQuickItem*>(apparea));
 
-    QObject* root = _view->rootObject();
-    QObject* apparea = root->findChild<QObject*>("apparea");
+    QQmlComponent component(_view->engine(), QUrl(app->source()));
+    component.create(incubator, context);
 
-    _currentAppItem = qobject_cast<QQuickItem*>(component->create(context));
-    _currentAppItem->setParentItem(qobject_cast<QQuickItem*>(apparea));
-    QQmlProperty(_currentAppItem, "anchors.fill").write(QVariant::fromValue(apparea));
+    _currentAppItem = QSharedPointer<QQuickItem>(qobject_cast<QQuickItem*>(incubator.object()));
 }
 
 void Phonion::loadApps()

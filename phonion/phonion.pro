@@ -11,7 +11,8 @@ INCLUDEPATH += ../sdk
 
 LIBS += -L../sdk -lphonion
 
-HEADERS += phonion.h
+HEADERS += phonion.h \
+           incubationcontroller.h
 
 SOURCES += main.cpp \
            phonion.cpp

@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QPointer>
+#include <QSharedPointer>
 #include <QString>
 
 class App;
@@ -34,7 +35,7 @@ private:
     QPointer<QQuickView> _view;
     QPointer<AppModel> _appModel;
     QPointer<QQmlContext> _appContext;
-    QPointer<QQuickItem> _currentAppItem;
+    QSharedPointer<QQuickItem> _currentAppItem;
 
     QString _onion;
 };
