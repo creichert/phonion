@@ -20,5 +20,13 @@ SOURCES += chatmodel.cpp \
 
 RESOURCES += messageapp.qrc
 
+# RPaths from within the apps/phone/phoneapp/ directory
 QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../integrator
 QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../../../sdk
+
+# RPaths from within the apps/ directory.
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/message/integrator
+QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../sdk
+
+# Copy to apps dir.
+QMAKE_POST_LINK += $$quote($$QMAKE_COPY $${OUT_PWD}/libmessageapp.so $${OUT_PWD}/../../$$escape_expand(\\n\\t))

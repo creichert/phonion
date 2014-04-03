@@ -94,11 +94,10 @@ void Phonion::launch(int index)
 
     app->launch(context, onion(), _notifier);
 
-    /* TODO: (Fix) This has to be called after the Phone (or
-     *        any app that uses a QSocket).
+    /* This has to be called after the Phone (or any app that uses a QSocket).
      *
-     *        Utilitze QNetworkAccessManager to build a network
-     *        access layer.
+     * This can be fixed when moving the proxy to a commmitted service
+     * within Phonion.
      */
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::Socks5Proxy);
@@ -123,16 +122,12 @@ void Phonion::launch(int index)
     QQmlProperty(_currentAppItem, "anchors.fill").write(QVariant::fromValue(apparea));
 }
 
-/* TODO: Move to the app model.
- */
 void Phonion::loadApps()
 {
-    /* TODO: Clean this up once we are copying
-     *       all apps to a proper plugins or apps dir.
-     */
-    QDirIterator it("./apps", QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        QPluginLoader loader(it.next());
+    QDir appdir("./apps");
+    QStringList apps = QDir("./apps").entryList(QStringList() << "*.so", QDir:: Files | QDir::NoSymLinks);
+    foreach(const QString& appname, apps) {
+        QPluginLoader loader(appdir.absoluteFilePath(appname));
         QObject* plugin = loader.instance();
         if (plugin) {
             App* app = qobject_cast<App*>(plugin);
