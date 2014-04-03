@@ -11,10 +11,10 @@ INCLUDEPATH += ../sdk
 
 LIBS += -L../sdk -lphonion
 
-HEADERS += phonion.h \
+HEADERS += phonion.h
 
 SOURCES += main.cpp \
-           phonion.cpp \
+           phonion.cpp
 
 RESOURCES += phonion.qrc
 
