@@ -4,7 +4,7 @@ SUBDIRS = integrator \
 CONFIG+=ordered
 
 # Copy torchat to build dir
-!equals(PWD, $${OUT_PWD}) {
+!equals($${PWD}, $${OUT_PWD}) {
     copytorchat.commands = $(COPY_DIR) $$PWD/torchat $$OUT_PWD
     first.depends = $(first) copytorchat
     export(first.depends)
