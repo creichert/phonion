@@ -5,5 +5,5 @@ CONFIG+=ordered
 
 # Copy torchat to build dir
 !equals($${PWD}, $${OUT_PWD}) {
-    system(cp $$PWD/torchat $$OUT_PWD)
+    system(cp -r $$PWD/torchat $$OUT_PWD)
 }
