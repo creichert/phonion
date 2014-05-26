@@ -1,8 +1,12 @@
-Phonion: Secure Communications Framework
-========================================
+# Phonion: Secure Communications Framework
 
-Dependendencies
-----------------
+Phonion is an experimental VOIP and messaging framework which uses Tor Hidden
+Services.
+
+Phonion uses QML and provides a lightweight plugin sandbox for writing
+extensions.
+
+## Dependendencies
 
     # Qt deps
     $ sudo apt-get install libxcb1 libxcb1-dev libx11-xcb1 libx11-xcb-dev \
@@ -26,26 +30,15 @@ Dependendencies
               libcap-dev libspeexdsp-dev libprotobuf-dev protobuf-compiler \
               libogg-dev libavahi-compat-libdnssd-dev libsndfile1-dev \
               libg15daemon-client-dev libxi-dev libopus-dev libcelt0-0 libcelt-dev
-Build
------
+## Build
 
     $ ./configure
     $ mkdir build && cd build/
     $ qmake CONFIG+=phonion CONFIG+=debug -recursive ..
     $ make
 
-Security
---------
+## Security
 
 * Test for DNS Leaks
 
     tcpdump -vvvv -i <your_device> dst port 64738
-
-TODO
-----
-
-1. Website
-..* Basic landing page.
-2. Documentation
-..* Technical security documentation outlining software libraries, encryption used, etc.
-..* User documentation and FAQ.
