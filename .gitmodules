@@ -1,6 +1,6 @@
 [submodule "mumble"]
 	path = apps/phone/mumble
-	url = git@git.reichertbrothers.com:mumble.git
+	url = git@github.com:creichert/mumble.git
 [submodule "torchat"]
 	path = apps/message/torchat
-	url = git@git.reichertbrothers.com:torchat.git
+	url = git@github.com:creichert/TorChat.git
